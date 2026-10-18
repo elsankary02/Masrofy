@@ -1,0 +1,3 @@
+class AppSvgs {
+  AppSvgs._();
+}
