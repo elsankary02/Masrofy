@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:masroofy/core/theme/app_theme.dart';
+import 'package:masrofy/core/theme/app_theme.dart';
 
-class Masroofy extends StatelessWidget {
-  const Masroofy({super.key});
+class Masrofy extends StatelessWidget {
+  const Masrofy({super.key});
 
   @override
   Widget build(BuildContext context) {

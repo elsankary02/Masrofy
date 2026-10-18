@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:masroofy/core/theme/app_colors.dart';
-import 'package:masroofy/core/theme/app_text_styles.dart';
-import 'package:masroofy/core/utils/constants/app_strings.dart';
+import 'package:masrofy/core/theme/app_colors.dart';
+import 'package:masrofy/core/theme/app_text_styles.dart';
+import 'package:masrofy/core/utils/constants/app_strings.dart';
 
 class AppTheme {
   AppTheme._();
