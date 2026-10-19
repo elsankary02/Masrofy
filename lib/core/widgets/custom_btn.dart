@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 enum ButtonVariant { primary, secondary, tertiary, outlined, text }
 
-class CustomButton extends StatelessWidget {
+class CustomBtn extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
   final ButtonVariant variant;
@@ -11,8 +11,11 @@ class CustomButton extends StatelessWidget {
   final double? height;
   final Widget? icon;
   final bool isDisabled;
+  final TextStyle? style;
+  final EdgeInsetsGeometry? padding; // أضفنا الحشو الداخلي
+  final EdgeInsetsGeometry? margin; // أضفنا الهوامش الخارجية
 
-  const CustomButton({
+  const CustomBtn({
     super.key,
     required this.text,
     this.onPressed,
@@ -22,16 +25,23 @@ class CustomButton extends StatelessWidget {
     this.height,
     this.icon,
     this.isDisabled = false,
+    this.style,
+    this.padding,
+    this.margin,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return SizedBox(
-      width: width ?? double.infinity,
-      height: height ?? 48,
-      child: _buildButton(theme),
+    return Container(
+      margin: margin,
+      padding: padding,
+      child: SizedBox(
+        width: width ?? double.infinity,
+        height: height ?? 48,
+        child: _buildButton(theme),
+      ),
     );
   }
 
@@ -104,7 +114,7 @@ class CustomButton extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         if (icon != null) ...[icon!, const SizedBox(width: 8)],
-        Text(text),
+        Text(text, style: style),
       ],
     );
   }
