@@ -19,6 +19,7 @@ class AppColors {
   // ===========================
 
   static const Color backgroundLight = Color(0xFFF5F7FA);
+
   static const Color surfaceLight = Colors.white;
   static const Color cardLight = Color(0xFFFFFFFF);
 
@@ -63,7 +64,7 @@ class AppColors {
   // ===========================
   // Extra Colors
   // ===========================
-
+  static const Color white = Color(0xffffffff);
   static const Color purple = Color(0xFF8B5CF6);
   static const Color orange = Color(0xFFF97316);
   static const Color blue = Color(0xFF3B82F6);
