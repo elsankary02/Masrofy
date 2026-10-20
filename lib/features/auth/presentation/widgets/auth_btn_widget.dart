@@ -16,7 +16,6 @@ class AuthBtnWidget extends StatelessWidget {
     return CustomBtn(
       text: LocaleKeys.google_sign_in.tr(),
       icon: FaIcon(FontAwesomeIcons.google, size: 20, color: AppColors.primary),
-      padding: EdgeInsets.symmetric(horizontal: context.h * .020),
       variant: ButtonVariant.outlined,
       style: context.textTheme.titleMedium,
       onPressed: () {
