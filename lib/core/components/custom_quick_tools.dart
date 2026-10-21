@@ -12,7 +12,7 @@ class CustomQuickTools extends StatelessWidget {
     super.key,
     required this.subTitle,
     this.icon,
-    this.color = AppColors.purple,
+    this.color,
     this.onTap,
   });
 
@@ -58,6 +58,7 @@ class CustomQuickTools extends StatelessWidget {
             color: context.isDarkMode
                 ? AppColors.textPrimaryDark
                 : AppColors.grey700,
+            fontWeight: FontWeight.w700,
           ),
         ),
       ],

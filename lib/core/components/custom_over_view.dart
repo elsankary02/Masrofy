@@ -29,16 +29,32 @@ class CustomOverView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.baseline,
         textBaseline: TextBaseline.alphabetic,
         children: [
-          Text(
-            price,
-            style: context.textTheme.titleMedium?.copyWith(color: valueColor),
-          ),
-          Text(
-            currency,
-            style: context.textTheme.bodySmall?.copyWith(color: valueColor),
-          ),
+          Text(price, style: _style(context)),
+          Text(currency, style: _style(context)),
         ],
       ),
+    );
+  }
+
+  TextStyle? _style(BuildContext context) => context.textTheme.titleMedium
+      ?.copyWith(color: valueColor, fontWeight: FontWeight.w700);
+}
+
+class _Leading extends StatelessWidget {
+  const _Leading({required this.color, required this.icon});
+
+  final Color? color;
+  final FaIconData? icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: color!.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: FaIcon(icon, color: color, size: 16),
     );
   }
 }
@@ -58,25 +74,6 @@ class _Title extends StatelessWidget {
             ? AppColors.textPrimaryDark
             : AppColors.grey700,
       ),
-    );
-  }
-}
-
-class _Leading extends StatelessWidget {
-  const _Leading({required this.color, required this.icon});
-
-  final Color? color;
-  final FaIconData? icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: color!.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: FaIcon(icon, color: color, size: 16),
     );
   }
 }

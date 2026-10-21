@@ -125,5 +125,7 @@
   "welcome_subtitle": "Manage your expenses, debts, and financial goals in one place",
   "yesterday": "Yesterday",
   "today_expenses": "Today's Expenses",
-  "current_month_income": "Current Month Income"
+  "current_month_income": "Current Month Income",
+  "no_notifications": "No notifications",
+  "no_notifications_subtitle": "You have no new notifications at the moment"
 }
