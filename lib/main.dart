@@ -9,7 +9,7 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   runApp(
     DevicePreview(
-      enabled: true,
+      enabled: false,
       builder: (context) {
         return EasyLocalization(
           supportedLocales: [Locale('en'), Locale('ar')],

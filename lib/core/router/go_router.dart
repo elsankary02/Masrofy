@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:masrofy/core/router/named_routes.dart';
 import 'package:masrofy/features/auth/presentation/pages/auth_page.dart';
+import 'package:masrofy/features/debts/debts_page.dart';
+import 'package:masrofy/features/expense/expense_page.dart';
+import 'package:masrofy/features/goals/goals_page.dart';
 import 'package:masrofy/features/home/presentation/page/home_page.dart';
+import 'package:masrofy/features/income/income_page.dart';
 import 'package:masrofy/features/notification/presentation/page/notification_page.dart';
 
 final GoRouter router = GoRouter(
@@ -26,6 +30,36 @@ final GoRouter router = GoRouter(
       name: NamedRoutes.notificationPage,
       builder: (BuildContext context, GoRouterState state) {
         return const NotificationPage();
+      },
+    ),
+
+    // Tabs
+    GoRoute(
+      path: NamedRoutes.goalsPage,
+      name: NamedRoutes.goalsPage,
+      builder: (BuildContext context, GoRouterState state) {
+        return const GoalsPage();
+      },
+    ),
+    GoRoute(
+      path: NamedRoutes.debtsPage,
+      name: NamedRoutes.debtsPage,
+      builder: (BuildContext context, GoRouterState state) {
+        return const DebtsPage();
+      },
+    ),
+    GoRoute(
+      path: NamedRoutes.incomePage,
+      name: NamedRoutes.incomePage,
+      builder: (BuildContext context, GoRouterState state) {
+        return const IncomePage();
+      },
+    ),
+    GoRoute(
+      path: NamedRoutes.expensePage,
+      name: NamedRoutes.expensePage,
+      builder: (BuildContext context, GoRouterState state) {
+        return const ExpensePage();
       },
     ),
   ],
