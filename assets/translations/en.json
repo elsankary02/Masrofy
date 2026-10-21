@@ -123,5 +123,7 @@
   "validation_income_input": "Enter a valid name and an amount greater than zero",
   "welcome_back": "Welcome back to Masrofy",
   "welcome_subtitle": "Manage your expenses, debts, and financial goals in one place",
-  "yesterday": "Yesterday"
+  "yesterday": "Yesterday",
+  "today_expenses": "Today's Expenses",
+  "current_month_income": "Current Month Income"
 }

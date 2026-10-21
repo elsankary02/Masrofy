@@ -127,6 +127,7 @@ class _TotalBalanceAndImage extends StatelessWidget {
               ),
             ),
             Row(
+              spacing: 4,
               crossAxisAlignment: CrossAxisAlignment.baseline,
               textBaseline: TextBaseline.alphabetic,
               children: [

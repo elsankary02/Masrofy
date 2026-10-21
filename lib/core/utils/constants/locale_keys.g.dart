@@ -128,4 +128,6 @@ abstract class LocaleKeys {
   static const welcome_back = 'welcome_back';
   static const welcome_subtitle = 'welcome_subtitle';
   static const yesterday = 'yesterday';
+  static const today_expenses = 'today_expenses';
+  static const current_month_income = 'current_month_income';
 }

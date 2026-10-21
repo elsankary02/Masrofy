@@ -123,5 +123,7 @@
   "validation_income_input": "أدخل اسمًا صحيحًا ومبلغًا أكبر من صفر",
   "welcome_back": "مرحبا بك مجددا في مصروفي",
   "welcome_subtitle": "أدر مصروفاتك وديونك وأهدافك المالية في مكان واحد",
-  "yesterday": "أمس"
+  "yesterday": "أمس",
+  "today_expenses": "المصروفات اليوم",
+  "current_month_income": "دخل الشهر الحالي"
 }
