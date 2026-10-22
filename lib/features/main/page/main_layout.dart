@@ -34,70 +34,101 @@ class _MainLayoutState extends State<MainLayout> {
       body: IndexedStack(index: _currentIndex, children: _tabs),
 
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Container(
-        padding: EdgeInsets.all(15),
-        decoration: BoxDecoration(
-          color: AppColors.primaryDark,
-          border: Border.all(color: AppColors.backgroundLight, width: 4),
-          shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.primary.withValues(alpha: 0.3),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: FaIcon(FontAwesomeIcons.plus, size: 25, color: AppColors.white),
-      ),
+      floatingActionButton: _FloatingActionButton(),
 
       bottomNavigationBar: BottomAppBar(
         color: isDark ? AppColors.surfaceDark : Colors.white,
         elevation: 0,
+        notchMargin: 8,
+        shape: CircularNotchedRectangle(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _item(
+            _Item(
+              currentIndex: _currentIndex,
               index: 0,
-              icon: FontAwesomeIcons.houseChimney,
+              iconSelected: FontAwesomeIcons.solidHouse,
+              iconUnSelected: FontAwesomeIcons.house,
               label: LocaleKeys.home.tr(),
+              onTap: (index) => setState(() => _currentIndex = index),
             ),
-            _item(
+            _Item(
+              currentIndex: _currentIndex,
               index: 1,
-              icon: FontAwesomeIcons.chartSimple,
+              iconSelected: FontAwesomeIcons.solidChartBar,
+              iconUnSelected: FontAwesomeIcons.chartBar,
               label: LocaleKeys.reports.tr(),
+              onTap: (index) => setState(() => _currentIndex = index),
             ),
             const SizedBox(width: 50),
-            _item(
+            _Item(
+              currentIndex: _currentIndex,
               index: 2,
-              icon: FontAwesomeIcons.circleDollarToSlot,
+              iconSelected: FontAwesomeIcons.solidCreditCard,
+              iconUnSelected: FontAwesomeIcons.creditCard,
               label: LocaleKeys.transactions.tr(),
+              onTap: (index) => setState(() => _currentIndex = index),
             ),
-            _item(
+            _Item(
+              currentIndex: _currentIndex,
               index: 3,
-              icon: FontAwesomeIcons.ellipsis,
+              iconSelected: FontAwesomeIcons.ellipsis,
+              iconUnSelected: FontAwesomeIcons.ellipsis,
               label: LocaleKeys.more.tr(),
+              onTap: (index) => setState(() => _currentIndex = index),
             ),
           ],
         ),
       ),
     );
   }
+}
 
-  Widget _item({
-    required FaIconData? icon,
-    required String label,
-    required int index,
-  }) {
-    final isSelected = _currentIndex == index;
+class _FloatingActionButton extends StatelessWidget {
+  const _FloatingActionButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: AppColors.primaryDark,
+        border: Border.all(color: AppColors.backgroundLight, width: 4),
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.primary.withValues(alpha: 0.3),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: FaIcon(FontAwesomeIcons.plus, size: 25, color: AppColors.white),
+    );
+  }
+}
+
+class _Item extends StatelessWidget {
+  final FaIconData? iconSelected, iconUnSelected;
+  final String label;
+  final int index;
+  final int currentIndex;
+  final ValueChanged<int> onTap;
+  const _Item({
+    required this.label,
+    required this.index,
+    required this.currentIndex,
+    required this.onTap,
+    this.iconSelected,
+    this.iconUnSelected,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isSelected = currentIndex == index;
     final color = isSelected ? AppColors.primaryDark : Colors.grey;
-
     return InkWell(
-      onTap: () {
-        setState(() {
-          _currentIndex = index;
-        });
-      },
+      onTap: () => onTap(index),
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       child: Padding(
@@ -105,7 +136,11 @@ class _MainLayoutState extends State<MainLayout> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            FaIcon(icon, size: 18, color: color),
+            FaIcon(
+              isSelected ? iconSelected : iconUnSelected,
+              size: 18,
+              color: color,
+            ),
             const SizedBox(height: 4),
             Text(
               label,

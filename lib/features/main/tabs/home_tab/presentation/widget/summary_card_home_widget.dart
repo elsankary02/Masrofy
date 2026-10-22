@@ -133,7 +133,8 @@ class _TotalBalanceAndImage extends StatelessWidget {
               children: [
                 Text(
                   isObscured == true ? "******" : "12,450",
-                  style: context.textTheme.displayMedium?.copyWith(
+                  style: context.textTheme.displaySmall?.copyWith(
+                    fontWeight: FontWeight.w700,
                     color: AppColors.white,
                   ),
                 ),
