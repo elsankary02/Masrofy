@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:masrofy/core/components/custom_over_view.dart';
 import 'package:masrofy/core/theme/app_colors.dart';
 import 'package:masrofy/core/utils/extensions/extensions.dart';
-import 'package:masrofy/features/home/data/model/over_view_model.dart';
+import 'package:masrofy/features/main/tabs/home_tab/data/model/over_view_model.dart';
 
 class OverViewHomeWidget extends StatelessWidget {
   const OverViewHomeWidget({super.key});

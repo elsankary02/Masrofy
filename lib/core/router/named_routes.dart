@@ -1,12 +1,18 @@
 class NamedRoutes {
   NamedRoutes._();
-  static const authPage = "/";
-  static const homePage = "/homePage";
-  static const notificationPage = "/notificationPage";
+  static const auth = "/";
+  static const notification = "/notification";
+  static const main = "/main";
 
   // Tabs
-  static const goalsPage = "/goalsPage";
-  static const debtsPage = "/debtsPage";
-  static const incomePage = "/incomePage";
-  static const expensePage = "/expensePage";
+  static const home = "/home";
+  static const reports = "/reports";
+  static const transactions = "/transactions";
+  static const more = "/more";
+
+  // Quik Tools
+  static const goals = "/goals";
+  static const debts = "/debts";
+  static const income = "/income";
+  static const expense = "/expense";
 }

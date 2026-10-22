@@ -25,24 +25,24 @@ List<QuickToolsModel> tools(BuildContext context) => [
     subTitle: LocaleKeys.goals.tr(),
     icon: FontAwesomeIcons.bullseye,
     color: AppColors.purple,
-    route: NamedRoutes.goalsPage,
+    route: NamedRoutes.goals,
   ),
   QuickToolsModel(
     subTitle: LocaleKeys.debts.tr(),
     icon: FontAwesomeIcons.creditCard,
     color: AppColors.warning,
-    route: NamedRoutes.debtsPage,
+    route: NamedRoutes.debts,
   ),
   QuickToolsModel(
     subTitle: LocaleKeys.income.tr(),
     icon: FontAwesomeIcons.arrowTrendUp,
     color: AppColors.income,
-    route: NamedRoutes.incomePage,
+    route: NamedRoutes.income,
   ),
   QuickToolsModel(
     subTitle: LocaleKeys.expense.tr(),
     icon: FontAwesomeIcons.bagShopping,
     color: AppColors.expense,
-    route: NamedRoutes.expensePage,
+    route: NamedRoutes.expense,
   ),
 ];
