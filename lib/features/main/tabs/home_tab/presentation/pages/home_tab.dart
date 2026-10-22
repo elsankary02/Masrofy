@@ -2,13 +2,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
 import 'package:masrofy/core/utils/extensions/extensions.dart';
-import 'package:masrofy/features/home/presentation/widget/app_bar_home_widget.dart';
-import 'package:masrofy/features/home/presentation/widget/over_view__home_widget.dart';
-import 'package:masrofy/features/home/presentation/widget/quik_tools_home_widget.dart';
-import 'package:masrofy/features/home/presentation/widget/summary_card_home_widget.dart';
+import 'package:masrofy/features/main/tabs/home_tab/presentation/widget/app_bar_home_widget.dart';
+import 'package:masrofy/features/main/tabs/home_tab/presentation/widget/over_view__home_widget.dart';
+import 'package:masrofy/features/main/tabs/home_tab/presentation/widget/quik_tools_home_widget.dart';
+import 'package:masrofy/features/main/tabs/home_tab/presentation/widget/summary_card_home_widget.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomeTab extends StatelessWidget {
+  const HomeTab({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +29,7 @@ class HomePage extends StatelessWidget {
               _CustomHeader(title: LocaleKeys.overview.tr()),
               SizedBox(height: context.h * .020),
               OverViewHomeWidget(),
+              SizedBox(height: context.h * .030),
             ],
           ),
         ),

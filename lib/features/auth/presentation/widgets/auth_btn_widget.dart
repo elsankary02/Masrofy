@@ -19,7 +19,7 @@ class AuthBtnWidget extends StatelessWidget {
       variant: ButtonVariant.outlined,
       style: context.textTheme.titleMedium,
       onPressed: () {
-        router.go(NamedRoutes.homePage);
+        router.go(NamedRoutes.main);
       },
     );
   }

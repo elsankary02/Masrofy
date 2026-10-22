@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:masrofy/core/components/custom_quick_tools.dart';
 import 'package:masrofy/core/router/go_router.dart';
-import 'package:masrofy/features/home/data/model/quick_tools_model.dart';
+import 'package:masrofy/features/main/tabs/home_tab/data/model/quick_tools_model.dart';
 
 class QuikToolsHomeWidget extends StatelessWidget {
   const QuikToolsHomeWidget({super.key});
