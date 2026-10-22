@@ -5,59 +5,93 @@ import 'package:masrofy/features/auth/presentation/pages/auth_page.dart';
 import 'package:masrofy/features/debts/debts_page.dart';
 import 'package:masrofy/features/expense/expense_page.dart';
 import 'package:masrofy/features/goals/goals_page.dart';
-import 'package:masrofy/features/home/presentation/page/home_page.dart';
 import 'package:masrofy/features/income/income_page.dart';
+import 'package:masrofy/features/main/page/main_layout.dart';
+import 'package:masrofy/features/main/tabs/home_tab/presentation/pages/home_tab.dart';
+import 'package:masrofy/features/main/tabs/more_tab/more_tab.dart';
+import 'package:masrofy/features/main/tabs/reports_tab/reports_tab.dart';
+import 'package:masrofy/features/main/tabs/transactions_tab/transactions_tab.dart';
 import 'package:masrofy/features/notification/presentation/page/notification_page.dart';
 
 final GoRouter router = GoRouter(
   routes: [
     GoRoute(
-      path: NamedRoutes.authPage,
-      name: NamedRoutes.authPage,
+      path: NamedRoutes.auth,
+      name: NamedRoutes.auth,
       builder: (BuildContext context, GoRouterState state) {
         return const AuthPage();
       },
     ),
     GoRoute(
-      path: NamedRoutes.homePage,
-      name: NamedRoutes.homePage,
+      path: NamedRoutes.notification,
+      name: NamedRoutes.notification,
       builder: (BuildContext context, GoRouterState state) {
-        return const HomePage();
+        return const NotificationPage();
       },
     ),
     GoRoute(
-      path: NamedRoutes.notificationPage,
-      name: NamedRoutes.notificationPage,
+      path: NamedRoutes.main,
+      name: NamedRoutes.main,
       builder: (BuildContext context, GoRouterState state) {
-        return const NotificationPage();
+        return const MainLayout();
       },
     ),
 
     // Tabs
     GoRoute(
-      path: NamedRoutes.goalsPage,
-      name: NamedRoutes.goalsPage,
+      path: NamedRoutes.home,
+      name: NamedRoutes.home,
+      builder: (BuildContext context, GoRouterState state) {
+        return const HomeTab();
+      },
+    ),
+    GoRoute(
+      path: NamedRoutes.reports,
+      name: NamedRoutes.reports,
+      builder: (BuildContext context, GoRouterState state) {
+        return const ReportsTab();
+      },
+    ),
+    GoRoute(
+      path: NamedRoutes.more,
+      name: NamedRoutes.more,
+      builder: (BuildContext context, GoRouterState state) {
+        return const MoreTab();
+      },
+    ),
+    GoRoute(
+      path: NamedRoutes.transactions,
+      name: NamedRoutes.transactions,
+      builder: (BuildContext context, GoRouterState state) {
+        return const TransactionsTab();
+      },
+    ),
+
+    // Quik Tools
+    GoRoute(
+      path: NamedRoutes.goals,
+      name: NamedRoutes.goals,
       builder: (BuildContext context, GoRouterState state) {
         return const GoalsPage();
       },
     ),
     GoRoute(
-      path: NamedRoutes.debtsPage,
-      name: NamedRoutes.debtsPage,
+      path: NamedRoutes.debts,
+      name: NamedRoutes.debts,
       builder: (BuildContext context, GoRouterState state) {
         return const DebtsPage();
       },
     ),
     GoRoute(
-      path: NamedRoutes.incomePage,
-      name: NamedRoutes.incomePage,
+      path: NamedRoutes.income,
+      name: NamedRoutes.income,
       builder: (BuildContext context, GoRouterState state) {
         return const IncomePage();
       },
     ),
     GoRoute(
-      path: NamedRoutes.expensePage,
-      name: NamedRoutes.expensePage,
+      path: NamedRoutes.expense,
+      name: NamedRoutes.expense,
       builder: (BuildContext context, GoRouterState state) {
         return const ExpensePage();
       },

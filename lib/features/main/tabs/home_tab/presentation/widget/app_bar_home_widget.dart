@@ -86,7 +86,7 @@ class _NotificationButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(100),
-      onTap: () => router.push(NamedRoutes.notificationPage),
+      onTap: () => router.push(NamedRoutes.notification),
       child: Stack(
         alignment: Alignment.topRight,
         children: [

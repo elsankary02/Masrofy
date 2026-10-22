@@ -5,7 +5,7 @@ import 'package:masrofy/core/theme/app_colors.dart';
 import 'package:masrofy/core/utils/constants/app_images.dart';
 import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
 import 'package:masrofy/core/utils/extensions/extensions.dart';
-import 'package:masrofy/features/home/presentation/cubit/balance_cubit.dart';
+import 'package:masrofy/features/main/tabs/home_tab/presentation/cubit/balance_cubit.dart';
 
 class SummaryCardHomeWidget extends StatelessWidget {
   const SummaryCardHomeWidget({super.key});
@@ -133,7 +133,8 @@ class _TotalBalanceAndImage extends StatelessWidget {
               children: [
                 Text(
                   isObscured == true ? "******" : "12,450",
-                  style: context.textTheme.displayMedium?.copyWith(
+                  style: context.textTheme.displaySmall?.copyWith(
+                    fontWeight: FontWeight.w700,
                     color: AppColors.white,
                   ),
                 ),
