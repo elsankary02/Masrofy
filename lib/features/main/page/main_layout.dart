@@ -41,8 +41,9 @@ class _MainLayoutState extends State<MainLayout> {
         elevation: 0,
         notchMargin: 8,
         shape: CircularNotchedRectangle(),
+
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _Item(
               currentIndex: _currentIndex,
