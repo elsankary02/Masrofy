@@ -127,5 +127,6 @@
   "today_expenses": "Today's Expenses",
   "current_month_income": "Current Month Income",
   "no_notifications": "No notifications",
-  "no_notifications_subtitle": "You have no new notifications at the moment"
+  "no_notifications_subtitle": "You have no new notifications at the moment",
+  "income_sources": "Income Sources"
 }

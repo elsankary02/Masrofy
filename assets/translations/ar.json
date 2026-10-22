@@ -127,5 +127,7 @@
   "today_expenses": "المصروفات اليوم",
   "current_month_income": "دخل الشهر الحالي",
   "no_notifications": "لا توجد إشعارات",
-  "no_notifications_subtitle": "ليس لديك أي إشعارات جديدة في الوقت الحالي"
+  "no_notifications_subtitle": "ليس لديك أي إشعارات جديدة في الوقت الحالي",
+  "income_sources": "مصادر الدخل"
+
 }
