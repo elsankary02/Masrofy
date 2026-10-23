@@ -38,7 +38,7 @@ List<OverViewModel> getOverviewData(
         ? AppColors.textPrimaryDark
         : AppColors.grey800,
     price: todayExpenses,
-    currency: LocaleKeys.currency_pounds.tr(),
+    currency: LocaleKeys.currency_egp.tr(),
   ),
   OverViewModel(
     title: LocaleKeys.current_month_income.tr(),
@@ -46,7 +46,7 @@ List<OverViewModel> getOverviewData(
     color: AppColors.success,
     valueColor: AppColors.success,
     price: currentMonthIncome,
-    currency: LocaleKeys.currency_pounds.tr(),
+    currency: LocaleKeys.currency_egp.tr(),
   ),
   OverViewModel(
     title: LocaleKeys.total_debts.tr(),
@@ -54,7 +54,7 @@ List<OverViewModel> getOverviewData(
     color: AppColors.warning,
     valueColor: AppColors.error,
     price: totalDebts,
-    currency: LocaleKeys.currency_pounds.tr(),
+    currency: LocaleKeys.currency_egp.tr(),
   ),
   OverViewModel(
     title: LocaleKeys.completed_goals.tr(),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:masrofy/core/theme/app_colors.dart';
-import 'package:masrofy/core/utils/extensions/extensions.dart';
+import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
 
 class AppLogoWidget extends StatelessWidget {
   const new({super.key});
@@ -8,7 +8,7 @@ class AppLogoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(context.h * 0.040),
+      padding: EdgeInsets.all(context.h40),
       decoration: BoxDecoration(
         gradient: AppColors.primaryGradient,
         shape: .circle,

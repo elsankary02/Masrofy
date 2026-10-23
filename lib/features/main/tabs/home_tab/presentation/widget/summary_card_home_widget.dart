@@ -5,6 +5,7 @@ import 'package:masrofy/core/theme/app_colors.dart';
 import 'package:masrofy/core/utils/constants/app_images.dart';
 import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
 import 'package:masrofy/core/utils/extensions/extensions.dart';
+import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
 import 'package:masrofy/features/main/tabs/home_tab/presentation/cubit/balance_cubit.dart';
 
 class SummaryCardHomeWidget extends StatelessWidget {
@@ -15,7 +16,7 @@ class SummaryCardHomeWidget extends StatelessWidget {
     return BlocProvider(
       create: (context) => BalanceCubit(),
       child: Container(
-        padding: EdgeInsets.all(context.h * .020),
+        padding: EdgeInsets.all(context.h20),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(28),
           gradient: AppColors.walletGradient,
@@ -57,13 +58,13 @@ class SummaryCardHomeWidget extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: context.h * .005),
+            SizedBox(height: context.h5),
             BlocBuilder<BalanceCubit, bool>(
               builder: (context, isObscured) {
                 return _TotalBalanceAndImage(isObscured: isObscured);
               },
             ),
-            SizedBox(height: context.h * .005),
+            SizedBox(height: context.h5),
 
             // Horizontal Divider
             Container(
@@ -73,7 +74,7 @@ class SummaryCardHomeWidget extends StatelessWidget {
                 color: AppColors.white.withValues(alpha: 0.3),
               ),
             ),
-            SizedBox(height: context.h * 0.016),
+            SizedBox(height: context.h15),
 
             // Footer Row: Total Income and Total Expenses
             Row(
@@ -86,7 +87,7 @@ class SummaryCardHomeWidget extends StatelessWidget {
                 ),
                 Container(
                   width: 0.5,
-                  height: 35,
+                  height: context.h35,
                   color: Colors.white.withValues(alpha: 0.3),
                 ),
                 _CardSubTitle(
@@ -139,7 +140,7 @@ class _TotalBalanceAndImage extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  LocaleKeys.currency_pounds.tr(),
+                  LocaleKeys.currency_egp.tr(),
                   style: context.textTheme.titleMedium?.copyWith(
                     color: AppColors.white,
                   ),
@@ -190,7 +191,7 @@ class _CardSubTitle extends StatelessWidget {
               style: context.textTheme.titleMedium?.copyWith(color: color),
             ),
             Text(
-              LocaleKeys.currency_pounds.tr(),
+              LocaleKeys.currency_egp.tr(),
               style: context.textTheme.bodySmall?.copyWith(
                 color: AppColors.white.withValues(alpha: .70),
               ),

@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:masrofy/core/theme/app_colors.dart';
 import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
 import 'package:masrofy/core/utils/extensions/extensions.dart';
+import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
 
 class WelcomeHeaderWidget extends StatelessWidget {
   const WelcomeHeaderWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final h20 = context.h * 0.020;
     final isDark = context.isDarkMode;
     return Column(
       children: [
-        SizedBox(height: h20),
+        SizedBox(height: context.h20),
         Text(
           LocaleKeys.title.tr(),
           textAlign: .center,
@@ -21,7 +21,7 @@ class WelcomeHeaderWidget extends StatelessWidget {
             color: isDark ? AppColors.white : AppColors.primary,
           ),
         ),
-        SizedBox(height: h20 + 12),
+        SizedBox(height: context.h20 + 12),
         Text(
           LocaleKeys.welcome_back.tr(),
           textAlign: .center,
@@ -29,7 +29,7 @@ class WelcomeHeaderWidget extends StatelessWidget {
             color: isDark ? AppColors.white : AppColors.primary,
           ),
         ),
-        SizedBox(height: h20),
+        SizedBox(height: context.h20),
         Text(
           LocaleKeys.welcome_subtitle.tr(),
           textAlign: .center,
@@ -37,7 +37,7 @@ class WelcomeHeaderWidget extends StatelessWidget {
             color: isDark ? AppColors.grey100 : AppColors.primary,
           ),
         ),
-        SizedBox(height: h20),
+        SizedBox(height: context.h20),
       ],
     );
   }

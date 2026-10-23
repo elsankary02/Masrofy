@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:masrofy/core/theme/app_colors.dart';
 import 'package:masrofy/core/utils/extensions/extensions.dart';
+import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
 
 class CustomQuickTools extends StatelessWidget {
   final String subTitle;
@@ -42,7 +43,7 @@ class CustomQuickTools extends StatelessWidget {
               ],
             ),
             child: Container(
-              padding: EdgeInsets.all(8),
+              padding: EdgeInsets.all(context.h10),
               decoration: BoxDecoration(
                 color: color!.withValues(alpha: 0.1),
                 shape: .circle,
@@ -51,7 +52,7 @@ class CustomQuickTools extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: context.h * .008),
+        SizedBox(height: context.h10),
         Text(
           subTitle,
           style: context.textTheme.bodySmall?.copyWith(
