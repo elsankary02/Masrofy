@@ -6,6 +6,7 @@ import 'package:masrofy/core/theme/app_colors.dart';
 import 'package:masrofy/core/utils/constants/app_images.dart';
 import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
 import 'package:masrofy/core/utils/extensions/extensions.dart';
+import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
 
 class AppBarHomeWidget extends StatelessWidget {
   const AppBarHomeWidget({super.key});
@@ -91,8 +92,8 @@ class _NotificationButton extends StatelessWidget {
         alignment: Alignment.topRight,
         children: [
           Container(
-            height: 8,
-            width: 8,
+            height: context.h10,
+            width: context.h10,
             decoration: BoxDecoration(
               color: AppColors.error,
               shape: .circle,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:masrofy/core/components/custom_quick_tools.dart';
 import 'package:masrofy/core/router/go_router.dart';
+import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
 import 'package:masrofy/features/main/tabs/home_tab/data/model/quick_tools_model.dart';
 
 class QuikToolsHomeWidget extends StatelessWidget {
@@ -9,7 +10,7 @@ class QuikToolsHomeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      padding: EdgeInsets.symmetric(horizontal: context.h10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

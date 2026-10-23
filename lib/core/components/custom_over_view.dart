@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:masrofy/core/theme/app_colors.dart';
 import 'package:masrofy/core/utils/extensions/extensions.dart';
+import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
 
 class CustomOverView extends StatelessWidget {
   final Color? color, valueColor;
@@ -49,7 +50,7 @@ class _Leading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(8),
+      padding: EdgeInsets.all(context.h10),
       decoration: BoxDecoration(
         color: color!.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),

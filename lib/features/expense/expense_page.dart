@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:masrofy/core/components/custom_appbar.dart';
 import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
-import 'package:masrofy/core/utils/extensions/extensions.dart';
+import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
 
 class ExpensePage extends StatelessWidget {
   const ExpensePage({super.key});
@@ -12,7 +12,7 @@ class ExpensePage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: context.h * .020),
+          padding: EdgeInsets.symmetric(horizontal: context.h20),
           child: Column(
             children: [CustomAppBar(title: LocaleKeys.expense.tr())],
           ),
