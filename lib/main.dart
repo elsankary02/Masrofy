@@ -1,4 +1,3 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,16 +9,11 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(
-    DevicePreview(
-      enabled: false,
-      builder: (context) {
-        return EasyLocalization(
-          supportedLocales: [Locale('en'), Locale('ar')],
-          path: AppStrings.pathTranslations,
-          fallbackLocale: Locale('ar'),
-          child: Masrofy(),
-        );
-      },
+    EasyLocalization(
+      supportedLocales: [Locale('en'), Locale('ar')],
+      path: AppStrings.pathTranslations,
+      fallbackLocale: Locale('ar'),
+      child: Masrofy(),
     ),
   );
 }

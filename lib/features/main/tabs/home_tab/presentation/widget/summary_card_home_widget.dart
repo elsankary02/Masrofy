@@ -139,7 +139,7 @@ class _TotalBalanceAndImage extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  LocaleKeys.currency_pounds.tr(),
+                  LocaleKeys.currency_egp.tr(),
                   style: context.textTheme.titleMedium?.copyWith(
                     color: AppColors.white,
                   ),
@@ -190,7 +190,7 @@ class _CardSubTitle extends StatelessWidget {
               style: context.textTheme.titleMedium?.copyWith(color: color),
             ),
             Text(
-              LocaleKeys.currency_pounds.tr(),
+              LocaleKeys.currency_egp.tr(),
               style: context.textTheme.bodySmall?.copyWith(
                 color: AppColors.white.withValues(alpha: .70),
               ),
