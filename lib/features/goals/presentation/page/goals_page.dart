@@ -9,8 +9,8 @@ import 'package:masrofy/features/goals/data/models/goals_card_model.dart';
 import 'package:masrofy/features/goals/presentation/cubit/goals_status_cubit.dart';
 import 'package:masrofy/features/goals/presentation/widget/goal_bottom_sheet_widget.dart';
 import 'package:masrofy/features/goals/presentation/widget/goal_card_widget.dart';
-import 'package:masrofy/features/goals/presentation/widget/goal_tab_item_widget.dart';
 import 'package:masrofy/features/goals/presentation/widget/goal_summary_card_widget.dart';
+import 'package:masrofy/features/goals/presentation/widget/goal_tab_item_widget.dart';
 
 class GoalsPage extends StatelessWidget {
   const GoalsPage({super.key});
@@ -24,9 +24,9 @@ class GoalsPage extends StatelessWidget {
           child: SingleChildScrollView(
             padding: EdgeInsets.symmetric(horizontal: context.h20),
             child: BlocBuilder<GoalsStatusCubit, GoalStatus>(
-              builder: (context, selectedStatus) {
+              builder: (context, state) {
                 final filteredGoals = goalModel.where((goal) {
-                  if (selectedStatus == GoalStatus.active) {
+                  if (state == GoalStatus.active) {
                     return goal.isAcitve;
                   } else {
                     return !goal.isAcitve;
@@ -53,14 +53,14 @@ class GoalsPage extends StatelessWidget {
                       children: [
                         GoalTabItemWidget(
                           title: LocaleKeys.status_active.tr(),
-                          selected: selectedStatus == GoalStatus.active,
+                          selected: state == GoalStatus.active,
                           onTap: () => context
                               .read<GoalsStatusCubit>()
                               .changeGoalStatus(GoalStatus.active),
                         ),
                         GoalTabItemWidget(
                           title: LocaleKeys.completed_goals.tr(),
-                          selected: selectedStatus == GoalStatus.completed,
+                          selected: state == GoalStatus.completed,
                           onTap: () => context
                               .read<GoalsStatusCubit>()
                               .changeGoalStatus(GoalStatus.completed),

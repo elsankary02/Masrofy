@@ -11,7 +11,7 @@ class AppLogoWidget extends StatelessWidget {
       padding: EdgeInsets.all(context.h40),
       decoration: BoxDecoration(
         gradient: AppColors.primaryGradient,
-        shape: .circle,
+        shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
             color: AppColors.primary,

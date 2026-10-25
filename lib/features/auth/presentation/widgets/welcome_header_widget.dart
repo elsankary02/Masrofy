@@ -21,10 +21,10 @@ class WelcomeHeaderWidget extends StatelessWidget {
             color: isDark ? AppColors.white : AppColors.primary,
           ),
         ),
-        SizedBox(height: context.h20 + 12),
+        SizedBox(height: context.h35),
         Text(
           LocaleKeys.welcome_back.tr(),
-          textAlign: .center,
+          textAlign: TextAlign.center,
           style: context.textTheme.titleSmall!.copyWith(
             color: isDark ? AppColors.white : AppColors.primary,
           ),
@@ -32,7 +32,7 @@ class WelcomeHeaderWidget extends StatelessWidget {
         SizedBox(height: context.h20),
         Text(
           LocaleKeys.welcome_subtitle.tr(),
-          textAlign: .center,
+          textAlign: TextAlign.center,
           style: context.textTheme.titleSmall!.copyWith(
             color: isDark ? AppColors.grey100 : AppColors.primary,
           ),
