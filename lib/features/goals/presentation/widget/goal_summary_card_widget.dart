@@ -45,21 +45,21 @@ class SummaryCardGoalsWidget extends StatelessWidget {
                 Text(
                   LocaleKeys.total_goals.tr(),
                   style: context.textTheme.titleSmall?.copyWith(
-                    color: Colors.white.withValues(alpha: 0.8),
+                    color: AppColors.white.withValues(alpha: 0.8),
                     fontWeight: FontWeight.w500,
                   ),
                 ),
                 Text(
                   achieved,
                   style: context.textTheme.headlineMedium?.copyWith(
-                    color: Colors.white,
+                    color: AppColors.white,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
                   '${LocaleKeys.completed_from.tr()} $total',
                   style: context.textTheme.bodySmall?.copyWith(
-                    color: Colors.white.withValues(alpha: 0.9),
+                    color: AppColors.white.withValues(alpha: 0.9),
                     fontWeight: FontWeight.w500,
                   ),
                 ),

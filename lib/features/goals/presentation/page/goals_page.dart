@@ -10,7 +10,7 @@ import 'package:masrofy/features/goals/presentation/cubit/goals_status_cubit.dar
 import 'package:masrofy/features/goals/presentation/widget/goal_bottom_sheet_widget.dart';
 import 'package:masrofy/features/goals/presentation/widget/goal_card_widget.dart';
 import 'package:masrofy/features/goals/presentation/widget/goal_tab_item_widget.dart';
-import 'package:masrofy/features/goals/presentation/widget/summary_card_goals_widget.dart';
+import 'package:masrofy/features/goals/presentation/widget/goal_summary_card_widget.dart';
 
 class GoalsPage extends StatelessWidget {
   const GoalsPage({super.key});

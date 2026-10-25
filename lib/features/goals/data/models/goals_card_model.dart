@@ -29,7 +29,7 @@ List<GoalsCardModel> goalModel = [
     id: '1',
     title: 'شراء سيارة',
     icon: Icons.directions_car_filled_rounded,
-    color: AppColors.saving, // استخدام لون الادخار الأزرق
+    color: AppColors.saving,
     current: 0,
     target: 250000,
   ),
@@ -37,7 +37,7 @@ List<GoalsCardModel> goalModel = [
     id: '2',
     title: 'سفر ألمانيا',
     icon: Icons.flight_takeoff_rounded,
-    color: AppColors.income, // استخدام لون الدخل / النجاح الأخضر
+    color: AppColors.income,
     current: 0,
     target: 23000,
   ),
@@ -45,7 +45,7 @@ List<GoalsCardModel> goalModel = [
     id: '3',
     title: 'صندوق طوارئ',
     icon: Icons.shield_rounded,
-    color: AppColors.cyan, // استخدام لون الـ cyan من إضافاتك
+    color: AppColors.cyan,
     current: 4000,
     target: 10000,
   ),
@@ -53,7 +53,7 @@ List<GoalsCardModel> goalModel = [
     id: '4',
     title: 'شراء منزل',
     icon: Icons.home_rounded,
-    color: AppColors.expense, // استخدام لون المصروفات/الخطأ الأحمر
+    color: AppColors.expense,
     current: 0,
     target: 500000,
   ),
@@ -61,7 +61,7 @@ List<GoalsCardModel> goalModel = [
     id: '5',
     title: 'شراء لابتوب جديد',
     icon: Icons.laptop_rounded,
-    color: AppColors.purple, // استخدام لون بنفسجي مخصص
+    color: AppColors.purple,
     current: 4000,
     target: 30000,
   ),
@@ -79,7 +79,7 @@ List<GoalsCardModel> goalModel = [
     title: 'ماوس RGB ردراجون',
     icon: Icons.mouse_rounded,
     color: AppColors.cyan,
-    current: 1400, // المبلغ الموفر
+    current: 1400,
     target: 1400,
   ),
   GoalsCardModel(
@@ -87,7 +87,7 @@ List<GoalsCardModel> goalModel = [
     title: 'كيبورد RGB ردراجون',
     icon: Icons.keyboard_rounded,
     color: AppColors.purple,
-    current: 2000, // المبلغ الموفر
+    current: 2000,
     target: 2000,
   ),
 ];
