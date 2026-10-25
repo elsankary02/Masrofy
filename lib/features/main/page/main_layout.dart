@@ -90,21 +90,27 @@ class _FloatingActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: AppColors.primaryDark,
-        border: Border.all(color: AppColors.backgroundLight, width: 4),
-        shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.primary.withValues(alpha: 0.3),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
+    return GestureDetector(
+      onTap: () => showModalBottomSheet(
+        context: context,
+        builder: (context) => Container(),
       ),
-      child: FaIcon(FontAwesomeIcons.plus, size: 25, color: AppColors.white),
+      child: Container(
+        padding: EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          color: AppColors.primaryDark,
+          border: Border.all(color: AppColors.backgroundLight, width: 4),
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.primary.withValues(alpha: 0.3),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: FaIcon(FontAwesomeIcons.plus, size: 25, color: AppColors.white),
+      ),
     );
   }
 }
@@ -128,10 +134,8 @@ class _Item extends StatelessWidget {
   Widget build(BuildContext context) {
     final isSelected = currentIndex == index;
     final color = isSelected ? AppColors.primaryDark : Colors.grey;
-    return InkWell(
+    return GestureDetector(
       onTap: () => onTap(index),
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Column(
