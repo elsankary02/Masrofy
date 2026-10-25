@@ -4,6 +4,7 @@ extension ScreenHelperExtension on BuildContext {
   // الارتفاع والعرض الكلي للشاشة
   double get h => MediaQuery.sizeOf(this).height;
   double get w => MediaQuery.sizeOf(this).width;
+  EdgeInsets get viewInsets => MediaQuery.of(this).viewInsets;
 
   // =================== نسب الارتفاع (Height Percentages) ===================
   double get h3 => h * 0.003;
@@ -27,6 +28,9 @@ extension ScreenHelperExtension on BuildContext {
   double get h90 => h * 0.090;
   double get h95 => h * 0.095;
   double get h100 => h * 0.100;
+  double get h110 => h * 0.110;
+  double get h120 => h * 0.120;
+  double get h130 => h * 0.130;
   double get h150 => h * 0.150;
   double get h200 => h * 0.200;
   double get h250 => h * 0.250;

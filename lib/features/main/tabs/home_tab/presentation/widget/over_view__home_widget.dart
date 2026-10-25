@@ -19,7 +19,7 @@ class OverViewHomeWidget extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: context.isDarkMode ? AppColors.cardDark : Colors.white,
+        color: context.isDarkMode ? AppColors.cardDark : AppColors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: context.isDarkMode ? AppColors.borderDark : AppColors.grey200,

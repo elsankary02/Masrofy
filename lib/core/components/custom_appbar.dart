@@ -15,10 +15,10 @@ class CustomAppBar extends StatelessWidget {
       children: [
         IconButton(
           onPressed: () => context.pop(),
-          icon: FaIcon(
-            FontAwesomeIcons.arrowRight,
+          icon: Icon(
+            Icons.arrow_back,
             color: context.theme.colorScheme.onSurface,
-            size: 24,
+            size: 30,
           ),
         ),
         Text(

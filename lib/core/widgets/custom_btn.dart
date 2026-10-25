@@ -34,14 +34,18 @@ class CustomBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Container(
-      margin: margin,
-      padding: padding,
-      child: SizedBox(
-        width: width ?? double.infinity,
-        height: height ?? 48,
-        child: _buildButton(theme),
-      ),
+    return Column(
+      children: [
+        Container(
+          margin: margin,
+          padding: padding,
+          child: SizedBox(
+            width: width ?? double.infinity,
+            height: height ?? 48,
+            child: _buildButton(theme),
+          ),
+        ),
+      ],
     );
   }
 
