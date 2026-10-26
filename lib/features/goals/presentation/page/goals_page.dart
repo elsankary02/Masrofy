@@ -10,7 +10,7 @@ import 'package:masrofy/features/goals/presentation/cubit/goals_status_cubit.dar
 import 'package:masrofy/features/goals/presentation/widget/goal_bottom_sheet_widget.dart';
 import 'package:masrofy/features/goals/presentation/widget/goal_card_widget.dart';
 import 'package:masrofy/features/goals/presentation/widget/goal_summary_card_widget.dart';
-import 'package:masrofy/features/goals/presentation/widget/goal_tab_item_widget.dart';
+import 'package:masrofy/features/goals/presentation/widget/goal_tab_bar_widget.dart';
 
 class GoalsPage extends StatelessWidget {
   const GoalsPage({super.key});
@@ -23,90 +23,74 @@ class GoalsPage extends StatelessWidget {
         body: SafeArea(
           child: SingleChildScrollView(
             padding: EdgeInsets.symmetric(horizontal: context.h20),
-            child: BlocBuilder<GoalsStatusCubit, GoalStatus>(
-              builder: (context, state) {
-                final filteredGoals = goalModel.where((goal) {
-                  if (state == GoalStatus.active) {
-                    return goal.isAcitve;
-                  } else {
-                    return !goal.isAcitve;
-                  }
-                }).toList();
-                return Column(
-                  children: [
-                    CustomAppBar(
-                      title: LocaleKeys.financial_goals.tr(),
-                      onPressed: () => showModalBottomSheet(
-                        isScrollControlled: true,
-                        context: context,
-                        builder: (context) => GoalBottomSheetWidget(
-                          isEditing: false,
-                          onSave: () {},
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: context.h20),
-                    SummaryCardGoalsWidget(total: '2', achieved: '8'),
-                    SizedBox(height: context.h20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        GoalTabItemWidget(
-                          title: LocaleKeys.status_active.tr(),
-                          selected: state == GoalStatus.active,
-                          onTap: () => context
-                              .read<GoalsStatusCubit>()
-                              .changeGoalStatus(GoalStatus.active),
-                        ),
-                        GoalTabItemWidget(
-                          title: LocaleKeys.completed_goals.tr(),
-                          selected: state == GoalStatus.completed,
-                          onTap: () => context
-                              .read<GoalsStatusCubit>()
-                              .changeGoalStatus(GoalStatus.completed),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: context.h40),
-                    filteredGoals.isEmpty
-                        ? Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(40.0),
-                              child: Text(
-                                LocaleKeys.no_goals.tr(),
-                                style: TextStyle(color: Colors.grey.shade400),
-                              ),
-                            ),
-                          )
-                        : ListView.separated(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: filteredGoals.length,
-                            separatorBuilder: (context, index) =>
-                                SizedBox(height: context.h20),
-                            itemBuilder: (context, index) {
-                              final goal = filteredGoals[index];
-                              return GoalCardWidget(
-                                onTap: () => showModalBottomSheet(
-                                  isScrollControlled: false,
-                                  context: context,
-                                  builder: (context) => GoalBottomSheetWidget(
-                                    isEditing: true,
-                                    onSave: () {},
-                                    onDelete: () => router.pop(),
-                                  ),
-                                ),
-                                goal: goal,
-                              );
-                            },
-                          ),
-                  ],
-                );
-              },
+            child: Column(
+              children: [
+                CustomAppBar(
+                  title: LocaleKeys.financial_goals.tr(),
+                  onPressed: () => showModalBottomSheet(
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (context) =>
+                        GoalBottomSheetWidget(isEditing: false, onSave: () {}),
+                  ),
+                ),
+                SizedBox(height: context.h20),
+                SummaryCardGoalsWidget(total: '2', achieved: '8'),
+                SizedBox(height: context.h20),
+                GoalTabBarWidget(),
+                SizedBox(height: context.h40),
+                BlocBuilder<GoalsStatusCubit, GoalStatus>(
+                  builder: (context, state) {
+                    return _GoalsListView(state: state);
+                  },
+                ),
+              ],
             ),
           ),
         ),
       ),
     );
+  }
+}
+
+class _GoalsListView extends StatelessWidget {
+  final Object? state;
+  const _GoalsListView({required this.state});
+  @override
+  Widget build(BuildContext context) {
+    final filteredGoals = goalModel.where((goal) {
+      return state == GoalStatus.active ? goal.isAcitve : !goal.isAcitve;
+    }).toList();
+    return filteredGoals.isEmpty
+        ? Center(
+            child: Padding(
+              padding: const EdgeInsets.all(40.0),
+              child: Text(
+                LocaleKeys.no_goals.tr(),
+                style: TextStyle(color: Colors.grey.shade400),
+              ),
+            ),
+          )
+        : ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: filteredGoals.length,
+            separatorBuilder: (context, index) => SizedBox(height: context.h20),
+            itemBuilder: (context, index) {
+              final goal = filteredGoals[index];
+              return GoalCardWidget(
+                onTap: () => showModalBottomSheet(
+                  isScrollControlled: false,
+                  context: context,
+                  builder: (context) => GoalBottomSheetWidget(
+                    isEditing: true,
+                    onSave: () {},
+                    onDelete: () => router.pop(),
+                  ),
+                ),
+                goal: goal,
+              );
+            },
+          );
   }
 }
