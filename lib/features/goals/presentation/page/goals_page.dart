@@ -7,10 +7,10 @@ import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
 import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
 import 'package:masrofy/features/goals/data/models/goals_card_model.dart';
 import 'package:masrofy/features/goals/presentation/cubit/goals_status_cubit.dart';
-import 'package:masrofy/features/goals/presentation/widget/goal_bottom_sheet_widget.dart';
-import 'package:masrofy/features/goals/presentation/widget/goal_card_widget.dart';
-import 'package:masrofy/features/goals/presentation/widget/goal_summary_card_widget.dart';
-import 'package:masrofy/features/goals/presentation/widget/goal_tab_bar_widget.dart';
+import 'package:masrofy/features/goals/presentation/widget/goals_bottom_sheet_widget.dart';
+import 'package:masrofy/features/goals/presentation/widget/goals_card_widget.dart';
+import 'package:masrofy/features/goals/presentation/widget/goals_summary_card_widget.dart';
+import 'package:masrofy/features/goals/presentation/widget/goals_tab_bar_widget.dart';
 
 class GoalsPage extends StatelessWidget {
   const GoalsPage({super.key});
@@ -31,19 +31,20 @@ class GoalsPage extends StatelessWidget {
                     isScrollControlled: true,
                     context: context,
                     builder: (context) =>
-                        GoalBottomSheetWidget(isEditing: false, onSave: () {}),
+                        GoalsBottomSheetWidget(isEditing: false, onSave: () {}),
                   ),
                 ),
                 SizedBox(height: context.h20),
-                SummaryCardGoalsWidget(total: '2', achieved: '8'),
+                GoalsSummaryCardWidget(),
                 SizedBox(height: context.h20),
-                GoalTabBarWidget(),
+                GoalsTabBarWidget(),
                 SizedBox(height: context.h40),
-                BlocBuilder<GoalsStatusCubit, GoalStatus>(
+                BlocBuilder<GoalsStatusCubit, GoalsStatus>(
                   builder: (context, state) {
                     return _GoalsListView(state: state);
                   },
                 ),
+                SizedBox(height: context.h40),
               ],
             ),
           ),
@@ -59,7 +60,11 @@ class _GoalsListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final filteredGoals = goalModel.where((goal) {
-      return state == GoalStatus.active ? goal.isAcitve : !goal.isAcitve;
+      if (state == GoalsStatus.active) {
+        return goal.isActive;
+      } else {
+        return goal.isCompleted;
+      }
     }).toList();
     return filteredGoals.isEmpty
         ? Center(
@@ -78,11 +83,11 @@ class _GoalsListView extends StatelessWidget {
             separatorBuilder: (context, index) => SizedBox(height: context.h20),
             itemBuilder: (context, index) {
               final goal = filteredGoals[index];
-              return GoalCardWidget(
+              return GoalsCardWidget(
                 onTap: () => showModalBottomSheet(
                   isScrollControlled: false,
                   context: context,
-                  builder: (context) => GoalBottomSheetWidget(
+                  builder: (context) => GoalsBottomSheetWidget(
                     isEditing: true,
                     onSave: () {},
                     onDelete: () => router.pop(),

@@ -6,10 +6,10 @@ import 'package:masrofy/core/utils/extensions/extensions.dart';
 import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
 import 'package:masrofy/features/goals/data/models/goals_card_model.dart';
 
-class GoalCardWidget extends StatelessWidget {
+class GoalsCardWidget extends StatelessWidget {
   final GoalsCardModel goal;
   final VoidCallback? onTap;
-  const GoalCardWidget({super.key, required this.goal, this.onTap});
+  const GoalsCardWidget({super.key, required this.goal, this.onTap});
 
   @override
   Widget build(BuildContext context) {

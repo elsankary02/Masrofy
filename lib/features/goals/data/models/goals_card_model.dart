@@ -18,10 +18,12 @@ class GoalsCardModel {
     required this.color,
   }) : current = current.toInt(),
        target = target.toInt();
-
+// 
   double get progress => target == 0 ? 0 : current / target;
   int get percentage => (progress * 100).round();
-  bool get isAcitve => current < target;
+// 
+  bool get isActive => current < target;
+  bool get isCompleted => current >= target;
 }
 
 List<GoalsCardModel> goalModel = [

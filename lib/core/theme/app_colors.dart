@@ -108,4 +108,14 @@ class AppColors {
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );
+  static const LinearGradient debtsGradient = LinearGradient(
+    colors: [Color(0xFFF87171), Color(0xFFEF4444)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+  static const LinearGradient goalsGradient = LinearGradient(
+    colors: [AppColors.purple50, AppColors.purple100],
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+  );
 }

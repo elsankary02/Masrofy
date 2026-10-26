@@ -4,16 +4,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masrofy/core/theme/app_colors.dart';
 import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
 import 'package:masrofy/core/utils/extensions/extensions.dart';
-import 'package:masrofy/features/goals/presentation/cubit/goals_status_cubit.dart';
+import 'package:masrofy/features/debts/presentation/cubit/debts_cubit.dart';
 
-class GoalTabBarWidget extends StatefulWidget {
-  const GoalTabBarWidget({super.key});
+class DebtsTabBarWidget extends StatefulWidget {
+  const DebtsTabBarWidget({super.key});
 
   @override
-  State<GoalTabBarWidget> createState() => _GoalTabBarWidgetState();
+  State<DebtsTabBarWidget> createState() => _DebtsTabBarWidgetState();
 }
 
-class _GoalTabBarWidgetState extends State<GoalTabBarWidget>
+class _DebtsTabBarWidgetState extends State<DebtsTabBarWidget>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
@@ -32,7 +32,7 @@ class _GoalTabBarWidgetState extends State<GoalTabBarWidget>
   @override
   Widget build(BuildContext context) {
     final isDark = context.isDarkMode;
-    final activeColor = AppColors.purple;
+    final activeColor = AppColors.expense;
     final inActiveColor = isDark
         ? AppColors.textSecondaryDark
         : AppColors.textSecondaryLight;
@@ -52,12 +52,14 @@ class _GoalTabBarWidgetState extends State<GoalTabBarWidget>
       indicatorSize: TabBarIndicatorSize.tab,
 
       onTap: (index) {
-        final status = index == 0 ? GoalStatus.active : GoalStatus.completed;
-        context.read<GoalsStatusCubit>().changeGoalStatus(status);
+        final status = [DebtsStatus.isActive, DebtsStatus.paid];
+
+        context.read<DebtsCubit>().debtsStatusFunc(status[index]);
       },
       tabs: [
         Tab(text: LocaleKeys.status_active.tr()),
-        Tab(text: LocaleKeys.completed_goals.tr()),
+
+        Tab(text: LocaleKeys.status_paid.tr()),
       ],
     );
   }

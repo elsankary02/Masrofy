@@ -5,27 +5,23 @@ import 'package:masrofy/core/utils/constants/app_images.dart';
 import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
 import 'package:masrofy/core/utils/extensions/extensions.dart';
 import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
+import 'package:masrofy/features/goals/data/models/goals_card_model.dart';
 
-class SummaryCardGoalsWidget extends StatelessWidget {
-  final String achieved;
-  final String total;
-  const SummaryCardGoalsWidget({
-    super.key,
-    required this.achieved,
-    required this.total,
-  });
+class GoalsSummaryCardWidget extends StatelessWidget {
+  const GoalsSummaryCardWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final int totalGoalsCount = goalModel.length;
+    final int achievedGoalsCount = goalModel
+        .where((goal) => goal.isCompleted)
+        .length;
+
     return Container(
       padding: EdgeInsets.all(context.h20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        gradient: const LinearGradient(
-          colors: [AppColors.purple50, AppColors.purple100],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-        ),
+        gradient: AppColors.goalsGradient,
         boxShadow: [
           BoxShadow(
             color: AppColors.purple.withValues(alpha: 0.15),
@@ -50,14 +46,14 @@ class SummaryCardGoalsWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  achieved,
+                  totalGoalsCount.toString(),
                   style: context.textTheme.headlineMedium?.copyWith(
                     color: AppColors.white,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  '${LocaleKeys.completed_from.tr()} $total',
+                  '${LocaleKeys.completed_from.tr()} $achievedGoalsCount',
                   style: context.textTheme.bodySmall?.copyWith(
                     color: AppColors.white.withValues(alpha: 0.9),
                     fontWeight: FontWeight.w500,

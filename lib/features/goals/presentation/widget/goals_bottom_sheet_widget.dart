@@ -7,14 +7,14 @@ import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
 import 'package:masrofy/core/widgets/custom_btn.dart';
 import 'package:masrofy/core/widgets/custom_text_form_field.dart';
 
-class GoalBottomSheetWidget extends StatelessWidget {
+class GoalsBottomSheetWidget extends StatelessWidget {
   final TextEditingController? titleController;
   final TextEditingController? currentController;
   final TextEditingController? targetController;
   final bool isEditing;
   final VoidCallback? onDelete;
   final VoidCallback onSave;
-  const GoalBottomSheetWidget({
+  const GoalsBottomSheetWidget({
     super.key,
     required this.isEditing,
     this.titleController,
