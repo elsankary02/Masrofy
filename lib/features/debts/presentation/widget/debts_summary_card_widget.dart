@@ -80,7 +80,7 @@ class _TotalDebtsWidget extends StatelessWidget {
           ),
         ),
         Row(
-          spacing: 4,
+          spacing: 2,
           children: [
             Text(
               "$price",

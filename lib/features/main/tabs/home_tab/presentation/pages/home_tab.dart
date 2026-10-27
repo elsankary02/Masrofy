@@ -30,7 +30,7 @@ class HomeTab extends StatelessWidget {
               _CustomHeader(title: LocaleKeys.overview.tr()),
               SizedBox(height: context.h20),
               OverViewHomeWidget(),
-              SizedBox(height: context.h30),
+              SizedBox(height: context.h60),
             ],
           ),
         ),

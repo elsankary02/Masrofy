@@ -129,5 +129,6 @@
   "no_notifications": "No notifications",
   "no_notifications_subtitle": "You have no new notifications at the moment",
   "income_sources": "Income Sources",
-  "all_debts": "All Debts"
+  "all_debts": "All Debts",
+  "creditor": "Creditor"
 }

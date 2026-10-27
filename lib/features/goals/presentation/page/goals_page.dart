@@ -31,7 +31,7 @@ class GoalsPage extends StatelessWidget {
                     isScrollControlled: true,
                     context: context,
                     builder: (context) =>
-                        GoalsBottomSheetWidget(isEditing: false, onSave: () {}),
+                        GoalsBottomSheetWidget(isEditing: false),
                   ),
                 ),
                 SizedBox(height: context.h20),
@@ -44,7 +44,7 @@ class GoalsPage extends StatelessWidget {
                     return _GoalsListView(state: state);
                   },
                 ),
-                SizedBox(height: context.h40),
+                SizedBox(height: context.h60),
               ],
             ),
           ),
@@ -89,7 +89,6 @@ class _GoalsListView extends StatelessWidget {
                   context: context,
                   builder: (context) => GoalsBottomSheetWidget(
                     isEditing: true,
-                    onSave: () {},
                     onDelete: () => router.pop(),
                   ),
                 ),

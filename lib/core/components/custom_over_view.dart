@@ -26,7 +26,7 @@ class CustomOverView extends StatelessWidget {
       title: _Title(title: title),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
-        spacing: 4,
+        spacing: 2,
         crossAxisAlignment: CrossAxisAlignment.baseline,
         textBaseline: TextBaseline.alphabetic,
         children: [

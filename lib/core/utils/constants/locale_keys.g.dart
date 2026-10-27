@@ -134,4 +134,5 @@ abstract class LocaleKeys {
   static const no_notifications_subtitle = 'no_notifications_subtitle';
   static const income_sources = 'income_sources';
   static const all_debts = 'all_debts';
+  static const creditor = 'creditor';
 }

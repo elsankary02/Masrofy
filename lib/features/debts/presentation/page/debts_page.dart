@@ -2,11 +2,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masrofy/core/components/custom_appbar.dart';
+import 'package:masrofy/core/router/go_router.dart';
 import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
 import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
 import 'package:masrofy/features/debts/data/models/debts_model.dart';
 import 'package:masrofy/features/debts/presentation/cubit/debts_cubit.dart';
 import 'package:masrofy/features/debts/presentation/widget/debets_card_widget.dart';
+import 'package:masrofy/features/debts/presentation/widget/debts_bottom_sheet_widget.dart';
 import 'package:masrofy/features/debts/presentation/widget/debts_summary_card_widget.dart';
 import 'package:masrofy/features/debts/presentation/widget/debts_tab_bar_widget.dart';
 
@@ -23,7 +25,14 @@ class DebtsPage extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: context.h20),
             child: Column(
               children: [
-                CustomAppBar(title: LocaleKeys.debts.tr()),
+                CustomAppBar(
+                  title: LocaleKeys.debts.tr(),
+                  onPressed: () => showModalBottomSheet(
+                    context: context,
+                    builder: (context) =>
+                        DebtsBottomSheetWidget(isEditing: false),
+                  ),
+                ),
                 SizedBox(height: context.h20),
                 DebtsSummaryCardWidget(),
                 SizedBox(height: context.h25),
@@ -34,7 +43,7 @@ class DebtsPage extends StatelessWidget {
                     return _DebtsListView(state: state);
                   },
                 ),
-                SizedBox(height: context.h40),
+                SizedBox(height: context.h60),
               ],
             ),
           ),
@@ -74,7 +83,16 @@ class _DebtsListView extends StatelessWidget {
             separatorBuilder: (context, index) => SizedBox(height: context.h20),
             itemBuilder: (context, index) {
               final debts = filteredDebts[index];
-              return DebetsCardWidget(debts: debts);
+              return DebetsCardWidget(
+                debts: debts,
+                onTap: () => showModalBottomSheet(
+                  context: context,
+                  builder: (context) => DebtsBottomSheetWidget(
+                    isEditing: true,
+                    onDelete: () => router.pop(),
+                  ),
+                ),
+              );
             },
           );
   }

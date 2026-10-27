@@ -38,7 +38,7 @@ class GoalsCardWidget extends StatelessWidget {
           title: Text(goal.title, style: context.textTheme.titleMedium),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 4,
+            spacing: 2,
             children: [
               Text(
                 '${goal.current} ${LocaleKeys.currency_egp.tr()}',

@@ -35,7 +35,7 @@ class GoalsSummaryCardWidget extends StatelessWidget {
         children: [
           Expanded(
             child: Column(
-              spacing: 4,
+              spacing: 2,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(

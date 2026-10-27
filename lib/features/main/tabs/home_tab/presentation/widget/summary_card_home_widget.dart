@@ -128,7 +128,7 @@ class _TotalBalanceAndImage extends StatelessWidget {
               ),
             ),
             Row(
-              spacing: 4,
+              spacing: 2,
               crossAxisAlignment: CrossAxisAlignment.baseline,
               textBaseline: TextBaseline.alphabetic,
               children: [
@@ -182,7 +182,7 @@ class _CardSubTitle extends StatelessWidget {
           ),
         ),
         Row(
-          spacing: 4,
+          spacing: 2,
           crossAxisAlignment: CrossAxisAlignment.baseline,
           textBaseline: TextBaseline.alphabetic,
           children: [

@@ -8,12 +8,12 @@ import 'package:masrofy/core/widgets/custom_btn.dart';
 import 'package:masrofy/core/widgets/custom_text_form_field.dart';
 
 class GoalsBottomSheetWidget extends StatelessWidget {
+  final bool isEditing;
   final TextEditingController? titleController;
   final TextEditingController? currentController;
   final TextEditingController? targetController;
-  final bool isEditing;
   final VoidCallback? onDelete;
-  final VoidCallback onSave;
+  final VoidCallback? onSave;
   const GoalsBottomSheetWidget({
     super.key,
     required this.isEditing,
@@ -21,7 +21,7 @@ class GoalsBottomSheetWidget extends StatelessWidget {
     this.currentController,
     this.targetController,
     this.onDelete,
-    required this.onSave,
+    this.onSave,
   });
 
   @override
@@ -29,7 +29,7 @@ class GoalsBottomSheetWidget extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.only(
-        bottom: context.viewInsets.bottom + context.h35,
+        bottom: context.viewInsets.bottom,
         left: context.h20,
         right: context.h20,
       ),
@@ -77,6 +77,7 @@ class GoalsBottomSheetWidget extends StatelessWidget {
                   : LocaleKeys.save_goal.tr(),
               onPressed: onSave,
             ),
+            SizedBox(height: context.h10),
           ],
         ),
       ),
