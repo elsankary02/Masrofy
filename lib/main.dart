@@ -12,7 +12,7 @@ void main() async {
     EasyLocalization(
       supportedLocales: [Locale('en'), Locale('ar')],
       path: AppStrings.pathTranslations,
-      fallbackLocale: Locale('ar'),
+      fallbackLocale: Locale('en'),
       child: Masrofy(),
     ),
   );
