@@ -135,4 +135,8 @@ abstract class LocaleKeys {
   static const income_sources = 'income_sources';
   static const all_debts = 'all_debts';
   static const creditor = 'creditor';
+  static const user_name = 'user_name';
+  static const user_email = 'user_email';
+  static const default_user_name = 'default_user_name';
+  static const default_user_email = 'default_user_email';
 }

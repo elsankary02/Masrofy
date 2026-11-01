@@ -130,5 +130,9 @@
   "no_notifications_subtitle": "You have no new notifications at the moment",
   "income_sources": "Income Sources",
   "all_debts": "All Debts",
-  "creditor": "Creditor"
+  "creditor": "Creditor",
+  "user_name": "User Name",
+  "user_email": "User Email",
+  "default_user_name": "Mohamed Ibrahim",
+  "default_user_email": "elsankary02@gmail.com"
 }

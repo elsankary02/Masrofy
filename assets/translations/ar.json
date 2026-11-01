@@ -130,5 +130,9 @@
   "no_notifications_subtitle": "ليس لديك أي إشعارات جديدة في الوقت الحالي",
   "income_sources": "مصادر الدخل",
   "all_debts": "كل الديون",
-  "creditor": "الدائن"
+  "creditor": "الدائن",
+  "user_name": "اسم المستخدم",
+  "user_email": "البريد الإلكتروني",
+  "default_user_name": "محمد إبراهيم",
+  "default_user_email": "elsankary02@gmail.com"
 }
