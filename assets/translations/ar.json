@@ -134,5 +134,9 @@
   "user_name": "اسم المستخدم",
   "user_email": "البريد الإلكتروني",
   "default_user_name": "محمد إبراهيم",
-  "default_user_email": "elsankary02@gmail.com"
+  "default_user_email": "elsankary02@gmail.com",
+  "this_week": "هذا الأسبوع",
+  "this_month": "هذا الشهر",
+  "last_month": "الشهر الماضي",
+  "this_year": "هذه السنة"
 }

@@ -134,5 +134,9 @@
   "user_name": "User Name",
   "user_email": "User Email",
   "default_user_name": "Mohamed Ibrahim",
-  "default_user_email": "elsankary02@gmail.com"
+  "default_user_email": "elsankary02@gmail.com",
+  "this_week": "This Week",
+  "this_month": "This Month",
+  "last_month": "Last Month",
+  "this_year": "This Year"
 }

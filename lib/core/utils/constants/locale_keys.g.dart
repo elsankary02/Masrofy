@@ -139,4 +139,8 @@ abstract class LocaleKeys {
   static const user_email = 'user_email';
   static const default_user_name = 'default_user_name';
   static const default_user_email = 'default_user_email';
+  static const this_week = 'this_week';
+  static const this_month = 'this_month';
+  static const last_month = 'last_month';
+  static const this_year = 'this_year';
 }
