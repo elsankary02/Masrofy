@@ -28,27 +28,40 @@ class _SettingBottomSheetState extends State<SettingBottomSheet> {
         spacing: 15,
         mainAxisSize: .min,
         children: [
+          Row(
+            children: [
+              Text(
+                widget.isTheme == true
+                    ? LocaleKeys.change_theme.tr()
+                    : LocaleKeys.change_language.tr(),
+                style: context.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+
           if (widget.isTheme == true) ...[
-            LisTileBottomSheet(
+            _LisTileBottomSheet(
               isSelected: mode == ThemeMode.system,
               title: LocaleKeys.system_theme.tr(),
               onTap: () =>
                   context.read<ThemeCubit>().changeTheme(ThemeMode.system),
             ),
-            LisTileBottomSheet(
+            _LisTileBottomSheet(
               isSelected: mode == ThemeMode.dark,
               title: LocaleKeys.dark_theme.tr(),
               onTap: () =>
                   context.read<ThemeCubit>().changeTheme(ThemeMode.dark),
             ),
-            LisTileBottomSheet(
+            _LisTileBottomSheet(
               isSelected: mode == ThemeMode.light,
               title: LocaleKeys.light_theme.tr(),
               onTap: () =>
                   context.read<ThemeCubit>().changeTheme(ThemeMode.light),
             ),
           ] else ...[
-            LisTileBottomSheet(
+            _LisTileBottomSheet(
               isSelected: locale.languageCode == 'en',
               title: LocaleKeys.english.tr(),
               onTap: () => context.read<LocaleCubit>().changeLocale(
@@ -56,7 +69,7 @@ class _SettingBottomSheetState extends State<SettingBottomSheet> {
                 Locale('en'),
               ),
             ),
-            LisTileBottomSheet(
+            _LisTileBottomSheet(
               isSelected: locale.languageCode == 'ar',
               title: LocaleKeys.arabic.tr(),
               onTap: () => context.read<LocaleCubit>().changeLocale(
@@ -71,12 +84,11 @@ class _SettingBottomSheetState extends State<SettingBottomSheet> {
   }
 }
 
-class LisTileBottomSheet extends StatelessWidget {
+class _LisTileBottomSheet extends StatelessWidget {
   final bool isSelected;
   final String title;
   final VoidCallback? onTap;
-  const LisTileBottomSheet({
-    super.key,
+  const _LisTileBottomSheet({
     required this.isSelected,
     this.onTap,
     required this.title,
