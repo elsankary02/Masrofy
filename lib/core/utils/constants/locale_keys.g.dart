@@ -143,4 +143,8 @@ abstract class LocaleKeys {
   static const this_month = 'this_month';
   static const last_month = 'last_month';
   static const this_year = 'this_year';
+  static const light_theme = 'light_theme';
+  static const dark_theme = 'dark_theme';
+  static const system_theme = 'system_theme';
+  static const english = 'english';
 }

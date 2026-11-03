@@ -138,5 +138,9 @@
   "this_week": "This Week",
   "this_month": "This Month",
   "last_month": "Last Month",
-  "this_year": "This Year"
+  "this_year": "This Year",
+  "light_theme": "Light",
+  "dark_theme": "Dark",
+  "system_theme": "System",
+  "english": "English"
 }

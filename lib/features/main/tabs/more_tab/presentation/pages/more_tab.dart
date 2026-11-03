@@ -4,9 +4,12 @@ import 'package:masrofy/core/theme/app_colors.dart';
 import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
 import 'package:masrofy/core/utils/extensions/extensions.dart';
 import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
+import 'package:masrofy/features/main/tabs/more_tab/presentation/cubits/locale_cubit.dart';
+import 'package:masrofy/features/main/tabs/more_tab/presentation/cubits/theme_cubit.dart';
 import 'package:masrofy/features/main/tabs/more_tab/presentation/widgets/custom_card_section.dart';
 import 'package:masrofy/features/main/tabs/more_tab/presentation/widgets/custom_list_tile.dart';
 import 'package:masrofy/features/main/tabs/more_tab/presentation/widgets/more_summary_card.dart';
+import 'package:masrofy/features/main/tabs/more_tab/presentation/widgets/setting_bottom_sheet.dart';
 
 class MoreTab extends StatelessWidget {
   const MoreTab({super.key});
@@ -34,10 +37,10 @@ class MoreTab extends StatelessWidget {
                 children: [
                   CustomListTile(
                     title: LocaleKeys.change_language.tr(),
-                    subTitle: 'العربية',
+                    subTitle: getLocaleSubTitle(context),
                     onTap: () => showModalBottomSheet(
                       context: context,
-                      builder: (context) => Container(),
+                      builder: (context) => SettingBottomSheet(isTheme: false),
                     ),
                     icon: Icons.language,
                     color: AppColors.primary,
@@ -51,10 +54,10 @@ class MoreTab extends StatelessWidget {
                   ),
                   CustomListTile(
                     title: LocaleKeys.change_theme.tr(),
-                    subTitle: 'تلقائي',
+                    subTitle: getThemeSubTitle(context),
                     onTap: () => showModalBottomSheet(
                       context: context,
-                      builder: (context) => Container(),
+                      builder: (context) => SettingBottomSheet(isTheme: true),
                     ),
                     icon: Icons.brightness_6,
                     color: AppColors.primary,
