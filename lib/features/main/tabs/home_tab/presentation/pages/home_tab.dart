@@ -25,7 +25,7 @@ class HomeTab extends StatelessWidget {
               SizedBox(height: context.h30),
               _CustomHeader(title: LocaleKeys.quick_tools.tr()),
               SizedBox(height: context.h20),
-              QuikToolsHomeWidget(),
+              QuickToolsHomeWidget(),
               SizedBox(height: context.h30),
               _CustomHeader(title: LocaleKeys.overview.tr()),
               SizedBox(height: context.h20),

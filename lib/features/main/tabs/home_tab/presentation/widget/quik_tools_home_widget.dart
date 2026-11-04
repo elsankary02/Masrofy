@@ -4,8 +4,8 @@ import 'package:masrofy/core/router/go_router.dart';
 import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
 import 'package:masrofy/features/main/tabs/home_tab/data/model/quick_tools_model.dart';
 
-class QuikToolsHomeWidget extends StatelessWidget {
-  const QuikToolsHomeWidget({super.key});
+class QuickToolsHomeWidget extends StatelessWidget {
+  const QuickToolsHomeWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
