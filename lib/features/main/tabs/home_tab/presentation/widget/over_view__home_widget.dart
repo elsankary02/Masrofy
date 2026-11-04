@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:masrofy/core/components/custom_over_view.dart';
+import 'package:masrofy/core/widgets/custom_over_view.dart';
 import 'package:masrofy/core/theme/app_colors.dart';
 import 'package:masrofy/core/utils/extensions/extensions.dart';
 import 'package:masrofy/features/main/tabs/home_tab/data/model/over_view_model.dart';
