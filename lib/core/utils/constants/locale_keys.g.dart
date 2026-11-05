@@ -147,4 +147,7 @@ abstract class LocaleKeys {
   static const dark_theme = 'dark_theme';
   static const system_theme = 'system_theme';
   static const english = 'english';
+  static const app_name = 'app_name';
+  static const splash_tagline = 'splash_tagline';
+  static const splash_welcome = 'splash_welcome';
 }
