@@ -35,20 +35,17 @@ class SummaryCardHomeWidget extends StatelessWidget {
               spacing: 8,
               children: [
                 BlocBuilder<BalanceCubit, bool>(
-                  builder: (context, isObscured) {
-                    return InkWell(
-                      onTap: () {
-                        context.read<BalanceCubit>().toggleBalanceVisibility();
-                      },
-                      child: Icon(
-                        isObscured == true
-                            ? Icons.visibility_off_outlined
-                            : Icons.visibility_outlined,
-                        color: Colors.white,
-                        size: 16,
-                      ),
-                    );
-                  },
+                  builder: (context, isObscured) => InkWell(
+                    onTap: () =>
+                        context.read<BalanceCubit>().toggleBalanceVisibility(),
+                    child: Icon(
+                      isObscured == true
+                          ? Icons.visibility_off_outlined
+                          : Icons.visibility_outlined,
+                      color: Colors.white,
+                      size: 16,
+                    ),
+                  ),
                 ),
                 Text(
                   LocaleKeys.financial_summary.tr(),
@@ -60,9 +57,8 @@ class SummaryCardHomeWidget extends StatelessWidget {
             ),
             SizedBox(height: context.h5),
             BlocBuilder<BalanceCubit, bool>(
-              builder: (context, isObscured) {
-                return _TotalBalanceAndImage(isObscured: isObscured);
-              },
+              builder: (context, isObscured) =>
+                  _TotalBalanceAndImage(isObscured: isObscured),
             ),
             SizedBox(height: context.h5),
 
