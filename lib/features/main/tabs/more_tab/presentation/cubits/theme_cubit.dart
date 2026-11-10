@@ -11,7 +11,7 @@ class ThemeCubit extends Cubit<ThemeMode> {
   }
 
   void _themeSaved() {
-    final isSaved = SharedPrefsService.getString(PrefsKeys.themeMode);
+    final isSaved = SPService.getString(PrefsKeys.themeMode);
 
     switch (isSaved) {
       case 'light':
@@ -28,7 +28,7 @@ class ThemeCubit extends Cubit<ThemeMode> {
 
   Future<void> changeTheme(ThemeMode mode) async {
     emit(mode);
-    await SharedPrefsService.setString(PrefsKeys.themeMode, mode.name);
+    await SPService.setString(PrefsKeys.themeMode, mode.name);
   }
 }
 

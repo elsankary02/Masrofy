@@ -10,7 +10,7 @@ class LocaleCubit extends Cubit<Locale> {
     _localeSaved();
   }
   void _localeSaved() {
-    final isSaved = SharedPrefsService.getString(PrefsKeys.locale);
+    final isSaved = SPService.getString(PrefsKeys.locale);
     switch (isSaved) {
       case 'ar':
         emit(Locale('ar'));
@@ -27,7 +27,7 @@ class LocaleCubit extends Cubit<Locale> {
   Future<void> changeLocale(BuildContext context, Locale locale) async {
     await context.setLocale(locale);
     emit(locale);
-    await SharedPrefsService.setString(PrefsKeys.locale, locale.languageCode);
+    await SPService.setString(PrefsKeys.locale, locale.languageCode);
   }
 }
 

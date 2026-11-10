@@ -10,7 +10,7 @@ import 'package:masrofy/features/main/tabs/more_tab/presentation/cubits/theme_cu
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SharedPrefsService.init();
+  await SPService.init();
   await EasyLocalization.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(

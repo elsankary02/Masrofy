@@ -143,6 +143,12 @@
   "dark_theme": "Dark",
   "system_theme": "System",
   "english": "English",
+  "transportation": "Transportation",
+  "food": "Food",
+  "bills": "Bills",
+  "shopping": "Shopping",
+  "entertainment": "Entertainment",
+  "other": "Other"
   "app_name": "Masrofy",
   "splash_tagline": "Your Money, Your Control",
   "splash_welcome": "Welcome to Masrofy"
