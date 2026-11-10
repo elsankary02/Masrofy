@@ -12,9 +12,17 @@ import 'package:masrofy/features/main/tabs/more_tab/presentation/pages/more_tab.
 import 'package:masrofy/features/main/tabs/reports_tab/presentation/pages/reports_tab.dart';
 import 'package:masrofy/features/main/tabs/transactions_tab/transactions_tab.dart';
 import 'package:masrofy/features/notification/presentation/page/notification_page.dart';
+import 'package:masrofy/features/splash/splash_page.dart';
 
 final GoRouter router = GoRouter(
   routes: [
+    GoRoute(
+      path: NamedRoutes.splash,
+      name: NamedRoutes.splash,
+      builder: (BuildContext context, GoRouterState state) {
+        return const SplashPage();
+      },
+    ),
     GoRoute(
       path: NamedRoutes.auth,
       name: NamedRoutes.auth,

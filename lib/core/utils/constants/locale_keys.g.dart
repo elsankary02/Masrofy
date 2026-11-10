@@ -153,4 +153,7 @@ abstract class LocaleKeys {
   static const shopping = 'shopping';
   static const entertainment = 'entertainment';
   static const other = 'other';
+  static const app_name = 'app_name';
+  static const splash_tagline = 'splash_tagline';
+  static const splash_welcome = 'splash_welcome';
 }

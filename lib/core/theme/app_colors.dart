@@ -118,4 +118,8 @@ class AppColors {
     begin: Alignment.centerLeft,
     end: Alignment.centerRight,
   );
+
+  static const splashGradient = LinearGradient(
+    colors: [Colors.transparent, AppColors.primary, Colors.transparent],
+  );
 }
