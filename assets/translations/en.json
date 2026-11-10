@@ -142,5 +142,11 @@
   "light_theme": "Light",
   "dark_theme": "Dark",
   "system_theme": "System",
-  "english": "English"
+  "english": "English",
+  "transportation": "Transportation",
+  "food": "Food",
+  "bills": "Bills",
+  "shopping": "Shopping",
+  "entertainment": "Entertainment",
+  "other": "Other"
 }

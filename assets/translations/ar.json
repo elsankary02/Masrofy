@@ -141,5 +141,11 @@
   "light_theme": "فاتح",
   "dark_theme": "داكن",
   "system_theme": "تلقائي",
-  "english": "الإنجليزية"
+  "english": "الإنجليزية",
+  "transportation": "المواصلات",
+  "food": "الطعام",
+  "bills": "الفواتير",
+  "shopping": "تسوق",
+  "entertainment": "ترفيه",
+  "other": "أخرى"
 }

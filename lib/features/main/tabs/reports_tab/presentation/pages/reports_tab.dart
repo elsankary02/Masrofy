@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
 import 'package:masrofy/core/utils/extensions/extensions.dart';
 import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
-import 'package:masrofy/features/main/tabs/reports_tab/widget/dashboard_date_filter_dropdown.dart';
+import 'package:masrofy/features/main/tabs/reports_tab/presentation/widget/dashboard_date_filter_dropdown.dart';
+import 'package:masrofy/features/main/tabs/reports_tab/presentation/widget/expenses_by_category_widget.dart';
+import 'package:masrofy/features/main/tabs/reports_tab/presentation/widget/reports_data_grid_view_builder_widget.dart';
 
 class ReportsTab extends StatelessWidget {
   const ReportsTab({super.key});
@@ -19,7 +21,6 @@ class ReportsTab extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -27,6 +28,11 @@ class ReportsTab extends StatelessWidget {
           child: Column(
             children: [
               DashboardDateFilterDropdown(onFilterChanged: (value) {}),
+              SizedBox(height: context.h20),
+              ReportsDataGridViewBuilderWidget(),
+              SizedBox(height: context.h20),
+              ExpensesByCategoryWidget(),
+              SizedBox(height: context.h20),
             ],
           ),
         ),
