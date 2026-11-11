@@ -147,8 +147,16 @@
   "bills": "الفواتير",
   "shopping": "تسوق",
   "entertainment": "ترفيه",
-  "other": "أخرى"
+  "other": "أخرى",
   "app_name": "مصروفي",
   "splash_tagline": "أموالك، تحكّمك",
-  "splash_welcome": "أهلاً بك في مصروفي"
+  "splash_welcome": "أهلاً بك في مصروفي",
+  "restaurant": "مطعم",
+  "lunch_with_friends": "غداء مع الأصدقاء",
+  "metro": "مترو",
+  "coffee": "قهوة",
+  "starbucks": "ستاربكس",
+  "supermarket": "من السوبر ماركت",
+  "electricity_bill": "فاتورة الكهرباء",
+  "clothes": "ملابس"
 }

@@ -22,17 +22,25 @@ extension DateFilterExtension on DateFilter {
   }
 }
 
-class DashboardDateFilterDropdown extends StatefulWidget {
+class PopupMenuDateFilterWidget extends StatefulWidget {
   final ValueChanged<DateFilter>? onFilterChanged;
-  const DashboardDateFilterDropdown({super.key, this.onFilterChanged});
+  final Color? color, iconColor, titleColor;
+  final Color borderColor;
+  const PopupMenuDateFilterWidget({
+    super.key,
+    this.onFilterChanged,
+    this.color,
+    required this.borderColor,
+    this.iconColor,
+    this.titleColor,
+  });
 
   @override
-  State<DashboardDateFilterDropdown> createState() =>
-      _DashboardDateFilterDropdownState();
+  State<PopupMenuDateFilterWidget> createState() =>
+      _PopupMenuDateFilterWidgetState();
 }
 
-class _DashboardDateFilterDropdownState
-    extends State<DashboardDateFilterDropdown> {
+class _PopupMenuDateFilterWidgetState extends State<PopupMenuDateFilterWidget> {
   DateFilter selectedFilter = DateFilter.thisMonth;
   @override
   Widget build(BuildContext context) {
@@ -58,13 +66,9 @@ class _DashboardDateFilterDropdownState
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
           decoration: BoxDecoration(
-            color: context.isDarkMode ? AppColors.cardDark : Colors.white,
+            color: widget.color,
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(
-              color: context.isDarkMode
-                  ? AppColors.borderDark
-                  : AppColors.borderLight,
-            ),
+            border: Border.all(color: widget.borderColor),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -73,15 +77,14 @@ class _DashboardDateFilterDropdownState
                 selectedFilter.label,
                 style: context.textTheme.bodySmall?.copyWith(
                   fontWeight: FontWeight.bold,
+                  color: widget.titleColor,
                 ),
               ),
               SizedBox(width: context.w10),
               Icon(
                 Icons.keyboard_arrow_down_rounded,
                 size: 16,
-                color: context.isDarkMode
-                    ? AppColors.textSecondaryDark
-                    : AppColors.textSecondaryLight,
+                color: widget.iconColor,
               ),
             ],
           ),

@@ -7,7 +7,7 @@ import 'package:masrofy/core/utils/extensions/extensions.dart';
 import 'package:masrofy/features/main/tabs/home_tab/presentation/pages/home_tab.dart';
 import 'package:masrofy/features/main/tabs/more_tab/presentation/pages/more_tab.dart';
 import 'package:masrofy/features/main/tabs/reports_tab/presentation/pages/reports_tab.dart';
-import 'package:masrofy/features/main/tabs/transactions_tab/transactions_tab.dart';
+import 'package:masrofy/features/main/tabs/transactions_tab/presentation/page/transactions_tab.dart';
 
 class MainLayout extends StatefulWidget {
   const MainLayout({super.key});

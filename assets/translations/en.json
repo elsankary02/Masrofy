@@ -148,8 +148,16 @@
   "bills": "Bills",
   "shopping": "Shopping",
   "entertainment": "Entertainment",
-  "other": "Other"
+  "other": "Other",
   "app_name": "Masrofy",
   "splash_tagline": "Your Money, Your Control",
-  "splash_welcome": "Welcome to Masrofy"
+  "splash_welcome": "Welcome to Masrofy",
+  "restaurant": "Restaurant",
+  "lunch_with_friends": "Lunch with friends",
+  "metro": "Metro",
+  "coffee": "Coffee",
+  "starbucks": "Starbucks",
+  "supermarket": "From supermarket",
+  "electricity_bill": "Electricity bill",
+  "clothes": "Clothes"
 }
