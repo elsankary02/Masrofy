@@ -6,10 +6,10 @@ import 'package:masrofy/core/utils/extensions/extensions.dart';
 import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
 import 'package:masrofy/features/main/tabs/more_tab/presentation/cubits/locale_cubit.dart';
 import 'package:masrofy/features/main/tabs/more_tab/presentation/cubits/theme_cubit.dart';
-import 'package:masrofy/features/main/tabs/more_tab/presentation/widgets/custom_card_section.dart';
-import 'package:masrofy/features/main/tabs/more_tab/presentation/widgets/custom_list_tile.dart';
+import 'package:masrofy/features/main/tabs/more_tab/presentation/widgets/more_custom_card_section.dart';
+import 'package:masrofy/features/main/tabs/more_tab/presentation/widgets/more_custom_list_tile.dart';
 import 'package:masrofy/features/main/tabs/more_tab/presentation/widgets/more_summary_card.dart';
-import 'package:masrofy/features/main/tabs/more_tab/presentation/widgets/setting_bottom_sheet.dart';
+import 'package:masrofy/features/main/tabs/more_tab/presentation/widgets/more_setting_bottom_sheet.dart';
 
 class MoreTab extends StatelessWidget {
   const MoreTab({super.key});

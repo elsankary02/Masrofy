@@ -5,7 +5,7 @@ import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
 import 'package:masrofy/core/utils/extensions/extensions.dart';
 import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
 import 'package:masrofy/core/widgets/popup_menu_date_filter_widget.dart';
-import 'package:masrofy/features/main/tabs/reports_tab/presentation/widget/expenses_by_category_widget.dart';
+import 'package:masrofy/features/main/tabs/reports_tab/presentation/widget/reports_by_category_widget.dart';
 import 'package:masrofy/features/main/tabs/reports_tab/presentation/widget/reports_data_grid_view_builder_widget.dart';
 
 class ReportsTab extends StatelessWidget {
