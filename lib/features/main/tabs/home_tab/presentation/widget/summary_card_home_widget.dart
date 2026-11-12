@@ -146,7 +146,7 @@ class _TotalBalanceAndImage extends StatelessWidget {
           ],
         ),
         Image.asset(
-          AppImages.income,
+          AppImages.summery,
           height: 100,
           width: 100,
           fit: BoxFit.cover,

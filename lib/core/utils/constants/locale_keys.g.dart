@@ -157,11 +157,11 @@ abstract class LocaleKeys {
   static const splash_tagline = 'splash_tagline';
   static const splash_welcome = 'splash_welcome';
   static const restaurant = 'restaurant';
-  static const  lunch_with_friends= 'lunch_with_friends';
+  static const lunch_with_friends = 'lunch_with_friends';
   static const metro = 'metro';
   static const coffee = 'coffee';
   static const starbucks = 'starbucks';
-  static const  supermarket= 'supermarket';
+  static const supermarket = 'supermarket';
   static const electricity_bill = 'electricity_bill';
-  static const  clothes= 'clothes';
+  static const clothes = 'clothes';
 }
