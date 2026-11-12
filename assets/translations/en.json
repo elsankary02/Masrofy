@@ -159,5 +159,9 @@
   "starbucks": "Starbucks",
   "supermarket": "From supermarket",
   "electricity_bill": "Electricity bill",
-  "clothes": "Clothes"
+  "clothes": "Clothes",
+  "date_time": "Date and Time",
+  "save_and_add_new": "Save and Add New",
+  "add_image_optional": "Add Image (Optional)",
+  "change_image": "Tap to change image"
 }

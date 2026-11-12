@@ -164,4 +164,8 @@ abstract class LocaleKeys {
   static const supermarket = 'supermarket';
   static const electricity_bill = 'electricity_bill';
   static const clothes = 'clothes';
+  static const date_time = 'date_time';
+  static const save_and_add_new = 'save_and_add_new';
+  static const add_image_optional = 'add_image_optional';
+  static const change_image = 'change_image';
 }

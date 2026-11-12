@@ -159,5 +159,9 @@
   "supermarket": "من السوبر ماركت",
   "electricity_bill": "فاتورة الكهرباء",
   "clothes": "ملابس",
-  "this_year": "هذا العام"
+  "this_year": "هذا العام",
+  "date_time": "التاريخ والوقت",
+  "save_and_add_new": "حفظ وإضافة جديد",
+  "add_image_optional": "إضافة صورة (اختياري)",
+  "change_image": "اضغط لتغيير الصورة"
 }

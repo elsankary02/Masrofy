@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:masrofy/core/router/named_routes.dart';
 import 'package:masrofy/features/auth/presentation/pages/auth_page.dart';
 import 'package:masrofy/features/debts/presentation/page/debts_page.dart';
-import 'package:masrofy/features/expense/expense_page.dart';
+import 'package:masrofy/features/expense/page/expense_page.dart';
 import 'package:masrofy/features/goals/presentation/page/goals_page.dart';
 import 'package:masrofy/features/income/income_page.dart';
 import 'package:masrofy/features/main/page/main_layout.dart';
