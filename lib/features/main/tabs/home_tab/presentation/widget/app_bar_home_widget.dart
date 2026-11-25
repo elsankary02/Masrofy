@@ -15,27 +15,21 @@ class AppBarHomeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      leading: _UserAvatar(),
-      title: _Title(),
-      subtitle: _SubTitle(),
-
-      trailing: _NotificationButton(),
+      leading: const _UserAvatar(),
+      title: const _Title(),
+      subtitle: const _SubTitle(),
+      trailing: const _NotificationButton(),
     );
   }
 }
 
-// =============================================================================
-// Local Widgets
-// =============================================================================
-
-/// Displays the user's avatar framed within a styled border.
 class _UserAvatar extends StatelessWidget {
   const _UserAvatar();
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(1),
+      padding: const EdgeInsets.all(1),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(
@@ -51,20 +45,23 @@ class _UserAvatar extends StatelessWidget {
   }
 }
 
-/// Displays the localized greeting and user name.
 class _Title extends StatelessWidget {
   const _Title();
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      "${LocaleKeys.greeting.tr()} محمد ابراهيم",
-      style: context.textTheme.titleLarge,
+      '${LocaleKeys.greeting.tr()} محمد ابراهيم',
+      style: context.textTheme.titleLarge?.copyWith(
+        fontWeight: FontWeight.w700,
+        color: context.isDarkMode
+            ? AppColors.textPrimaryDark
+            : AppColors.textPrimaryLight,
+      ),
     );
   }
 }
 
-/// Displays the financial quote subtitle.
 class _SubTitle extends StatelessWidget {
   const _SubTitle();
 
@@ -72,14 +69,15 @@ class _SubTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       LocaleKeys.financial_freedom_quote.tr(),
-      style: context.textTheme.bodySmall!.copyWith(
-        color: context.isDarkMode ? AppColors.grey400 : AppColors.grey500,
+      style: context.textTheme.bodySmall?.copyWith(
+        color: context.isDarkMode
+            ? AppColors.textSecondaryDark
+            : AppColors.textSecondaryLight,
       ),
     );
   }
 }
 
-/// Notification icon button featuring an unread status badge.
 class _NotificationButton extends StatelessWidget {
   const _NotificationButton();
 
@@ -88,24 +86,33 @@ class _NotificationButton extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(100),
       onTap: () => router.push(NamedRoutes.notification),
-      child: Stack(
-        alignment: Alignment.topRight,
-        children: [
-          Container(
-            height: context.h10,
-            width: context.h10,
-            decoration: BoxDecoration(
-              color: AppColors.error,
-              shape: .circle,
-              border: Border.all(color: AppColors.white),
+      child: Padding(
+        padding: const EdgeInsets.all(4),
+        child: Stack(
+          alignment: Alignment.topRight,
+          children: [
+            Container(
+              height: context.h10,
+              width: context.h10,
+              decoration: BoxDecoration(
+                color: AppColors.error,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: context.isDarkMode
+                      ? AppColors.surfaceDark
+                      : AppColors.white,
+                ),
+              ),
             ),
-          ),
-          Icon(
-            Icons.notifications_none,
-            size: 24,
-            color: context.isDarkMode ? AppColors.grey200 : AppColors.grey900,
-          ),
-        ],
+            Icon(
+              Icons.notifications_none_rounded,
+              size: 26,
+              color: context.isDarkMode
+                  ? AppColors.textPrimaryDark
+                  : AppColors.textPrimaryLight,
+            ),
+          ],
+        ),
       ),
     );
   }

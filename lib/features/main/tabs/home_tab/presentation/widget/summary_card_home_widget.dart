@@ -6,108 +6,105 @@ import 'package:masrofy/core/utils/constants/app_images.dart';
 import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
 import 'package:masrofy/core/utils/extensions/extensions.dart';
 import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
-import 'package:masrofy/features/main/tabs/home_tab/presentation/cubit/balance_cubit.dart';
+import 'package:masrofy/features/main/tabs/home_tab/presentation/cubit/home_cubit.dart';
+import 'package:masrofy/features/main/tabs/home_tab/presentation/cubit/home_state.dart';
 
 class SummaryCardHomeWidget extends StatelessWidget {
   const SummaryCardHomeWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => BalanceCubit(),
-      child: Container(
-        padding: EdgeInsets.all(context.h20),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(28),
-          gradient: AppColors.walletGradient,
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.primary.withValues(alpha: 0.15),
-              blurRadius: 15,
-              offset: const Offset(0, 8),
-            ),
-          ],
-        ),
-        child: Column(
-          children: [
-            // Header Row: Toggle Icon and Financial Summary Label
-            Row(
-              spacing: 8,
-              children: [
-                BlocBuilder<BalanceCubit, bool>(
-                  builder: (context, isObscured) => InkWell(
+    final formatter = NumberFormat('#,##0');
+
+    return BlocBuilder<HomeCubit, HomeState>(
+      builder: (context, state) {
+        final balanceText = state.isObscured
+            ? '******'
+            : formatter.format(state.summary.totalBalance);
+        final incomeText = state.isObscured
+            ? '******'
+            : formatter.format(state.summary.totalIncome);
+        final expenseText = state.isObscured
+            ? '******'
+            : formatter.format(state.summary.totalExpenses);
+
+        return Container(
+          padding: EdgeInsets.all(context.h20),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(28),
+            gradient: AppColors.walletGradient,
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.primary.withValues(alpha: 0.15),
+                blurRadius: 15,
+                offset: const Offset(0, 8),
+              ),
+            ],
+          ),
+          child: Column(
+            children: [
+              Row(
+                spacing: 8,
+                children: [
+                  InkWell(
                     onTap: () =>
-                        context.read<BalanceCubit>().toggleBalanceVisibility(),
+                        context.read<HomeCubit>().toggleBalanceVisibility(),
                     child: Icon(
-                      isObscured == true
+                      state.isObscured
                           ? Icons.visibility_off_outlined
                           : Icons.visibility_outlined,
-                      color: Colors.white,
-                      size: 16,
+                      color: AppColors.white,
+                      size: 18,
                     ),
                   ),
-                ),
-                Text(
-                  LocaleKeys.financial_summary.tr(),
-                  style: context.textTheme.bodyMedium?.copyWith(
-                    color: AppColors.white.withValues(alpha: 0.70),
+                  Text(
+                    LocaleKeys.financial_summary.tr(),
+                    style: context.textTheme.bodyMedium?.copyWith(
+                      color: AppColors.white.withValues(alpha: 0.85),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(height: context.h5),
-            BlocBuilder<BalanceCubit, bool>(
-              builder: (context, isObscured) =>
-                  _TotalBalanceAndImage(isObscured: isObscured),
-            ),
-            SizedBox(height: context.h5),
-
-            // Horizontal Divider
-            Container(
-              width: double.infinity,
-              height: 0.5,
-              decoration: BoxDecoration(
+                ],
+              ),
+              SizedBox(height: context.h5),
+              _TotalBalanceAndImage(balanceText: balanceText),
+              SizedBox(height: context.h5),
+              Container(
+                width: double.infinity,
+                height: 0.5,
                 color: AppColors.white.withValues(alpha: 0.3),
               ),
-            ),
-            SizedBox(height: context.h15),
-
-            // Footer Row: Total Income and Total Expenses
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _CardSubTitle(
-                  title: LocaleKeys.total_income.tr(),
-                  price: "27,850",
-                  color: AppColors.primaryLight,
-                ),
-                Container(
-                  width: 0.5,
-                  height: context.h35,
-                  color: Colors.white.withValues(alpha: 0.3),
-                ),
-                _CardSubTitle(
-                  title: LocaleKeys.total_expenses.tr(),
-                  price: "15,400",
-                  color: AppColors.debt,
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
+              SizedBox(height: context.h15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _CardSubTitle(
+                    title: LocaleKeys.total_income.tr(),
+                    price: incomeText,
+                    color: AppColors.primaryLight,
+                  ),
+                  Container(
+                    width: 0.5,
+                    height: context.h35,
+                    color: AppColors.white.withValues(alpha: 0.3),
+                  ),
+                  _CardSubTitle(
+                    title: LocaleKeys.total_expenses.tr(),
+                    price: expenseText,
+                    color: AppColors.debt,
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
 
-// =============================================================================
-// Local Widgets
-// =============================================================================
-
-/// Displays total balance alongside the wallet graphic.
 class _TotalBalanceAndImage extends StatelessWidget {
-  final bool isObscured;
-  const _TotalBalanceAndImage({required this.isObscured});
+  final String balanceText;
+  const _TotalBalanceAndImage({required this.balanceText});
 
   @override
   Widget build(BuildContext context) {
@@ -120,16 +117,16 @@ class _TotalBalanceAndImage extends StatelessWidget {
             Text(
               LocaleKeys.total_balance.tr(),
               style: context.textTheme.bodyMedium?.copyWith(
-                color: AppColors.white.withValues(alpha: 0.70),
+                color: AppColors.white.withValues(alpha: 0.85),
               ),
             ),
             Row(
-              spacing: 2,
+              spacing: 4,
               crossAxisAlignment: CrossAxisAlignment.baseline,
               textBaseline: TextBaseline.alphabetic,
               children: [
                 Text(
-                  isObscured == true ? "******" : "12,450",
+                  balanceText,
                   style: context.textTheme.displaySmall?.copyWith(
                     fontWeight: FontWeight.w700,
                     color: AppColors.white,
@@ -156,7 +153,6 @@ class _TotalBalanceAndImage extends StatelessWidget {
   }
 }
 
-/// A sub-card component used for displaying financial metrics like income or expenses.
 class _CardSubTitle extends StatelessWidget {
   final String title;
   final String price;
@@ -174,22 +170,25 @@ class _CardSubTitle extends StatelessWidget {
         Text(
           title,
           style: context.textTheme.bodySmall?.copyWith(
-            color: AppColors.white.withValues(alpha: 0.70),
+            color: AppColors.white.withValues(alpha: 0.85),
           ),
         ),
         Row(
-          spacing: 2,
+          spacing: 4,
           crossAxisAlignment: CrossAxisAlignment.baseline,
           textBaseline: TextBaseline.alphabetic,
           children: [
             Text(
               price,
-              style: context.textTheme.titleMedium?.copyWith(color: color),
+              style: context.textTheme.titleMedium?.copyWith(
+                color: color,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             Text(
               LocaleKeys.currency_egp.tr(),
               style: context.textTheme.bodySmall?.copyWith(
-                color: AppColors.white.withValues(alpha: .70),
+                color: AppColors.white.withValues(alpha: 0.85),
               ),
             ),
           ],

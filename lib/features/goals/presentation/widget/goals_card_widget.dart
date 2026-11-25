@@ -39,7 +39,7 @@ class GoalsCardWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Icon(
-              isDone ? Icons.check_circle_rounded : (goal.icon ?? Icons.flag_rounded),
+              isDone ? Icons.check_circle_rounded : (goal.icon),
               color: accentColor,
               size: 20,
             ),

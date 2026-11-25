@@ -5,7 +5,7 @@ import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
 import 'package:masrofy/features/main/tabs/home_tab/data/model/quick_tools_model.dart';
 
 class QuickToolsHomeWidget extends StatelessWidget {
-  const QuickToolsHomeWidget({super.key});
+  const QuickToolsHomeWidget({super.key, required Future<void> Function() onAfterReturn});
 
   @override
   Widget build(BuildContext context) {
