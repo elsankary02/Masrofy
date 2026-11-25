@@ -1,7 +1,6 @@
-import 'package:masrofy/features/auth/data/user_model.dart';
-
 import '../../domain/repositories/auth_repository.dart';
 import '../datasources/auth_local_datasource.dart';
+import '../user_model.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthLocalDataSource _localDataSource;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:masrofy/core/utils/extensions/extensions.dart';
+
+import '../../../../../../core/utils/extensions/extensions.dart';
 
 class CustomListTile extends StatelessWidget {
   final String title;

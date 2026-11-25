@@ -1,4 +1,4 @@
-import 'package:masrofy/features/main/tabs/home_tab/domain/entities/home_summary_entity.dart';
+import '../../domain/entities/home_summary_entity.dart';
 
 class HomeState {
   final HomeSummaryEntity summary;

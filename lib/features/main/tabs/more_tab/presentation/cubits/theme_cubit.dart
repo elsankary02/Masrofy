@@ -1,9 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:masrofy/core/services/shared_preferences.dart';
-import 'package:masrofy/core/utils/constants/app_strings.dart';
-import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
+
+import '../../../../../../core/services/shared_preferences.dart';
+import '../../../../../../core/utils/constants/app_strings.dart';
+import '../../../../../../core/utils/constants/locale_keys.g.dart';
 
 class ThemeCubit extends Cubit<ThemeMode> {
   ThemeCubit() : super(ThemeMode.system) {

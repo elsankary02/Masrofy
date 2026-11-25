@@ -1,11 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:masrofy/core/theme/app_colors.dart';
-import 'package:masrofy/core/theme/app_text_styles.dart';
-import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
-import 'package:masrofy/core/utils/extensions/extensions.dart';
-import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
-import 'package:masrofy/core/widgets/custom_text_form_field.dart';
+
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/utils/constants/locale_keys.g.dart';
+import '../../../../core/utils/extensions/extensions.dart';
+import '../../../../core/utils/extensions/screen_helper_extension.dart';
+import '../../../../core/widgets/custom_text_form_field.dart';
 
 class ExpenseDescriptionSection extends StatelessWidget {
   final TextEditingController controller;

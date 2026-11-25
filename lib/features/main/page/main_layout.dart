@@ -1,16 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:masrofy/core/router/go_router.dart';
-import 'package:masrofy/core/router/named_routes.dart';
-import 'package:masrofy/core/theme/app_colors.dart';
-import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
-import 'package:masrofy/core/utils/extensions/extensions.dart';
-import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
-import 'package:masrofy/core/widgets/custom_btn.dart';
-import 'package:masrofy/features/main/tabs/home_tab/presentation/pages/home_tab.dart';
-import 'package:masrofy/features/main/tabs/more_tab/presentation/pages/more_tab.dart';
-import 'package:masrofy/features/main/tabs/reports_tab/presentation/pages/reports_tab.dart';
-import 'package:masrofy/features/main/tabs/transactions_tab/presentation/page/transactions_tab.dart';
+
+import '../../../core/router/go_router.dart';
+import '../../../core/router/named_routes.dart';
+import '../../../core/theme/app_colors.dart';
+import '../../../core/utils/constants/locale_keys.g.dart';
+import '../../../core/utils/extensions/extensions.dart';
+import '../../../core/utils/extensions/screen_helper_extension.dart';
+import '../../../core/widgets/custom_btn.dart';
+import '../tabs/home_tab/presentation/pages/home_tab.dart';
+import '../tabs/more_tab/presentation/pages/more_tab.dart';
+import '../tabs/reports_tab/presentation/pages/reports_tab.dart';
+import '../tabs/transactions_tab/presentation/page/transactions_tab.dart';
 
 class MainLayout extends StatefulWidget {
   const MainLayout({super.key});
@@ -22,12 +23,27 @@ class MainLayout extends StatefulWidget {
 class _MainLayoutState extends State<MainLayout> {
   int _currentIndex = 0;
 
-  final List<Widget> _tabs = [
-    const HomeTab(),
-    const ReportsTab(),
-    const TransactionsTab(),
+  late final List<Widget> _tabs = [
+    HomeTab(key: homeTabKey),
+    ReportsTab(key: reportsTabKey),
+    TransactionsTab(key: transactionsTabKey),
     const MoreTab(),
   ];
+
+  void _refreshTabAt(int index) {
+    if (index == 0) {
+      homeTabKey.currentState?.refreshHome();
+    } else if (index == 1) {
+      reportsTabKey.currentState?.refreshReports();
+    } else if (index == 2) {
+      transactionsTabKey.currentState?.refreshTransactions();
+    }
+  }
+
+  void _onTabSelected(int index) {
+    setState(() => _currentIndex = index);
+    _refreshTabAt(index);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +52,9 @@ class _MainLayoutState extends State<MainLayout> {
     return Scaffold(
       body: IndexedStack(index: _currentIndex, children: _tabs),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: const _QuickAddFab(),
+      floatingActionButton: _QuickAddFab(
+        onReturnedFromAdd: () => _refreshTabAt(_currentIndex),
+      ),
       bottomNavigationBar: BottomAppBar(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         elevation: 0,
@@ -50,14 +68,14 @@ class _MainLayoutState extends State<MainLayout> {
               index: 0,
               icon: Icons.home_rounded,
               label: LocaleKeys.home.tr(),
-              onTap: (index) => setState(() => _currentIndex = index),
+              onTap: _onTabSelected,
             ),
             _NavItem(
               currentIndex: _currentIndex,
               index: 1,
               icon: Icons.bar_chart_rounded,
               label: LocaleKeys.reports.tr(),
-              onTap: (index) => setState(() => _currentIndex = index),
+              onTap: _onTabSelected,
             ),
             const SizedBox(width: 50),
             _NavItem(
@@ -65,14 +83,14 @@ class _MainLayoutState extends State<MainLayout> {
               index: 2,
               icon: Icons.receipt_long_rounded,
               label: LocaleKeys.transactions.tr(),
-              onTap: (index) => setState(() => _currentIndex = index),
+              onTap: _onTabSelected,
             ),
             _NavItem(
               currentIndex: _currentIndex,
               index: 3,
               icon: Icons.more_horiz_rounded,
               label: LocaleKeys.more.tr(),
-              onTap: (index) => setState(() => _currentIndex = index),
+              onTap: _onTabSelected,
             ),
           ],
         ),
@@ -82,7 +100,9 @@ class _MainLayoutState extends State<MainLayout> {
 }
 
 class _QuickAddFab extends StatelessWidget {
-  const _QuickAddFab();
+  final VoidCallback? onReturnedFromAdd;
+
+  const _QuickAddFab({this.onReturnedFromAdd});
 
   void _openQuickActions(BuildContext context) {
     showModalBottomSheet(
@@ -112,17 +132,19 @@ class _QuickAddFab extends StatelessWidget {
               ),
               CustomBtn(
                 text: LocaleKeys.add_expense.tr(),
-                onPressed: () {
+                onPressed: () async {
                   Navigator.pop(sheetContext);
-                  router.push(NamedRoutes.expense);
+                  await router.push(NamedRoutes.expense);
+                  onReturnedFromAdd?.call();
                 },
               ),
               CustomBtn(
                 text: LocaleKeys.add_new_income.tr(),
                 variant: ButtonVariant.text,
-                onPressed: () {
+                onPressed: () async {
                   Navigator.pop(sheetContext);
-                  router.push(NamedRoutes.income);
+                  await router.push(NamedRoutes.income);
+                  onReturnedFromAdd?.call();
                 },
               ),
             ],

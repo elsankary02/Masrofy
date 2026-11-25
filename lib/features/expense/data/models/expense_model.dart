@@ -1,4 +1,4 @@
-import 'package:masrofy/features/expense/domain/entities/expense_entity.dart';
+import '../../domain/entities/expense_entity.dart';
 
 class ExpenseModel extends ExpenseEntity {
   const ExpenseModel({

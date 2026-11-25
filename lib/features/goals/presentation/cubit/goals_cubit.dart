@@ -1,7 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:masrofy/features/goals/data/models/goals_card_model.dart';
-import 'package:masrofy/features/goals/data/repos/goals_repository.dart';
-import 'package:masrofy/features/goals/presentation/cubit/goals_status_cubit.dart';
+
+import '../../data/models/goals_card_model.dart';
+import '../../data/repos/goals_repository.dart';
+import 'goals_status_cubit.dart';
 
 class GoalsCubit extends Cubit<GoalsState> {
   final GoalsRepository repository;

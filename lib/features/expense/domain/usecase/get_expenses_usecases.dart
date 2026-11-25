@@ -1,5 +1,5 @@
-import 'package:masrofy/features/expense/domain/entities/expense_entity.dart';
-import 'package:masrofy/features/expense/domain/repo/expense_repository.dart';
+import '../entities/expense_entity.dart';
+import '../repo/expense_repository.dart';
 
 class GetExpensesUseCase {
   final ExpenseRepository repository;

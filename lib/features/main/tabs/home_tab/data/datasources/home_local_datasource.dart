@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:masrofy/core/services/shared_preferences.dart';
-import 'package:masrofy/features/main/tabs/home_tab/data/model/home_summary_model.dart';
+import '../../../../../../core/services/shared_preferences.dart';
+import '../model/home_summary_model.dart';
 
 abstract class HomeLocalDataSource {
   Future<HomeSummaryModel> getHomeSummary();
@@ -13,6 +13,24 @@ class HomeLocalDataSourceImpl implements HomeLocalDataSource {
   static const String _debtsKey = 'masrofy_debts_list';
   static const String _goalsKey = 'masrofy_goals_list';
 
+  num? _parseNum(dynamic value) {
+    if (value is num) return value;
+    if (value is String) return num.tryParse(value.trim());
+    return null;
+  }
+
+  List<dynamic> _decodeList(String? rawJson, {String? nestedMapKey}) {
+    if (rawJson == null || rawJson.trim().isEmpty) return const [];
+    final decoded = jsonDecode(rawJson);
+    if (decoded is List) return decoded;
+    if (decoded is Map &&
+        nestedMapKey != null &&
+        decoded[nestedMapKey] is List) {
+      return decoded[nestedMapKey] as List<dynamic>;
+    }
+    return const [];
+  }
+
   @override
   Future<HomeSummaryModel> getHomeSummary() async {
     final now = DateTime.now();
@@ -20,59 +38,75 @@ class HomeLocalDataSourceImpl implements HomeLocalDataSource {
     final expensesRaw = SPService.getString(_expensesKey);
     int todayExpenses = 0;
     int totalExpenses = 0;
-    if (expensesRaw != null && expensesRaw.trim().isNotEmpty) {
-      final List<dynamic> list = jsonDecode(expensesRaw) as List<dynamic>;
-      for (final item in list) {
-        final map = item as Map<String, dynamic>;
-        final amount = ((map['amount'] as num?) ?? 0).round();
-        totalExpenses += amount;
+    for (final item in _decodeList(expensesRaw, nestedMapKey: 'expenses')) {
+      if (item is! Map) continue;
+      final map = Map<String, dynamic>.from(item);
+      final amount = (_parseNum(map['amount']) ?? 0).round();
+      totalExpenses += amount;
 
-        final parsedDate = DateTime.tryParse(map['date']?.toString() ?? '');
-        if (parsedDate != null &&
-            parsedDate.year == now.year &&
-            parsedDate.month == now.month &&
-            parsedDate.day == now.day) {
-          todayExpenses += amount;
-        }
+      final parsedDate = DateTime.tryParse(map['date']?.toString() ?? '');
+      if (parsedDate != null &&
+          parsedDate.year == now.year &&
+          parsedDate.month == now.month &&
+          parsedDate.day == now.day) {
+        todayExpenses += amount;
       }
     }
 
     final incomesRaw = SPService.getString(_incomesKey);
     int totalIncome = 0;
-    if (incomesRaw != null && incomesRaw.trim().isNotEmpty) {
-      final List<dynamic> list = jsonDecode(incomesRaw) as List<dynamic>;
-      for (final item in list) {
-        final map = item as Map<String, dynamic>;
-        totalIncome += ((map['amount'] as num?) ?? 0).round();
-      }
+    for (final item in _decodeList(incomesRaw, nestedMapKey: 'incomes')) {
+      if (item is! Map) continue;
+      final map = Map<String, dynamic>.from(item);
+      totalIncome += (_parseNum(map['amount']) ?? 0).round();
     }
 
     final debtsRaw = SPService.getString(_debtsKey);
     int remainingDebts = 0;
-    if (debtsRaw != null && debtsRaw.trim().isNotEmpty) {
-      final List<dynamic> list = jsonDecode(debtsRaw) as List<dynamic>;
-      for (final item in list) {
-        final map = item as Map<String, dynamic>;
-        final total = ((map['total'] as num?) ?? 0).round();
-        final paid = ((map['paid'] as num?) ?? 0).round();
-        final rem = total - paid;
-        if (rem > 0) remainingDebts += rem;
+    for (final item in _decodeList(debtsRaw, nestedMapKey: 'debts')) {
+      if (item is! Map) continue;
+      final map = Map<String, dynamic>.from(item);
+
+      final directRemaining = _parseNum(
+        map['current'] ?? map['remaining'] ?? map['remainingAmount'],
+      );
+      if (directRemaining != null) {
+        if (directRemaining > 0) {
+          remainingDebts += directRemaining.round();
+        }
+        continue;
+      }
+
+      final total =
+          (_parseNum(map['target'] ?? map['total'] ?? map['amount']) ?? 0)
+              .round();
+      final paid = (_parseNum(map['paid'] ?? map['paidAmount']) ?? 0).round();
+      final rem = total - paid;
+      if (rem > 0) {
+        remainingDebts += rem;
       }
     }
 
     final goalsRaw = SPService.getString(_goalsKey);
     int completedGoals = 0;
     int totalGoals = 0;
-    if (goalsRaw != null && goalsRaw.trim().isNotEmpty) {
-      final List<dynamic> list = jsonDecode(goalsRaw) as List<dynamic>;
-      totalGoals = list.length;
-      for (final item in list) {
-        final map = item as Map<String, dynamic>;
-        final current = ((map['current'] as num?) ?? 0).round();
-        final target = ((map['target'] as num?) ?? 0).round();
-        if (target > 0 && current >= target) {
-          completedGoals++;
-        }
+    final goalsList = _decodeList(goalsRaw, nestedMapKey: 'goals');
+    totalGoals = goalsList.length;
+    for (final item in goalsList) {
+      if (item is! Map) continue;
+      final map = Map<String, dynamic>.from(item);
+      final current =
+          (_parseNum(map['current'] ?? map['currentAmount'] ?? map['saved']) ??
+                  0)
+              .round();
+      final target =
+          (_parseNum(
+                    map['target'] ?? map['targetAmount'] ?? map['goalAmount'],
+                  ) ??
+                  0)
+              .round();
+      if (target > 0 && current >= target) {
+        completedGoals++;
       }
     }
 

@@ -1,4 +1,4 @@
-import 'package:masrofy/features/notification/data/models/notification_model.dart';
+import '../../data/models/notification_model.dart';
 
 class NotificationState {
   final List<NotificationModel> notifications;

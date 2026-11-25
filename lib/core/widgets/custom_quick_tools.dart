@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:masrofy/core/theme/app_colors.dart';
-import 'package:masrofy/core/utils/extensions/extensions.dart';
-import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
+
+import '../theme/app_colors.dart';
+import '../utils/extensions/extensions.dart';
+import '../utils/extensions/screen_helper_extension.dart';
 
 class CustomQuickTools extends StatelessWidget {
   final String subTitle;

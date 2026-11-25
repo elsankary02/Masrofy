@@ -1,11 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
-import 'package:masrofy/core/utils/extensions/extensions.dart';
-import 'package:masrofy/features/notification/data/datasources/notification_local_datasource.dart';
-import 'package:masrofy/features/notification/presentation/cubit/notification_cubit.dart';
-import 'package:masrofy/features/notification/presentation/cubit/notification_state.dart';
+
+import '../../../../core/utils/constants/locale_keys.g.dart';
+import '../../../../core/utils/extensions/extensions.dart';
+import '../../data/datasources/notification_local_datasource.dart';
+import '../cubit/notification_cubit.dart';
+import '../cubit/notification_state.dart';
 
 class NotificationPage extends StatelessWidget {
   const NotificationPage({super.key});

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:masrofy/core/services/shared_preferences.dart';
-import 'package:masrofy/features/auth/data/user_model.dart';
+import '../../../../core/services/shared_preferences.dart';
+import '../user_model.dart';
 
 abstract class AuthLocalDataSource {
   bool isLoggedIn();

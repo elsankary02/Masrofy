@@ -1,20 +1,21 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:masrofy/core/theme/app_colors.dart';
-import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
-import 'package:masrofy/core/utils/extensions/extensions.dart';
-import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
-import 'package:masrofy/core/widgets/custom_appbar.dart';
-import 'package:masrofy/features/income/data/datasource/income_local_datasource.dart';
-import 'package:masrofy/features/income/data/repo/income_repository_impl.dart';
-import 'package:masrofy/features/income/domain/entities/income_entity.dart';
-import 'package:masrofy/features/income/domain/usecases/get_incomes_usecase.dart';
-import 'package:masrofy/features/income/presentation/cubit/income_cubit.dart';
-import 'package:masrofy/features/income/presentation/cubit/income_state.dart';
-import 'package:masrofy/features/income/presentation/widget/income_bottom_sheet_widget.dart';
-import 'package:masrofy/features/income/presentation/widget/income_item_widget.dart';
-import 'package:masrofy/features/income/presentation/widget/income_summary_card_widget.dart';
+
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/utils/constants/locale_keys.g.dart';
+import '../../../../core/utils/extensions/extensions.dart';
+import '../../../../core/utils/extensions/screen_helper_extension.dart';
+import '../../../../core/widgets/custom_appbar.dart';
+import '../../data/datasource/income_local_datasource.dart';
+import '../../data/repo/income_repository_impl.dart';
+import '../../domain/entities/income_entity.dart';
+import '../../domain/usecases/get_incomes_usecase.dart';
+import '../cubit/income_cubit.dart';
+import '../cubit/income_state.dart';
+import '../widget/income_bottom_sheet_widget.dart';
+import '../widget/income_item_widget.dart';
+import '../widget/income_summary_card_widget.dart';
 
 class IncomePage extends StatefulWidget {
   const IncomePage({super.key});
@@ -54,10 +55,7 @@ class _IncomePageState extends State<IncomePage> {
     ScaffoldMessenger.of(targetContext)
       ..hideCurrentSnackBar()
       ..showSnackBar(
-        SnackBar(
-          content: Text(message),
-          behavior: SnackBarBehavior.floating,
-        ),
+        SnackBar(content: Text(message), behavior: SnackBarBehavior.floating),
       );
   }
 
@@ -90,8 +88,9 @@ class _IncomePageState extends State<IncomePage> {
               final title = _titleController.text.trim();
               final amountText = _amountController.text.trim();
               final description = _descriptionController.text.trim();
-              final num? parsedAmount =
-                  amountText.isEmpty ? null : num.tryParse(amountText);
+              final num? parsedAmount = amountText.isEmpty
+                  ? null
+                  : num.tryParse(amountText);
 
               if (title.isEmpty) {
                 _showValidationSnackBar(
@@ -197,10 +196,7 @@ class _IncomeListView extends StatelessWidget {
   final List<IncomeEntity> incomes;
   final ValueChanged<IncomeEntity> onEdit;
 
-  const _IncomeListView({
-    required this.incomes,
-    required this.onEdit,
-  });
+  const _IncomeListView({required this.incomes, required this.onEdit});
 
   @override
   Widget build(BuildContext context) {
@@ -227,10 +223,7 @@ class _IncomeListView extends StatelessWidget {
       separatorBuilder: (context, index) => SizedBox(height: context.h20),
       itemBuilder: (context, index) {
         final item = incomes[index];
-        return IncomeItemWidget(
-          income: item,
-          onTap: () => onEdit(item),
-        );
+        return IncomeItemWidget(income: item, onTap: () => onEdit(item));
       },
     );
   }

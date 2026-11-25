@@ -1,7 +1,7 @@
-import 'package:masrofy/features/expense/data/datasource/expense_local_datasource.dart';
-import 'package:masrofy/features/expense/data/models/expense_model.dart';
-import 'package:masrofy/features/expense/domain/entities/expense_entity.dart';
-import 'package:masrofy/features/expense/domain/repo/expense_repository.dart';
+import '../../domain/entities/expense_entity.dart';
+import '../../domain/repo/expense_repository.dart';
+import '../datasource/expense_local_datasource.dart';
+import '../models/expense_model.dart';
 
 class ExpenseRepositoryImpl implements ExpenseRepository {
   final ExpenseLocalDataSource localDataSource;

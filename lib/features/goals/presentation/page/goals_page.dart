@@ -1,20 +1,21 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:masrofy/core/theme/app_colors.dart';
-import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
-import 'package:masrofy/core/utils/extensions/extensions.dart';
-import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
-import 'package:masrofy/core/widgets/custom_appbar.dart';
-import 'package:masrofy/features/goals/data/datasource/goals_local_datasource.dart';
-import 'package:masrofy/features/goals/data/models/goals_card_model.dart';
-import 'package:masrofy/features/goals/data/repos/goals_repository.dart';
-import 'package:masrofy/features/goals/presentation/cubit/goals_cubit.dart';
-import 'package:masrofy/features/goals/presentation/cubit/goals_status_cubit.dart';
-import 'package:masrofy/features/goals/presentation/widget/goals_bottom_sheet_widget.dart';
-import 'package:masrofy/features/goals/presentation/widget/goals_card_widget.dart';
-import 'package:masrofy/features/goals/presentation/widget/goals_summary_card_widget.dart';
-import 'package:masrofy/features/goals/presentation/widget/goals_tab_bar_widget.dart';
+
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/utils/constants/locale_keys.g.dart';
+import '../../../../core/utils/extensions/extensions.dart';
+import '../../../../core/utils/extensions/screen_helper_extension.dart';
+import '../../../../core/widgets/custom_appbar.dart';
+import '../../data/datasource/goals_local_datasource.dart';
+import '../../data/models/goals_card_model.dart';
+import '../../data/repos/goals_repository.dart';
+import '../cubit/goals_cubit.dart';
+import '../cubit/goals_status_cubit.dart';
+import '../widget/goals_bottom_sheet_widget.dart';
+import '../widget/goals_card_widget.dart';
+import '../widget/goals_summary_card_widget.dart';
+import '../widget/goals_tab_bar_widget.dart';
 
 class GoalsPage extends StatefulWidget {
   const GoalsPage({super.key});

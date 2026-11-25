@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:masrofy/core/services/shared_preferences.dart';
-import 'package:masrofy/features/expense/data/models/expense_model.dart';
+import '../../../../core/services/shared_preferences.dart';
+import '../models/expense_model.dart';
 
 abstract class ExpenseLocalDataSource {
   Future<List<ExpenseModel>> getExpenses();

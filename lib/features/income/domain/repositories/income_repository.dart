@@ -1,4 +1,4 @@
-import 'package:masrofy/features/income/domain/entities/income_entity.dart';
+import '../entities/income_entity.dart';
 
 abstract class IncomeRepository {
   Future<List<IncomeEntity>> getIncomes();

@@ -2,14 +2,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:masrofy/app.dart';
-import 'package:masrofy/core/services/shared_preferences.dart';
-import 'package:masrofy/core/utils/constants/app_strings.dart';
-import 'package:masrofy/features/auth/data/datasources/auth_local_datasource.dart';
-import 'package:masrofy/features/auth/data/repositories/auth_repository_impl.dart';
-import 'package:masrofy/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:masrofy/features/main/tabs/more_tab/presentation/cubits/locale_cubit.dart';
-import 'package:masrofy/features/main/tabs/more_tab/presentation/cubits/theme_cubit.dart';
+
+import 'app.dart';
+import 'core/services/shared_preferences.dart';
+import 'core/utils/constants/app_strings.dart';
+import 'features/auth/data/datasources/auth_local_datasource.dart';
+import 'features/auth/data/repositories/auth_repository_impl.dart';
+import 'features/auth/presentation/cubit/auth_cubit.dart';
+import 'features/main/tabs/more_tab/presentation/cubits/locale_cubit.dart';
+import 'features/main/tabs/more_tab/presentation/cubits/theme_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

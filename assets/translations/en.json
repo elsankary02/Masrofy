@@ -134,7 +134,7 @@
   "user_name": "User Name",
   "user_email": "User Email",
   "default_user_name": "Mohamed Ibrahim",
-  "default_user_email": "elsankary02@gmail.com",
+  "default_user_email": "mohamedibrahimsoftware02@gmail.com",
   "this_week": "This Week",
   "this_month": "This Month",
   "last_month": "Last Month",
@@ -180,5 +180,13 @@
   "validation_goal_target_positive": "Target amount must be greater than zero and not negative",
   "validation_expense_amount_required": "Enter the expense amount first",
   "validation_expense_amount_invalid": "Enter a valid number for the expense amount",
-  "validation_expense_amount_positive": "Expense amount must be greater than zero and not negative"
+  "validation_expense_amount_positive": "Expense amount must be greater than zero and not negative",
+  "no_transactions": "No transactions yet",
+  "logout_confirm_message": "Are you sure you want to log out? You can choose to clear all locally saved expenses, income, debts, and goals.",
+  "clear_local_data": "Clear local data (expenses, income, debts, goals)",
+  "cancel": "Cancel",
+  "in_progress": "In progress...",
+  "home_welcome_masrofy": "Welcome to Masrofy",
+  "developed_by": "Developed by",
+  "mohamed": "Eng. Mohamed Ibrahim"
 }

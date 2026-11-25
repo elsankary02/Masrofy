@@ -1,15 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:masrofy/core/theme/app_colors.dart';
-import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
-import 'package:masrofy/core/utils/extensions/extensions.dart';
-import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
-import 'package:masrofy/features/main/tabs/more_tab/presentation/cubits/locale_cubit.dart';
-import 'package:masrofy/features/main/tabs/more_tab/presentation/cubits/theme_cubit.dart';
-import 'package:masrofy/features/main/tabs/more_tab/presentation/widgets/more_custom_card_section.dart';
-import 'package:masrofy/features/main/tabs/more_tab/presentation/widgets/more_custom_list_tile.dart';
-import 'package:masrofy/features/main/tabs/more_tab/presentation/widgets/more_summary_card.dart';
-import 'package:masrofy/features/main/tabs/more_tab/presentation/widgets/more_setting_bottom_sheet.dart';
+
+import '../../../../../../core/theme/app_colors.dart';
+import '../../../../../../core/utils/constants/locale_keys.g.dart';
+import '../../../../../../core/utils/extensions/extensions.dart';
+import '../../../../../../core/utils/extensions/screen_helper_extension.dart';
+import '../cubits/locale_cubit.dart';
+import '../cubits/theme_cubit.dart';
+import '../widgets/logout_confirm_bottom_sheet.dart';
+import '../widgets/more_custom_card_section.dart';
+import '../widgets/more_custom_list_tile.dart';
+import '../widgets/more_setting_bottom_sheet.dart';
+import '../widgets/more_summary_card.dart';
 
 class MoreTab extends StatelessWidget {
   const MoreTab({super.key});
@@ -74,7 +76,8 @@ class MoreTab extends StatelessWidget {
                     icon: Icons.logout,
                     onTap: () => showModalBottomSheet(
                       context: context,
-                      builder: (context) => Container(),
+                      backgroundColor: Colors.transparent,
+                      builder: (context) => const LogoutConfirmBottomSheet(),
                     ),
                     color: AppColors.error,
                   ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:masrofy/features/expense/presentation/widget/amount_input_field.dart';
+
+import 'amount_input_field.dart';
 
 class ExpenseAmountSection extends StatelessWidget {
   final TextEditingController controller;

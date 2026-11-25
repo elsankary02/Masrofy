@@ -1,52 +1,80 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
-import 'package:masrofy/core/theme/app_colors.dart';
-import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
 
-class ReportsModel {
-  final String label;
-  final String amount;
-  final String? changeText;
-  final Color? changeColor;
-  final String subText;
-  final bool isPercentage;
+import '../../../../../../core/theme/app_colors.dart';
+import '../../../../../../core/utils/constants/locale_keys.g.dart';
+import '../../domain/entities/reports_entity.dart';
 
-  ReportsModel({
-    required this.label,
-    required this.amount,
-    this.changeText,
-    this.changeColor,
-    required this.subText,
-    this.isPercentage = false,
+class ReportsModel extends ReportsEntity {
+  const ReportsModel({
+    required super.filterKey,
+    required super.summaryCards,
+    required super.categories,
+    required super.totalExpensesAmount,
   });
-}
 
-List<ReportsModel> reportsData(BuildContext context) {
-  return [
-    ReportsModel(
-      label: LocaleKeys.total_expenses.tr(),
-      amount: "15,400",
-      changeText: "8% ▼",
-      changeColor: AppColors.expense,
-      subText: LocaleKeys.from_last_month.tr(),
-    ),
-    ReportsModel(
-      label: LocaleKeys.total_income_alt.tr(),
-      amount: "27,850",
-      changeText: "12% ▲",
-      changeColor: AppColors.income,
-      subText: LocaleKeys.from_last_month.tr(),
-    ),
-    ReportsModel(
-      label: LocaleKeys.savings_rate.tr(),
-      amount: "45%",
-      subText: LocaleKeys.from_income.tr(),
-      isPercentage: true,
-    ),
-    ReportsModel(
-      label: LocaleKeys.net_income.tr(),
-      amount: "12,450",
-      subText: LocaleKeys.current_month_income.tr(),
-    ),
-  ];
+  factory ReportsModel.fromTotals({
+    required String filterKey,
+    required double periodExpenses,
+    required double periodIncome,
+    required Map<String, double> categoryTotals,
+  }) {
+    final netIncome = periodIncome - periodExpenses;
+    final savingsRate = periodIncome > 0
+        ? (((periodIncome - periodExpenses) / periodIncome) * 100)
+              .clamp(-100, 100)
+              .round()
+        : 0;
+
+    final categoryMeta = [
+      ('food', LocaleKeys.food.tr(), AppColors.expense),
+      ('transportation', LocaleKeys.transportation.tr(), AppColors.blue),
+      ('bills', LocaleKeys.bills.tr(), AppColors.accent),
+      ('shopping', LocaleKeys.shopping.tr(), AppColors.purple),
+      ('entertainment', LocaleKeys.entertainment.tr(), AppColors.orange),
+      ('other', LocaleKeys.other.tr(), AppColors.grey400),
+    ];
+
+    final categories = categoryMeta.map((meta) {
+      final value = categoryTotals[meta.$1] ?? 0;
+      final fraction = periodExpenses > 0 ? (value / periodExpenses) : 0.0;
+      return CategoryBreakdownEntity(
+        keyName: meta.$1,
+        label: meta.$2,
+        color: meta.$3,
+        amount: value,
+        fraction: fraction,
+      );
+    }).toList();
+
+    final summaryCards = [
+      SummaryCardEntity(
+        label: LocaleKeys.total_expenses.tr(),
+        amount: periodExpenses.round().toString(),
+        subText: LocaleKeys.from_last_month.tr(),
+      ),
+      SummaryCardEntity(
+        label: LocaleKeys.total_income_alt.tr(),
+        amount: periodIncome.round().toString(),
+        subText: LocaleKeys.from_last_month.tr(),
+      ),
+      SummaryCardEntity(
+        label: LocaleKeys.savings_rate.tr(),
+        amount: '$savingsRate%',
+        subText: LocaleKeys.from_income.tr(),
+        isPercentage: true,
+      ),
+      SummaryCardEntity(
+        label: LocaleKeys.net_income.tr(),
+        amount: netIncome.round().toString(),
+        subText: LocaleKeys.current_month_income.tr(),
+      ),
+    ];
+
+    return ReportsModel(
+      filterKey: filterKey,
+      summaryCards: summaryCards,
+      categories: categories,
+      totalExpensesAmount: periodExpenses.round(),
+    );
+  }
 }

@@ -1,11 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:masrofy/core/theme/app_colors.dart';
-import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
-import 'package:masrofy/core/utils/extensions/extensions.dart';
-import 'package:masrofy/features/debts/presentation/cubit/debts_cubit.dart';
-import 'package:masrofy/features/debts/presentation/cubit/debts_state.dart';
+
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/utils/constants/locale_keys.g.dart';
+import '../../../../core/utils/extensions/extensions.dart';
+import '../cubit/debts_cubit.dart';
+import '../cubit/debts_state.dart';
 
 class DebtsTabBarWidget extends StatefulWidget {
   const DebtsTabBarWidget({super.key});
@@ -53,8 +54,8 @@ class _DebtsTabBarWidgetState extends State<DebtsTabBarWidget>
       indicatorColor: activeColor,
       indicatorSize: TabBarIndicatorSize.tab,
       onTap: (index) {
-        final status = [DebtsStatus.isActive, DebtsStatus.paid];
-        context.read<DebtsCubit>().debtsStatusFunc(status[index]);
+        final status = [DebtsStatus.isActive, DebtsStatus.isPaid];
+        context.read<DebtsCubit>().changeStatus(status[index]);
       },
       tabs: [
         Tab(text: LocaleKeys.status_active.tr()),

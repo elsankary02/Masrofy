@@ -1,4 +1,4 @@
-import 'package:masrofy/features/auth/data/user_model.dart';
+import '../../data/user_model.dart';
 
 abstract class AuthRepository {
   bool isLoggedIn();

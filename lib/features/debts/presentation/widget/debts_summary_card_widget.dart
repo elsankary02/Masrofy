@@ -1,18 +1,21 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:masrofy/core/theme/app_colors.dart';
-import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
-import 'package:masrofy/core/utils/extensions/extensions.dart';
-import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
-import 'package:masrofy/features/debts/presentation/cubit/debts_cubit.dart';
-import 'package:masrofy/features/debts/presentation/cubit/debts_state.dart';
+
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/utils/constants/locale_keys.g.dart';
+import '../../../../core/utils/extensions/extensions.dart';
+import '../../../../core/utils/extensions/screen_helper_extension.dart';
+import '../cubit/debts_cubit.dart';
+import '../cubit/debts_state.dart';
 
 class DebtsSummaryCardWidget extends StatelessWidget {
   const DebtsSummaryCardWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,##0');
+
     return BlocBuilder<DebtsCubit, DebtsState>(
       builder: (context, state) {
         final num totalTarget = state.debts.fold(
@@ -24,10 +27,13 @@ class DebtsSummaryCardWidget extends StatelessWidget {
           (sum, item) => sum + item.current,
         );
 
-        final num totalPaid = totalTarget - totalCurrent;
-        final double totalProgress = totalTarget == 0
-            ? 0
-            : (totalPaid / totalTarget).clamp(0.0, 1.0);
+        final num totalPaid = (totalTarget - totalCurrent).clamp(
+          0,
+          totalTarget,
+        );
+        final double totalProgress = totalTarget <= 0
+            ? 0.0
+            : (totalPaid / totalTarget).clamp(0.0, 1.0).toDouble();
         final int totalPercentage = (totalProgress * 100).round();
 
         return Container(
@@ -48,15 +54,16 @@ class DebtsSummaryCardWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
+                spacing: context.h10,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _TotalDebtsWidget(
                     title: LocaleKeys.total_debts.tr(),
-                    price: totalTarget.toInt(),
+                    price: formatter.format(totalTarget.round()),
                   ),
                   _TotalDebtsWidget(
                     title: LocaleKeys.remaining_label.tr(),
-                    price: totalCurrent.toInt(),
+                    price: formatter.format(totalCurrent.round()),
                   ),
                 ],
               ),
@@ -74,7 +81,7 @@ class DebtsSummaryCardWidget extends StatelessWidget {
 
 class _TotalDebtsWidget extends StatelessWidget {
   final String title;
-  final int price;
+  final String price;
   const _TotalDebtsWidget({required this.title, required this.price});
 
   @override
@@ -85,24 +92,26 @@ class _TotalDebtsWidget extends StatelessWidget {
         Text(
           title,
           style: context.textTheme.labelLarge?.copyWith(
-            color: Colors.white.withValues(alpha: 0.8),
+            color: AppColors.white.withValues(alpha: 0.85),
             fontWeight: FontWeight.w500,
           ),
         ),
         Row(
-          spacing: 2,
+          spacing: 4,
+          crossAxisAlignment: CrossAxisAlignment.baseline,
+          textBaseline: TextBaseline.alphabetic,
           children: [
             Text(
-              "$price",
+              price,
               style: context.textTheme.headlineMedium?.copyWith(
-                color: Colors.white.withValues(alpha: 0.8),
+                color: AppColors.white,
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
               LocaleKeys.currency_egp.tr(),
               style: context.textTheme.titleMedium?.copyWith(
-                color: Colors.white.withValues(alpha: 0.8),
+                color: AppColors.white.withValues(alpha: 0.9),
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -132,14 +141,14 @@ class _CircularProgress extends StatelessWidget {
               child: CircularProgressIndicator(
                 value: progress,
                 strokeWidth: 5,
-                color: Colors.white,
-                backgroundColor: Colors.white.withValues(alpha: 0.25),
+                color: AppColors.white,
+                backgroundColor: AppColors.white.withValues(alpha: 0.25),
               ),
             ),
             Text(
               '$percentage%',
               style: context.textTheme.titleMedium?.copyWith(
-                color: Colors.white,
+                color: AppColors.white,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -148,7 +157,7 @@ class _CircularProgress extends StatelessWidget {
         Text(
           LocaleKeys.paid_label.tr(),
           style: context.textTheme.bodySmall?.copyWith(
-            color: Colors.white.withValues(alpha: 0.9),
+            color: AppColors.white.withValues(alpha: 0.9),
             fontWeight: FontWeight.w500,
           ),
         ),

@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:masrofy/features/notification/data/datasources/notification_local_datasource.dart';
-import 'package:masrofy/features/notification/data/models/notification_model.dart';
 
+import '../../data/datasources/notification_local_datasource.dart';
+import '../../data/models/notification_model.dart';
 import 'notification_state.dart';
 
 class NotificationCubit extends Cubit<NotificationState> {

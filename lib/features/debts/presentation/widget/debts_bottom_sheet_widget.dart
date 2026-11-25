@@ -1,11 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:masrofy/core/theme/app_colors.dart';
-import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
-import 'package:masrofy/core/utils/extensions/extensions.dart';
-import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
-import 'package:masrofy/core/widgets/custom_btn.dart';
-import 'package:masrofy/core/widgets/custom_text_form_field.dart';
+
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/utils/constants/locale_keys.g.dart';
+import '../../../../core/utils/extensions/extensions.dart';
+import '../../../../core/utils/extensions/screen_helper_extension.dart';
+import '../../../../core/widgets/custom_btn.dart';
+import '../../../../core/widgets/custom_text_form_field.dart';
 
 class DebtsBottomSheetWidget extends StatefulWidget {
   final bool isEditing;
@@ -44,7 +45,7 @@ class _DebtsBottomSheetWidgetState extends State<DebtsBottomSheetWidget> {
   String? _validateTotal(String? value) {
     final text = value?.trim() ?? '';
     if (text.isEmpty) {
-      return LocaleKeys.validation_debt_total_required.tr();
+      return LocaleKeys.validation_debt_total_invalid.tr();
     }
     final parsed = num.tryParse(text);
     if (parsed == null) {
@@ -88,7 +89,7 @@ class _DebtsBottomSheetWidgetState extends State<DebtsBottomSheetWidget> {
       width: double.infinity,
       padding: EdgeInsets.only(
         top: context.h20,
-        bottom: context.viewInsets.bottom,
+        bottom: context.viewInsets.bottom + context.h15,
         left: context.h20,
         right: context.h20,
       ),

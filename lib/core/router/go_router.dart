@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:masrofy/core/router/named_routes.dart';
-import 'package:masrofy/features/auth/presentation/pages/auth_page.dart';
-import 'package:masrofy/features/debts/presentation/page/debts_page.dart';
-import 'package:masrofy/features/expense/presentation/page/expense_page.dart';
-import 'package:masrofy/features/goals/presentation/page/goals_page.dart';
-import 'package:masrofy/features/income/presentation/screens/income_page.dart';
-import 'package:masrofy/features/main/page/main_layout.dart';
-import 'package:masrofy/features/main/tabs/home_tab/presentation/pages/home_tab.dart';
-import 'package:masrofy/features/main/tabs/more_tab/presentation/pages/more_tab.dart';
-import 'package:masrofy/features/main/tabs/reports_tab/presentation/pages/reports_tab.dart';
-import 'package:masrofy/features/main/tabs/transactions_tab/presentation/page/transactions_tab.dart';
-import 'package:masrofy/features/notification/presentation/page/notification_page.dart';
-import 'package:masrofy/features/splash/splash_page.dart';
+
+import '../../features/auth/presentation/pages/auth_page.dart';
+import '../../features/debts/presentation/page/debts_page.dart';
+import '../../features/expense/presentation/page/expense_page.dart';
+import '../../features/goals/presentation/page/goals_page.dart';
+import '../../features/income/presentation/screens/income_page.dart';
+import '../../features/main/page/main_layout.dart';
+import '../../features/main/tabs/home_tab/presentation/pages/home_tab.dart';
+import '../../features/main/tabs/more_tab/presentation/pages/more_tab.dart';
+import '../../features/main/tabs/reports_tab/presentation/pages/reports_tab.dart';
+import '../../features/main/tabs/transactions_tab/presentation/page/transactions_tab.dart';
+import '../../features/notification/presentation/page/notification_page.dart';
+import '../../features/splash/splash_page.dart';
+import 'named_routes.dart';
 
 final GoRouter router = GoRouter(
   routes: [

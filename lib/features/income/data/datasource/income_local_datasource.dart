@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:masrofy/core/services/shared_preferences.dart';
-import 'package:masrofy/features/income/data/models/income_model.dart';
+import '../../../../core/services/shared_preferences.dart';
+import '../models/income_model.dart';
 
 abstract class IncomeLocalDataSource {
   Future<List<IncomeModel>> getIncomes();

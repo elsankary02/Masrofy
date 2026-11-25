@@ -1,4 +1,4 @@
-import 'package:masrofy/features/income/domain/entities/income_entity.dart';
+import '../../domain/entities/income_entity.dart';
 
 enum IncomeFilter { all, thisMonth, lastMonth, thisYear }
 
@@ -13,8 +13,7 @@ class IncomeState {
     this.isLoading = false,
   });
 
-  int get totalAmount =>
-      incomes.fold<int>(0, (sum, item) => sum + item.amount);
+  int get totalAmount => incomes.fold<int>(0, (sum, item) => sum + item.amount);
 
   IncomeState copyWith({
     List<IncomeEntity>? incomes,

@@ -1,9 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:masrofy/core/router/named_routes.dart';
-import 'package:masrofy/core/theme/app_colors.dart';
-import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
+
+import '../../../../../../core/router/named_routes.dart';
+import '../../../../../../core/theme/app_colors.dart';
+import '../../../../../../core/utils/constants/locale_keys.g.dart';
 
 class QuickToolsModel {
   final String subTitle;

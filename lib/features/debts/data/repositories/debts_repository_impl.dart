@@ -1,44 +1,39 @@
-import 'package:masrofy/features/debts/data/datasources/debts_local_datasource.dart';
-import 'package:masrofy/features/debts/data/models/debts_model.dart';
-import 'package:masrofy/features/debts/domain/repositories/debts_repository.dart';
+import '../../domain/entities/debt_entity.dart';
+import '../../domain/repositories/debts_repository.dart';
+import '../datasources/debts_local_datasource.dart';
+import '../models/debts_model.dart';
 
 class DebtsRepositoryImpl implements DebtsRepository {
-  final DebtsLocalDataSource _localDataSource;
+  final DebtsLocalDataSource localDataSource;
 
-  DebtsRepositoryImpl(this._localDataSource);
-
-  @override
-  List<DebtsModel> getDebts() => _localDataSource.getDebts();
+  const DebtsRepositoryImpl(this.localDataSource);
 
   @override
-  Future<List<DebtsModel>> addDebt(DebtsModel debt) async {
-    final currentList = List<DebtsModel>.from(_localDataSource.getDebts());
-    final newDebt = debt.id.isEmpty
-        ? debt.copyWith(id: DateTime.now().millisecondsSinceEpoch.toString())
-        : debt;
-    currentList.add(newDebt);
-    await _localDataSource.saveDebts(currentList);
-    return currentList;
+  Future<List<DebtEntity>> getDebts() => localDataSource.getDebts();
+
+  @override
+  Future<void> addDebt(DebtEntity debt) async {
+    final currentList = await localDataSource.getDebts();
+    final newItem = DebtsModel.fromEntity(
+      debt.copyWith(id: DateTime.now().microsecondsSinceEpoch.toString()),
+    );
+    await localDataSource.saveDebts([...currentList, newItem]);
   }
 
   @override
-  Future<List<DebtsModel>> updateDebt(DebtsModel debt) async {
-    final currentList = List<DebtsModel>.from(_localDataSource.getDebts());
-    final index = currentList.indexWhere((item) => item.id == debt.id);
-    if (index != -1) {
-      currentList[index] = debt;
-      await _localDataSource.saveDebts(currentList);
-    }
-    return currentList;
-  }
-
-  @override
-  Future<List<DebtsModel>> deleteDebt(String id) async {
-    final currentList = _localDataSource
-        .getDebts()
-        .where((item) => item.id != id)
+  Future<void> updateDebt(DebtEntity debt) async {
+    final currentList = await localDataSource.getDebts();
+    final updatedItem = DebtsModel.fromEntity(debt);
+    final updatedList = currentList
+        .map((item) => item.id == updatedItem.id ? updatedItem : item)
         .toList();
-    await _localDataSource.saveDebts(currentList);
-    return currentList;
+    await localDataSource.saveDebts(updatedList);
+  }
+
+  @override
+  Future<void> deleteDebt(String id) async {
+    final currentList = await localDataSource.getDebts();
+    final filtered = currentList.where((item) => item.id != id).toList();
+    await localDataSource.saveDebts(filtered);
   }
 }

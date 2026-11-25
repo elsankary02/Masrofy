@@ -1,8 +1,8 @@
-import 'package:masrofy/features/debts/data/models/debts_model.dart';
+import '../entities/debt_entity.dart';
 
 abstract class DebtsRepository {
-  List<DebtsModel> getDebts();
-  Future<List<DebtsModel>> addDebt(DebtsModel debt);
-  Future<List<DebtsModel>> updateDebt(DebtsModel debt);
-  Future<List<DebtsModel>> deleteDebt(String id);
+  Future<List<DebtEntity>> getDebts();
+  Future<void> addDebt(DebtEntity debt);
+  Future<void> updateDebt(DebtEntity debt);
+  Future<void> deleteDebt(String id);
 }

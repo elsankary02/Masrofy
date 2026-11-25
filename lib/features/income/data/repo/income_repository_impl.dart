@@ -1,7 +1,7 @@
-import 'package:masrofy/features/income/data/datasource/income_local_datasource.dart';
-import 'package:masrofy/features/income/data/models/income_model.dart';
-import 'package:masrofy/features/income/domain/entities/income_entity.dart';
-import 'package:masrofy/features/income/domain/repositories/income_repository.dart';
+import '../../domain/entities/income_entity.dart';
+import '../../domain/repositories/income_repository.dart';
+import '../datasource/income_local_datasource.dart';
+import '../models/income_model.dart';
 
 class IncomeRepositoryImpl implements IncomeRepository {
   final IncomeLocalDataSource localDataSource;

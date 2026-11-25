@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:masrofy/features/income/domain/entities/income_entity.dart';
+
+import '../../domain/entities/income_entity.dart';
 
 class IncomeModel extends IncomeEntity {
   const IncomeModel({

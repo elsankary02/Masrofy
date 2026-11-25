@@ -1,12 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:masrofy/core/theme/app_colors.dart';
-import 'package:masrofy/core/utils/extensions/extensions.dart';
-import 'package:masrofy/core/widgets/custom_over_view.dart';
-import 'package:masrofy/features/main/tabs/home_tab/data/model/over_view_model.dart';
-import 'package:masrofy/features/main/tabs/home_tab/presentation/cubit/home_cubit.dart';
-import 'package:masrofy/features/main/tabs/home_tab/presentation/cubit/home_state.dart';
+
+import '../../../../../../core/theme/app_colors.dart';
+import '../../../../../../core/utils/extensions/extensions.dart';
+import '../../../../../../core/widgets/custom_over_view.dart';
+import '../../data/model/over_view_model.dart';
+import '../cubit/home_cubit.dart';
+import '../cubit/home_state.dart';
 
 class OverViewHomeWidget extends StatelessWidget {
   const OverViewHomeWidget({super.key});
@@ -20,7 +21,9 @@ class OverViewHomeWidget extends StatelessWidget {
         final overviewList = getOverviewData(
           context,
           todayExpenses: formatter.format(state.summary.todayExpenses),
-          currentMonthIncome: formatter.format(state.summary.currentMonthIncome),
+          currentMonthIncome: formatter.format(
+            state.summary.currentMonthIncome,
+          ),
           totalDebts: formatter.format(state.summary.remainingDebts),
           completedGoals:
               '${state.summary.completedGoalsCount} / ${state.summary.totalGoalsCount}',

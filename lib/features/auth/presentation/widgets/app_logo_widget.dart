@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:masrofy/core/theme/app_colors.dart';
-import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
+
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/utils/extensions/screen_helper_extension.dart';
 
 class AppLogoWidget extends StatelessWidget {
   const new({super.key});

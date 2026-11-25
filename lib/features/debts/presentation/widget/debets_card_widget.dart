@@ -1,14 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:masrofy/core/theme/app_colors.dart';
-import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
-import 'package:masrofy/core/utils/extensions/extensions.dart';
-import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
-import 'package:masrofy/features/debts/data/models/debts_model.dart';
+
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/utils/constants/locale_keys.g.dart';
+import '../../../../core/utils/extensions/extensions.dart';
+import '../../../../core/utils/extensions/screen_helper_extension.dart';
+import '../../data/models/debts_model.dart';
+import '../../domain/entities/debt_entity.dart';
 
 class DebetsCardWidget extends StatelessWidget {
   final VoidCallback? onTap;
-  final DebtsModel debts;
+  final DebtEntity debts;
+
   const DebetsCardWidget({super.key, this.onTap, required this.debts});
 
   @override
@@ -17,6 +20,15 @@ class DebetsCardWidget extends StatelessWidget {
     final secondaryColor = isDark
         ? AppColors.textSecondaryDark
         : AppColors.textSecondaryLight;
+    final cardColor = debts is DebtsModel
+        ? (debts as DebtsModel).color
+        : Color(debts.colorValue);
+
+    final double progress = debts.target <= 0
+        ? 0.0
+        : (debts.paidAmount / debts.target).clamp(0.0, 1.0).toDouble();
+    final int percentage = (progress * 100).round();
+    final formatter = NumberFormat('#,##0.##');
 
     return InkWell(
       borderRadius: BorderRadius.circular(18),
@@ -24,10 +36,10 @@ class DebetsCardWidget extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(context.h15),
         decoration: BoxDecoration(
-          color: isDark ? AppColors.cardDark : Colors.white,
+          color: isDark ? AppColors.cardDark : AppColors.white,
           borderRadius: BorderRadius.circular(18),
           border: Border.all(
-            color: debts.color.withValues(alpha: isDark ? 0.35 : 0.22),
+            color: cardColor.withValues(alpha: isDark ? 0.35 : 0.22),
             width: 1.2,
           ),
           boxShadow: [
@@ -44,41 +56,50 @@ class DebetsCardWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      debts.title,
-                      style: context.textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        debts.title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: context.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: context.h5),
-                    Text(
-                      debts.subtitle,
-                      style: context.textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w500,
-                        color: secondaryColor,
-                      ),
-                    ),
-                  ],
+                      if (debts.subtitle.isNotEmpty) ...[
+                        SizedBox(height: context.h5),
+                        Text(
+                          debts.subtitle,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: context.textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.w500,
+                            color: secondaryColor,
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
                 ),
+                SizedBox(width: context.h10),
                 Container(
                   padding: EdgeInsets.symmetric(
                     horizontal: context.h10,
                     vertical: context.h5,
                   ),
                   decoration: BoxDecoration(
-                    color: debts.color.withValues(alpha: 0.12),
+                    color: cardColor.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
-                    '${LocaleKeys.remaining_label.tr()} ${debts.current} ${LocaleKeys.currency_egp.tr()}',
+                    '${LocaleKeys.remaining_label.tr()} ${formatter.format(debts.current)} ${LocaleKeys.currency_egp.tr()}',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: context.textTheme.labelMedium?.copyWith(
                       fontWeight: FontWeight.w700,
-                      color: debts.color,
+                      color: cardColor,
                     ),
                   ),
                 ),
@@ -90,9 +111,9 @@ class DebetsCardWidget extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(100),
                 child: LinearProgressIndicator(
-                  value: debts.progress,
-                  backgroundColor: debts.color.withValues(alpha: 0.15),
-                  valueColor: AlwaysStoppedAnimation<Color>(debts.color),
+                  value: progress,
+                  backgroundColor: cardColor.withValues(alpha: 0.15),
+                  valueColor: AlwaysStoppedAnimation<Color>(cardColor),
                 ),
               ),
             ),
@@ -101,14 +122,14 @@ class DebetsCardWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '${debts.percentage}%',
+                  '$percentage%',
                   style: context.textTheme.labelMedium?.copyWith(
                     fontWeight: FontWeight.w700,
-                    color: debts.color,
+                    color: cardColor,
                   ),
                 ),
                 Text(
-                  '${LocaleKeys.total.tr()} ${debts.target} ${LocaleKeys.currency_egp.tr()}',
+                  '${LocaleKeys.total.tr()} ${formatter.format(debts.target)} ${LocaleKeys.currency_egp.tr()}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: context.textTheme.labelMedium?.copyWith(

@@ -1,5 +1,5 @@
-import 'package:masrofy/features/goals/data/datasource/goals_local_datasource.dart';
-import 'package:masrofy/features/goals/data/models/goals_card_model.dart';
+import '../datasource/goals_local_datasource.dart';
+import '../models/goals_card_model.dart';
 
 abstract class GoalsRepository {
   Future<List<GoalsCardModel>> getGoals();

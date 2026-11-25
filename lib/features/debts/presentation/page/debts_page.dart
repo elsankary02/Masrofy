@@ -1,19 +1,22 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:masrofy/core/theme/app_colors.dart';
-import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
-import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
-import 'package:masrofy/core/widgets/custom_appbar.dart';
-import 'package:masrofy/features/debts/data/datasources/debts_local_datasource.dart';
-import 'package:masrofy/features/debts/data/models/debts_model.dart';
-import 'package:masrofy/features/debts/data/repositories/debts_repository_impl.dart';
-import 'package:masrofy/features/debts/presentation/cubit/debts_cubit.dart';
-import 'package:masrofy/features/debts/presentation/cubit/debts_state.dart';
-import 'package:masrofy/features/debts/presentation/widget/debets_card_widget.dart';
-import 'package:masrofy/features/debts/presentation/widget/debts_bottom_sheet_widget.dart';
-import 'package:masrofy/features/debts/presentation/widget/debts_summary_card_widget.dart';
-import 'package:masrofy/features/debts/presentation/widget/debts_tab_bar_widget.dart';
+
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/utils/constants/locale_keys.g.dart';
+import '../../../../core/utils/extensions/extensions.dart';
+import '../../../../core/utils/extensions/screen_helper_extension.dart';
+import '../../../../core/widgets/custom_appbar.dart';
+import '../../data/datasources/debts_local_datasource.dart';
+import '../../data/repositories/debts_repository_impl.dart';
+import '../../domain/entities/debt_entity.dart';
+import '../../domain/usecases/get_debts_usecase.dart';
+import '../cubit/debts_cubit.dart';
+import '../cubit/debts_state.dart';
+import '../widget/debets_card_widget.dart';
+import '../widget/debts_bottom_sheet_widget.dart';
+import '../widget/debts_summary_card_widget.dart';
+import '../widget/debts_tab_bar_widget.dart';
 
 class DebtsPage extends StatefulWidget {
   const DebtsPage({super.key});
@@ -32,8 +35,13 @@ class _DebtsPageState extends State<DebtsPage> {
   @override
   void initState() {
     super.initState();
-    _debtsCubit = DebtsCubit(DebtsRepositoryImpl(DebtsLocalDataSourceImpl()))
-      ..loadDebts();
+    final repository = DebtsRepositoryImpl(DebtsLocalDataSourceImpl());
+    _debtsCubit = DebtsCubit(
+      getDebtsUseCase: GetDebtsUseCase(repository),
+      addDebtUseCase: AddDebtUseCase(repository),
+      updateDebtUseCase: UpdateDebtUseCase(repository),
+      deleteDebtUseCase: DeleteDebtUseCase(repository),
+    )..loadDebts();
   }
 
   @override
@@ -54,11 +62,9 @@ class _DebtsPageState extends State<DebtsPage> {
       );
   }
 
-  void _openDebtForm({DebtsModel? debt}) {
+  void _openDebtForm({DebtEntity? debt}) {
     final isEditing = debt != null;
-    final initialPaid = debt == null
-        ? ''
-        : (debt.target - debt.current).clamp(0, debt.target).toString();
+    final initialPaid = debt == null ? '' : debt.paidAmount.toString();
 
     _titleController.text = debt?.title ?? '';
     _creditorController.text = debt?.subtitle ?? '';
@@ -91,30 +97,48 @@ class _DebtsPageState extends State<DebtsPage> {
               final totalText = _totalController.text.trim();
               final paidText = _paidController.text.trim();
 
-              final num? parsedTotal = totalText.isEmpty
-                  ? null
-                  : num.tryParse(totalText);
-              final num? parsedPaid = paidText.isEmpty
-                  ? 0
-                  : num.tryParse(paidText);
-
               if (title.isEmpty) {
-                _showValidationMessage(context, 'أدخل عنوانًا صحيحًا للدين');
-                return;
-              }
-
-              if (parsedTotal == null || parsedTotal <= 0) {
                 _showValidationMessage(
                   context,
-                  'المبلغ الإجمالي يجب أن يكون رقمًا موجبًا أكبر من صفر',
+                  LocaleKeys.validation_debt_title_required.tr(),
                 );
                 return;
               }
 
-              if (parsedPaid == null || parsedPaid < 0) {
+              final num? parsedTotal = totalText.isEmpty
+                  ? null
+                  : num.tryParse(totalText);
+              if (parsedTotal == null) {
                 _showValidationMessage(
                   context,
-                  'لا يُسمح بإدخال مبلغ مدفوع بالسالب',
+                  LocaleKeys.validation_debt_total_invalid.tr(),
+                );
+                return;
+              }
+
+              if (parsedTotal <= 0) {
+                _showValidationMessage(
+                  context,
+                  LocaleKeys.validation_debt_total_positive.tr(),
+                );
+                return;
+              }
+
+              final num? parsedPaid = paidText.isEmpty
+                  ? 0
+                  : num.tryParse(paidText);
+              if (parsedPaid == null) {
+                _showValidationMessage(
+                  context,
+                  LocaleKeys.validation_debt_paid_invalid.tr(),
+                );
+                return;
+              }
+
+              if (parsedPaid < 0) {
+                _showValidationMessage(
+                  context,
+                  LocaleKeys.validation_debt_paid_negative.tr(),
                 );
                 return;
               }
@@ -122,7 +146,7 @@ class _DebtsPageState extends State<DebtsPage> {
               if (parsedPaid > parsedTotal) {
                 _showValidationMessage(
                   context,
-                  'المبلغ المدفوع لا يمكن أن يتجاوز المبلغ الإجمالي',
+                  LocaleKeys.validation_debt_paid_exceeds_total.tr(),
                 );
                 return;
               }
@@ -132,21 +156,21 @@ class _DebtsPageState extends State<DebtsPage> {
                 parsedTotal,
               );
               final palette = [
-                AppColors.error,
-                AppColors.saving,
-                AppColors.cyan,
+                AppColors.error.toARGB32(),
+                AppColors.saving.toARGB32(),
+                AppColors.cyan.toARGB32(),
               ];
-              final cardColor =
-                  debt?.color ??
+              final cardColorValue =
+                  debt?.colorValue ??
                   palette[_debtsCubit.state.debts.length % palette.length];
 
-              final item = DebtsModel(
+              final item = DebtEntity(
                 id: debt?.id ?? '',
                 title: title,
                 subtitle: subtitle,
                 current: remaining,
                 target: parsedTotal,
-                color: cardColor,
+                colorValue: cardColorValue,
               );
 
               if (isEditing) {
@@ -203,9 +227,9 @@ class _DebtsPageState extends State<DebtsPage> {
 }
 
 class _DebtsListView extends StatelessWidget {
-  final List<DebtsModel> debts;
+  final List<DebtEntity> debts;
   final DebtsStatus status;
-  final ValueChanged<DebtsModel> onEdit;
+  final ValueChanged<DebtEntity> onEdit;
 
   const _DebtsListView({
     required this.debts,
@@ -229,7 +253,11 @@ class _DebtsListView extends StatelessWidget {
           padding: const EdgeInsets.all(40.0),
           child: Text(
             LocaleKeys.no_debts.tr(),
-            style: TextStyle(color: Colors.grey.shade400),
+            style: context.textTheme.bodyMedium?.copyWith(
+              color: context.isDarkMode
+                  ? AppColors.textSecondaryDark
+                  : AppColors.textSecondaryLight,
+            ),
           ),
         ),
       );

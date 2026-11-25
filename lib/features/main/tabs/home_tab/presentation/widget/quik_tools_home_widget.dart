@@ -1,29 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:masrofy/core/widgets/custom_quick_tools.dart';
-import 'package:masrofy/core/router/go_router.dart';
-import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
-import 'package:masrofy/features/main/tabs/home_tab/data/model/quick_tools_model.dart';
+
+import '../../../../../../core/router/go_router.dart';
+import '../../../../../../core/utils/extensions/screen_helper_extension.dart';
+import '../../../../../../core/widgets/custom_quick_tools.dart';
+import '../../data/model/quick_tools_model.dart';
 
 class QuickToolsHomeWidget extends StatelessWidget {
-  const QuickToolsHomeWidget({super.key, required Future<void> Function() onAfterReturn});
+  final VoidCallback? onAfterReturn;
+
+  const QuickToolsHomeWidget({super.key, this.onAfterReturn});
 
   @override
   Widget build(BuildContext context) {
+    final quickTools = tools(context);
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: context.h10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          ...List.generate(tools(context).length, (index) {
-            final tool = tools(context)[index];
-            return CustomQuickTools(
-              subTitle: tool.subTitle,
-              color: tool.color,
-              icon: tool.icon,
-              onTap: () => router.push(tool.route),
-            );
-          }),
-        ],
+        children: List.generate(quickTools.length, (index) {
+          final tool = quickTools[index];
+          return CustomQuickTools(
+            subTitle: tool.subTitle,
+            color: tool.color,
+            icon: tool.icon,
+            onTap: () async {
+              await router.push(tool.route);
+              onAfterReturn?.call();
+            },
+          );
+        }),
       ),
     );
   }

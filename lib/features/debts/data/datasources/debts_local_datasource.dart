@@ -1,39 +1,31 @@
 import 'dart:convert';
-import 'package:masrofy/core/services/shared_preferences.dart';
-import 'package:masrofy/features/debts/data/models/debts_model.dart';
+
+import '../../../../core/services/shared_preferences.dart';
+import '../models/debts_model.dart';
 
 abstract class DebtsLocalDataSource {
-  List<DebtsModel> getDebts();
+  Future<List<DebtsModel>> getDebts();
   Future<void> saveDebts(List<DebtsModel> debts);
 }
 
 class DebtsLocalDataSourceImpl implements DebtsLocalDataSource {
-  static const _debtsKey = 'masrofy_local_debts';
-  static const _seededKey = 'masrofy_debts_seeded';
+  static const String _storageKey = 'masrofy_debts_list';
 
   @override
-  List<DebtsModel> getDebts() {
-    final hasSeeded = SPService.getBool(_seededKey) ?? false;
-    final raw = SPService.getString(_debtsKey);
-
-    if (!hasSeeded && (raw == null || raw.isEmpty)) {
-      return List<DebtsModel>.from(initialDebts);
+  Future<List<DebtsModel>> getDebts() async {
+    final String? rawJson = SPService.getString(_storageKey);
+    if (rawJson == null || rawJson.trim().isEmpty) {
+      return [];
     }
-
-    if (raw == null || raw.isEmpty) return [];
-
-    final List<dynamic> decoded = jsonDecode(raw) as List<dynamic>;
+    final List<dynamic> decoded = jsonDecode(rawJson) as List<dynamic>;
     return decoded
-        .map((item) => DebtsModel.fromMap(item as Map<String, dynamic>))
+        .map((item) => DebtsModel.fromJson(item as Map<String, dynamic>))
         .toList();
   }
 
   @override
   Future<void> saveDebts(List<DebtsModel> debts) async {
-    await SPService.setBool(_seededKey, true);
-    await SPService.setString(
-      _debtsKey,
-      jsonEncode(debts.map((d) => d.toMap()).toList()),
-    );
+    final String encoded = jsonEncode(debts.map((e) => e.toJson()).toList());
+    await SPService.setString(_storageKey, encoded);
   }
 }

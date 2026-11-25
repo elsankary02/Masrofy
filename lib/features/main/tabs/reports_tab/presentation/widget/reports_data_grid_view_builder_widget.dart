@@ -1,34 +1,51 @@
 import 'package:flutter/material.dart';
-import 'package:masrofy/core/theme/app_colors.dart';
-import 'package:masrofy/core/utils/extensions/extensions.dart';
-import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
-import 'package:masrofy/features/main/tabs/reports_tab/data/models/reports_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../../../core/theme/app_colors.dart';
+import '../../../../../../core/utils/extensions/extensions.dart';
+import '../../../../../../core/utils/extensions/screen_helper_extension.dart';
+import '../../domain/entities/reports_entity.dart';
+import '../cubit/reports_cubit.dart';
+import '../cubit/reports_state.dart';
 
 class ReportsDataGridViewBuilderWidget extends StatelessWidget {
-  const new({super.key});
+  const ReportsDataGridViewBuilderWidget({
+    super.key,
+    required List<SummaryCardEntity> cards,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 12.0,
-        mainAxisSpacing: 12.0,
-        childAspectRatio: 1.25,
-      ),
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: reportsData(context).length,
-      itemBuilder: (context, index) {
-        final report = reportsData(context)[index];
+    return BlocBuilder<ReportsCubit, ReportsState>(
+      builder: (context, state) {
+        if (state is! ReportsLoaded) {
+          return const SizedBox.shrink();
+        }
 
-        return _ReportsSummaryCardWidget(
-          label: report.label,
-          amount: report.amount,
-          subText: report.subText,
-          isPercentage: report.isPercentage,
-          changeText: report.changeText,
-          changeColor: report.changeColor,
+        final cards = state.report.summaryCards;
+
+        return GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 12.0,
+            mainAxisSpacing: 12.0,
+            childAspectRatio: 1.25,
+          ),
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: cards.length,
+          itemBuilder: (context, index) {
+            final report = cards[index];
+
+            return _ReportsSummaryCardWidget(
+              label: report.label,
+              amount: report.amount,
+              subText: report.subText,
+              isPercentage: report.isPercentage,
+              changeText: report.changeText,
+              changeColor: report.changeColor,
+            );
+          },
         );
       },
     );
@@ -42,6 +59,7 @@ class _ReportsSummaryCardWidget extends StatelessWidget {
   final Color? changeColor;
   final String subText;
   final bool isPercentage;
+
   const _ReportsSummaryCardWidget({
     required this.label,
     required this.amount,
@@ -69,7 +87,7 @@ class _ReportsSummaryCardWidget extends StatelessWidget {
         ),
       ),
       child: Column(
-        crossAxisAlignment: .start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 8,
         children: [
           Text(

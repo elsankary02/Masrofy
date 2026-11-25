@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:masrofy/core/services/shared_preferences.dart';
-import 'package:masrofy/features/goals/data/models/goals_card_model.dart';
+import '../../../../core/services/shared_preferences.dart';
+import '../models/goals_card_model.dart';
 
 abstract class GoalsLocalDataSource {
   Future<List<GoalsCardModel>> getGoals();

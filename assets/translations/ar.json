@@ -134,7 +134,7 @@
   "user_name": "اسم المستخدم",
   "user_email": "البريد الإلكتروني",
   "default_user_name": "محمد إبراهيم",
-  "default_user_email": "elsankary02@gmail.com",
+  "default_user_email": "mohamedibrahimsoftware02@gmail.com",
   "this_week": "هذا الأسبوع",
   "this_month": "هذا الشهر",
   "last_month": "الشهر الماضي",
@@ -183,5 +183,13 @@
   "validation_income_amount_positive": "قيمة الدخل لازم تكون أكبر من صفر ومش سالب",
   "validation_expense_amount_required": "اكتب قيمة المصروف أولاً",
   "validation_expense_amount_invalid": "أدخل رقمًا صحيحًا لقيمة المصروف",
-  "validation_expense_amount_positive": "قيمة المصروف لازم تكون أكبر من صفر ومش سالب"
+  "validation_expense_amount_positive": "قيمة المصروف لازم تكون أكبر من صفر ومش سالب",
+  "no_transactions": "لا توجد معاملات بعد",
+  "logout_confirm_message": "هل أنت متأكد من تسجيل الخروج؟ يمكنك اختيار مسح جميع المصروفات والدخل والديون والأهداف المحفوظة محلياً.",
+  "clear_local_data": "مسح البيانات المحلية (المصروفات، الدخل، الديون، الأهداف)",
+  "cancel": "إلغاء",
+  "in_progress": "جاري التنفيذ...",
+  "home_welcome_masrofy": "مرحباً بك في مصروفي",
+  "developed_by": "تم التطوير بواسطة",
+  "mohamed": "م. محمد إبراهيم"
 }

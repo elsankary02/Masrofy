@@ -1,26 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:masrofy/core/theme/app_colors.dart';
-import 'package:masrofy/core/utils/extensions/extensions.dart';
-import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
-import 'package:masrofy/features/main/tabs/reports_tab/data/models/category_legend_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../../../core/theme/app_colors.dart';
+import '../../../../../../core/utils/extensions/extensions.dart';
+import '../../../../../../core/utils/extensions/screen_helper_extension.dart';
+import '../cubit/reports_cubit.dart';
+import '../cubit/reports_state.dart';
 
 class CategoryLegendListWidget extends StatelessWidget {
   const CategoryLegendListWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      itemCount: categories.length,
-      separatorBuilder: (context, index) => SizedBox(height: context.h20),
-      itemBuilder: (context, index) {
-        final items = categories[index];
-        return _CategoryLegend(
-          label: items.label,
-          color: items.color,
-          percentage: items.percentage,
-          amount: items.amount,
+    return BlocBuilder<ReportsCubit, ReportsState>(
+      builder: (context, state) {
+        if (state is! ReportsLoaded) {
+          return const SizedBox.shrink();
+        }
+
+        final categories = state.report.categories;
+
+        return ListView.separated(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: categories.length,
+          separatorBuilder: (context, index) => SizedBox(height: context.h20),
+          itemBuilder: (context, index) {
+            final item = categories[index];
+            return _CategoryLegend(
+              label: item.label,
+              color: item.color,
+              percentage: item.percentageText,
+              amount: item.formattedAmount,
+            );
+          },
         );
       },
     );
@@ -33,6 +46,7 @@ class _CategoryLegend extends StatelessWidget {
   final Color color;
   final String percentage;
   final String amount;
+
   const _CategoryLegend({
     required this.label,
     required this.color,
@@ -45,7 +59,7 @@ class _CategoryLegend extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsetsGeometry.all(4),
+          padding: const EdgeInsets.all(4),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

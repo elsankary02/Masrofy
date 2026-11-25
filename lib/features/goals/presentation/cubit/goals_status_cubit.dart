@@ -1,4 +1,4 @@
-import 'package:masrofy/features/goals/data/models/goals_card_model.dart';
+import '../../data/models/goals_card_model.dart';
 
 enum GoalsStatus { active, completed }
 

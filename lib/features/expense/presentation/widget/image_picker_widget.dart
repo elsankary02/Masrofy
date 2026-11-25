@@ -3,9 +3,10 @@ import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:masrofy/core/theme/app_text_styles.dart';
-import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
-import 'package:masrofy/core/utils/extensions/extensions.dart';
+
+import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/utils/constants/locale_keys.g.dart';
+import '../../../../core/utils/extensions/extensions.dart';
 
 class ImagePickerWidget extends StatefulWidget {
   final ValueChanged<File?>? onImageSelected;

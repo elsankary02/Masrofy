@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:masrofy/core/services/shared_preferences.dart';
-import 'package:masrofy/features/notification/data/models/notification_model.dart';
+import '../../../../core/services/shared_preferences.dart';
+import '../models/notification_model.dart';
 
 abstract class NotificationLocalDataSource {
   List<NotificationModel> getNotifications();

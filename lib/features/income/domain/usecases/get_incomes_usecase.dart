@@ -1,5 +1,5 @@
-import 'package:masrofy/features/income/domain/entities/income_entity.dart';
-import 'package:masrofy/features/income/domain/repositories/income_repository.dart';
+import '../entities/income_entity.dart';
+import '../repositories/income_repository.dart';
 
 class GetIncomesUseCase {
   final IncomeRepository repository;

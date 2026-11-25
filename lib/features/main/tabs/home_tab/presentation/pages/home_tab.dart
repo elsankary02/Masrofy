@@ -1,37 +1,54 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
-import 'package:masrofy/core/utils/extensions/extensions.dart';
-import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
-import 'package:masrofy/features/main/tabs/home_tab/data/datasources/home_local_datasource.dart';
-import 'package:masrofy/features/main/tabs/home_tab/data/repositories/home_repository_impl.dart';
-import 'package:masrofy/features/main/tabs/home_tab/domain/usecases/get_home_summary_usecase.dart';
-import 'package:masrofy/features/main/tabs/home_tab/presentation/cubit/home_cubit.dart';
-import 'package:masrofy/features/main/tabs/home_tab/presentation/widget/app_bar_home_widget.dart';
-import 'package:masrofy/features/main/tabs/home_tab/presentation/widget/over_view__home_widget.dart';
-import 'package:masrofy/features/main/tabs/home_tab/presentation/widget/quik_tools_home_widget.dart';
-import 'package:masrofy/features/main/tabs/home_tab/presentation/widget/summary_card_home_widget.dart';
+
+import '../../../../../../core/theme/app_colors.dart';
+import '../../../../../../core/utils/constants/locale_keys.g.dart';
+import '../../../../../../core/utils/extensions/extensions.dart';
+import '../../../../../../core/utils/extensions/screen_helper_extension.dart';
+import '../../data/datasources/home_local_datasource.dart';
+import '../../data/repositories/home_repository_impl.dart';
+import '../../domain/usecases/get_home_summary_usecase.dart';
+import '../cubit/home_cubit.dart';
+import '../widget/app_bar_home_widget.dart';
+import '../widget/over_view__home_widget.dart';
+import '../widget/quik_tools_home_widget.dart';
+import '../widget/summary_card_home_widget.dart';
+
+final GlobalKey<HomeTabState> homeTabKey = GlobalKey<HomeTabState>();
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
 
   @override
-  State<HomeTab> createState() => _HomeTabState();
+  State<HomeTab> createState() => HomeTabState();
 }
 
-class _HomeTabState extends State<HomeTab> {
+class HomeTabState extends State<HomeTab> with WidgetsBindingObserver {
   late final HomeCubit _homeCubit;
+
+  void refreshHome() {
+    _homeCubit.loadSummary();
+  }
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     final repository = HomeRepositoryImpl(HomeLocalDataSourceImpl());
     _homeCubit = HomeCubit(GetHomeSummaryUseCase(repository))..loadSummary();
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      refreshHome();
+    }
+  }
+
+  @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _homeCubit.close();
     super.dispose();
   }
@@ -83,6 +100,9 @@ class _CustomHeader extends StatelessWidget {
           title,
           style: context.textTheme.titleSmall!.copyWith(
             fontWeight: FontWeight.w700,
+            color: context.isDarkMode
+                ? AppColors.textPrimaryDark
+                : AppColors.textPrimaryLight,
           ),
         ),
       ],

@@ -1,35 +1,44 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:masrofy/features/debts/data/models/debts_model.dart';
-import 'package:masrofy/features/debts/domain/repositories/debts_repository.dart';
 
+import '../../domain/entities/debt_entity.dart';
+import '../../domain/usecases/get_debts_usecase.dart';
 import 'debts_state.dart';
 
 class DebtsCubit extends Cubit<DebtsState> {
-  final DebtsRepository _repository;
+  final GetDebtsUseCase getDebtsUseCase;
+  final AddDebtUseCase addDebtUseCase;
+  final UpdateDebtUseCase updateDebtUseCase;
+  final DeleteDebtUseCase deleteDebtUseCase;
 
-  DebtsCubit(this._repository) : super(const DebtsState());
+  DebtsCubit({
+    required this.getDebtsUseCase,
+    required this.addDebtUseCase,
+    required this.updateDebtUseCase,
+    required this.deleteDebtUseCase,
+  }) : super(const DebtsState());
 
-  void loadDebts() {
-    final debts = _repository.getDebts();
-    emit(state.copyWith(debts: debts));
+  Future<void> loadDebts() async {
+    emit(state.copyWith(isLoading: true));
+    final items = await getDebtsUseCase();
+    emit(state.copyWith(debts: items, isLoading: false));
   }
 
-  void debtsStatusFunc(DebtsStatus debtsStatus) {
-    emit(state.copyWith(status: debtsStatus));
+  void changeStatus(DebtsStatus status) {
+    emit(state.copyWith(status: status));
   }
 
-  Future<void> addDebt(DebtsModel debt) async {
-    final updated = await _repository.addDebt(debt);
-    emit(state.copyWith(debts: updated));
+  Future<void> addDebt(DebtEntity debt) async {
+    await addDebtUseCase(debt);
+    await loadDebts();
   }
 
-  Future<void> updateDebt(DebtsModel debt) async {
-    final updated = await _repository.updateDebt(debt);
-    emit(state.copyWith(debts: updated));
+  Future<void> updateDebt(DebtEntity debt) async {
+    await updateDebtUseCase(debt);
+    await loadDebts();
   }
 
   Future<void> deleteDebt(String id) async {
-    final updated = await _repository.deleteDebt(id);
-    emit(state.copyWith(debts: updated));
+    await deleteDebtUseCase(id);
+    await loadDebts();
   }
 }

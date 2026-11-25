@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:masrofy/features/main/tabs/home_tab/domain/usecases/get_home_summary_usecase.dart';
-import 'package:masrofy/features/main/tabs/home_tab/presentation/cubit/home_state.dart';
+
+import '../../domain/usecases/get_home_summary_usecase.dart';
+import 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   final GetHomeSummaryUseCase getHomeSummaryUseCase;

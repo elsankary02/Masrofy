@@ -1,11 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:masrofy/core/theme/app_colors.dart';
-import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
-import 'package:masrofy/core/utils/extensions/extensions.dart';
-import 'package:masrofy/features/main/tabs/more_tab/presentation/cubits/locale_cubit.dart';
-import 'package:masrofy/features/main/tabs/more_tab/presentation/cubits/theme_cubit.dart';
+
+import '../../../../../../core/theme/app_colors.dart';
+import '../../../../../../core/utils/constants/locale_keys.g.dart';
+import '../../../../../../core/utils/extensions/extensions.dart';
+import '../cubits/locale_cubit.dart';
+import '../cubits/theme_cubit.dart';
 
 class SettingBottomSheet extends StatefulWidget {
   final bool isTheme;

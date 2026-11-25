@@ -1,7 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:masrofy/features/income/domain/entities/income_entity.dart';
-import 'package:masrofy/features/income/domain/usecases/get_incomes_usecase.dart';
-import 'package:masrofy/features/income/presentation/cubit/income_state.dart';
+
+import '../../domain/entities/income_entity.dart';
+import '../../domain/usecases/get_incomes_usecase.dart';
+import 'income_state.dart';
 
 class IncomeCubit extends Cubit<IncomeState> {
   final GetIncomesUseCase getIncomesUseCase;

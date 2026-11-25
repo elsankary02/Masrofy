@@ -1,55 +1,57 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:masrofy/core/theme/app_colors.dart';
-import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
-import 'package:masrofy/core/utils/extensions/extensions.dart';
-import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
+
+import '../../../../../../core/theme/app_colors.dart';
+import '../../../../../../core/utils/constants/locale_keys.g.dart';
+import '../../../../../../core/utils/extensions/extensions.dart';
+import '../../../../../../core/utils/extensions/screen_helper_extension.dart';
+import '../../domain/entities/transaction_entity.dart';
 
 class TransactionItemWidget extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final String time;
-  final String amount;
-  final IconData? icon;
-  final Color? iconColor;
-  final bool? isHighlighted;
-  const TransactionItemWidget({
-    super.key,
+  final TransactionEntity transaction;
 
-    this.icon,
-    required this.title,
-    required this.subtitle,
-    required this.time,
-    required this.amount,
-    this.iconColor,
-    this.isHighlighted,
-  });
+  const TransactionItemWidget({super.key, required this.transaction});
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,##0.##');
+    final timeLabel = DateFormat.jm(context.locale.languageCode)
+        .format(transaction.date);
+    final sign = transaction.isExpense ? '-' : '+';
+
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      leading: _Leading(iconColor: iconColor, icon: icon),
-      title: _Title(title: title),
-      subtitle: Text(
-        subtitle,
-        style: context.textTheme.bodySmall?.copyWith(
-          color: context.isDarkMode
-              ? AppColors.textSecondaryDark
-              : AppColors.textSecondaryLight,
-        ),
+      leading: _Leading(
+        iconColor: transaction.iconColor,
+        icon: transaction.icon,
       ),
+      title: _Title(title: transaction.title),
+      subtitle: transaction.subtitle.isEmpty
+          ? null
+          : Text(
+              transaction.subtitle,
+              style: context.textTheme.bodySmall?.copyWith(
+                color: context.isDarkMode
+                    ? AppColors.textSecondaryDark
+                    : AppColors.textSecondaryLight,
+              ),
+            ),
       trailing: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.end,
-        spacing: 8,
+        spacing: 6,
         children: [
           Text(
-            '$amount ${LocaleKeys.currency_egp.tr()}',
-            style: _style(context),
+            '$sign${formatter.format(transaction.amount)} ${LocaleKeys.currency_egp.tr()}',
+            style: context.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.w700,
+              color: transaction.isExpense
+                  ? AppColors.expense
+                  : AppColors.success,
+            ),
           ),
           Text(
-            time,
+            timeLabel,
             style: context.textTheme.bodySmall?.copyWith(
               color: context.isDarkMode
                   ? AppColors.textSecondaryDark
@@ -60,23 +62,20 @@ class TransactionItemWidget extends StatelessWidget {
       ),
     );
   }
-
-  TextStyle? _style(BuildContext context) =>
-      context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700);
 }
 
 class _Leading extends StatelessWidget {
   const _Leading({required this.iconColor, required this.icon});
 
-  final Color? iconColor;
-  final IconData? icon;
+  final Color iconColor;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(context.h10),
       decoration: BoxDecoration(
-        color: iconColor!.withValues(alpha: 0.1),
+        color: iconColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Icon(icon, color: iconColor, size: 16),
@@ -97,7 +96,7 @@ class _Title extends StatelessWidget {
         fontWeight: FontWeight.bold,
         color: context.isDarkMode
             ? AppColors.textPrimaryDark
-            : AppColors.grey700,
+            : AppColors.textPrimaryLight,
       ),
     );
   }

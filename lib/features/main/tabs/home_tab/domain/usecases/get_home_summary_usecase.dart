@@ -1,5 +1,5 @@
-import 'package:masrofy/features/main/tabs/home_tab/domain/entities/home_summary_entity.dart';
-import 'package:masrofy/features/main/tabs/home_tab/domain/repositories/home_repository.dart';
+import '../entities/home_summary_entity.dart';
+import '../repositories/home_repository.dart';
 
 class GetHomeSummaryUseCase {
   final HomeRepository repository;

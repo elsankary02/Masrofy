@@ -169,6 +169,10 @@ abstract class LocaleKeys {
   static const add_image_optional = 'add_image_optional';
   static const change_image = 'change_image';
   static const notifications = 'notifications';
+  static const no_transactions = 'no_transactions';
+  static const logout_confirm_message = 'logout_confirm_message';
+  static const clear_local_data = 'clear_local_data';
+  static const cancel = 'cancel';
   static const validation_debt_title_required =
       'validation_debt_title_required';
   static const validation_debt_total_required =
@@ -204,4 +208,9 @@ abstract class LocaleKeys {
       'validation_expense_amount_invalid';
   static const validation_expense_amount_positive =
       'validation_expense_amount_positive';
+  static const in_progress = 'in_progress';
+  static const home_welcome_masrofy = 'home_welcome_masrofy';
+  static const developed_by_mohamed = 'developed_by_mohamed';
+  static const developed_by = 'developed_by';
+  static const mohamed = 'mohamed';
 }

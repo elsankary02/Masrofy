@@ -1,7 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:masrofy/features/expense/domain/entities/expense_entity.dart';
-import 'package:masrofy/features/expense/domain/usecase/get_expenses_usecases.dart';
-import 'package:masrofy/features/expense/presentation/cubit/expense_state.dart';
+
+import '../../domain/entities/expense_entity.dart';
+import '../../domain/usecase/get_expenses_usecases.dart';
+import 'expense_state.dart';
 
 class ExpenseCubit extends Cubit<ExpenseState> {
   final GetExpensesUseCase getExpensesUseCase;

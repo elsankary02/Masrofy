@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
-import 'package:masrofy/features/auth/presentation/widgets/app_logo_widget.dart';
-import 'package:masrofy/features/auth/presentation/widgets/auth_btn_widget.dart';
-import 'package:masrofy/features/auth/presentation/widgets/welcome_header_widget.dart';
+
+import '../../../../core/utils/extensions/screen_helper_extension.dart';
+import '../widgets/app_logo_widget.dart';
+import '../widgets/auth_btn_widget.dart';
+import '../widgets/welcome_header_widget.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});
