@@ -23,7 +23,7 @@ class ExpenseDescriptionSection extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: 8),
           child: Text(
-            LocaleKeys.description_hint.tr(),
+            LocaleKeys.description_optional.tr(),
             style: AppTextStyles.bodyMedium.copyWith(
               color: colors.onSurfaceVariant,
               fontWeight: FontWeight.w600,
@@ -52,7 +52,7 @@ class ExpenseDescriptionSection extends StatelessWidget {
               focusedBorder: InputBorder.none,
               isDense: true,
               contentPadding: const EdgeInsets.symmetric(vertical: 12),
-              hintText: LocaleKeys.description_optional.tr(),
+              hintText: LocaleKeys.description_hint.tr(),
               hintStyle: AppTextStyles.bodyMedium.copyWith(
                 color: colors.onSurfaceVariant.withValues(alpha: 0.65),
               ),
