@@ -1,17 +1,14 @@
 # 💚 Masrofy | مصروفي
 
-<p align="center">
-  <b>Take Control of Your Money, One Transaction at a Time.</b>
-</p>
+
+## 📸 Application Preview
 
 <p align="center">
-  A personal finance management application built with Flutter to help users track their income, expenses, debts, and financial goals in one place.
-</p>
-
-<p align="center">
-  ![Flutter](https://img.shields.io/badge/Flutter-Framework-02569B?logo=flutter)
-  ![Dart](https://img.shields.io/badge/Dart-Language-0175C2?logo=dart)
-  ![Platform](https://img.shields.io/badge/Platform-Android-green?logo=android)
+  <img
+    src="https://github.com/user-attachments/assets/6d5eec7f-3645-4372-bfbc-c221a17e4c3f"
+    alt="Masrofy App Preview"
+    width="100%"
+  />
 </p>
 
 ---
