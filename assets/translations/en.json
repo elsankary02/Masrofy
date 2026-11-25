@@ -163,5 +163,22 @@
   "date_time": "Date and Time",
   "save_and_add_new": "Save and Add New",
   "add_image_optional": "Add Image (Optional)",
-  "change_image": "Tap to change image"
+  "change_image": "Tap to change image",
+  "notifications": "Notifications",
+  "validation_debt_title_required": "Enter a debt title first",
+  "validation_debt_total_required": "Enter the total debt amount",
+  "validation_debt_total_invalid": "Enter a valid number for the total amount",
+  "validation_debt_total_positive": "Total amount must be greater than zero and not negative",
+  "validation_debt_paid_invalid": "Enter a valid number for the paid amount",
+  "validation_debt_paid_negative": "Paid amount cannot be negative",
+  "validation_debt_paid_exceeds_total": "Paid amount cannot exceed the total amount",
+  "validation_goal_title_required": "Enter a goal name first",
+  "validation_goal_current_invalid": "Enter a valid number for the current amount",
+  "validation_goal_current_negative": "Current amount cannot be negative",
+  "validation_goal_target_required": "Enter the target goal amount",
+  "validation_goal_target_invalid": "Enter a valid number for the target amount",
+  "validation_goal_target_positive": "Target amount must be greater than zero and not negative",
+  "validation_expense_amount_required": "Enter the expense amount first",
+  "validation_expense_amount_invalid": "Enter a valid number for the expense amount",
+  "validation_expense_amount_positive": "Expense amount must be greater than zero and not negative"
 }

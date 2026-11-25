@@ -1,24 +1,173 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:masrofy/core/widgets/custom_appbar.dart';
-import 'package:masrofy/core/router/go_router.dart';
+import 'package:masrofy/core/theme/app_colors.dart';
 import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
+import 'package:masrofy/core/utils/extensions/extensions.dart';
 import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
+import 'package:masrofy/core/widgets/custom_appbar.dart';
+import 'package:masrofy/features/goals/data/datasource/goals_local_datasource.dart';
 import 'package:masrofy/features/goals/data/models/goals_card_model.dart';
+import 'package:masrofy/features/goals/data/repos/goals_repository.dart';
+import 'package:masrofy/features/goals/presentation/cubit/goals_cubit.dart';
 import 'package:masrofy/features/goals/presentation/cubit/goals_status_cubit.dart';
 import 'package:masrofy/features/goals/presentation/widget/goals_bottom_sheet_widget.dart';
 import 'package:masrofy/features/goals/presentation/widget/goals_card_widget.dart';
 import 'package:masrofy/features/goals/presentation/widget/goals_summary_card_widget.dart';
 import 'package:masrofy/features/goals/presentation/widget/goals_tab_bar_widget.dart';
 
-class GoalsPage extends StatelessWidget {
+class GoalsPage extends StatefulWidget {
   const GoalsPage({super.key});
 
   @override
+  State<GoalsPage> createState() => _GoalsPageState();
+}
+
+class _GoalsPageState extends State<GoalsPage> {
+  late final GoalsCubit _goalsCubit;
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _currentController = TextEditingController();
+  final TextEditingController _targetController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _goalsCubit = GoalsCubit(GoalsRepositoryImpl(GoalsLocalDataSourceImpl()))
+      ..loadGoals();
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _currentController.dispose();
+    _targetController.dispose();
+    _goalsCubit.close();
+    super.dispose();
+  }
+
+  void _showValidationSnackBar(BuildContext targetContext, String message) {
+    ScaffoldMessenger.of(targetContext)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(content: Text(message), behavior: SnackBarBehavior.floating),
+      );
+  }
+
+  void _openGoalForm({GoalsCardModel? goal}) {
+    final isEditing = goal != null;
+    _titleController.text = goal?.title ?? '';
+    _currentController.text = goal == null ? '' : goal.current.toString();
+    _targetController.text = goal == null ? '' : goal.target.toString();
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (sheetContext) {
+        return BlocProvider.value(
+          value: _goalsCubit,
+          child: GoalsBottomSheetWidget(
+            isEditing: isEditing,
+            titleController: _titleController,
+            currentController: _currentController,
+            targetController: _targetController,
+            onDelete: isEditing
+                ? () async {
+                    await _goalsCubit.deleteGoal(goal.id);
+                    if (!sheetContext.mounted) return;
+                    Navigator.pop(sheetContext);
+                  }
+                : null,
+            onSave: () async {
+              final title = _titleController.text.trim();
+              final currentText = _currentController.text.trim();
+              final targetText = _targetController.text.trim();
+
+              final num? parsedCurrent = currentText.isEmpty
+                  ? 0
+                  : num.tryParse(currentText);
+              final num? parsedTarget = targetText.isEmpty
+                  ? null
+                  : num.tryParse(targetText);
+
+              if (title.isEmpty) {
+                _showValidationSnackBar(
+                  context,
+                  LocaleKeys.validation_goal_title_required.tr(),
+                );
+                return;
+              }
+
+              if (parsedCurrent == null) {
+                _showValidationSnackBar(
+                  context,
+                  LocaleKeys.validation_goal_current_invalid.tr(),
+                );
+                return;
+              }
+
+              if (parsedCurrent < 0) {
+                _showValidationSnackBar(
+                  context,
+                  LocaleKeys.validation_goal_current_negative.tr(),
+                );
+                return;
+              }
+
+              if (parsedTarget == null) {
+                _showValidationSnackBar(
+                  context,
+                  LocaleKeys.validation_goal_target_invalid.tr(),
+                );
+                return;
+              }
+
+              if (parsedTarget <= 0) {
+                _showValidationSnackBar(
+                  context,
+                  LocaleKeys.validation_goal_target_positive.tr(),
+                );
+                return;
+              }
+
+              final palette = [
+                AppColors.purple,
+                AppColors.cyan,
+                AppColors.saving,
+              ];
+              final cardColor =
+                  goal?.color ??
+                  palette[_goalsCubit.state.goals.length % palette.length];
+              final cardIconKey = goal?.iconKey ?? 'flag';
+
+              final item = GoalsCardModel(
+                id: goal?.id ?? '',
+                title: title,
+                current: parsedCurrent,
+                target: parsedTarget,
+                color: cardColor,
+                iconKey: cardIconKey,
+              );
+
+              if (isEditing) {
+                await _goalsCubit.updateGoal(item);
+              } else {
+                await _goalsCubit.addGoal(item);
+              }
+
+              if (!sheetContext.mounted) return;
+              Navigator.pop(sheetContext);
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => GoalsStatusCubit(),
+    return BlocProvider.value(
+      value: _goalsCubit,
       child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
@@ -27,21 +176,26 @@ class GoalsPage extends StatelessWidget {
               children: [
                 CustomAppBar(
                   title: LocaleKeys.financial_goals.tr(),
-                  onPressed: () => showModalBottomSheet(
-                    isScrollControlled: true,
-                    context: context,
-                    builder: (context) =>
-                        GoalsBottomSheetWidget(isEditing: false),
-                  ),
+                  onPressed: () => _openGoalForm(),
                 ),
                 SizedBox(height: context.h20),
-                GoalsSummaryCardWidget(),
+                const GoalsSummaryCardWidget(),
                 SizedBox(height: context.h20),
-                GoalsTabBarWidget(),
-                SizedBox(height: context.h40),
-                BlocBuilder<GoalsStatusCubit, GoalsStatus>(
+                const GoalsTabBarWidget(),
+                SizedBox(height: context.h25),
+                BlocBuilder<GoalsCubit, GoalsState>(
                   builder: (context, state) {
-                    return _GoalsListView(state: state);
+                    if (state.isLoading && state.goals.isEmpty) {
+                      return Padding(
+                        padding: EdgeInsets.symmetric(vertical: context.h40),
+                        child: const CircularProgressIndicator(),
+                      );
+                    }
+                    return _GoalsListView(
+                      goals: state.goals,
+                      status: state.status,
+                      onEdit: (goal) => _openGoalForm(goal: goal),
+                    );
                   },
                 ),
                 SizedBox(height: context.h60),
@@ -55,46 +209,50 @@ class GoalsPage extends StatelessWidget {
 }
 
 class _GoalsListView extends StatelessWidget {
-  final Object? state;
-  const _GoalsListView({required this.state});
+  final List<GoalsCardModel> goals;
+  final GoalsStatus status;
+  final ValueChanged<GoalsCardModel> onEdit;
+
+  const _GoalsListView({
+    required this.goals,
+    required this.status,
+    required this.onEdit,
+  });
+
   @override
   Widget build(BuildContext context) {
-    final filteredGoals = goalModel.where((goal) {
-      if (state == GoalsStatus.active) {
+    final filteredGoals = goals.where((goal) {
+      if (status == GoalsStatus.active) {
         return goal.isActive;
-      } else {
-        return goal.isCompleted;
       }
+      return goal.isCompleted;
     }).toList();
-    return filteredGoals.isEmpty
-        ? Center(
-            child: Padding(
-              padding: const EdgeInsets.all(40.0),
-              child: Text(
-                LocaleKeys.no_goals.tr(),
-                style: TextStyle(color: Colors.grey.shade400),
-              ),
+
+    if (filteredGoals.isEmpty) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(40.0),
+          child: Text(
+            LocaleKeys.no_goals.tr(),
+            style: context.textTheme.bodyMedium?.copyWith(
+              color: context.isDarkMode
+                  ? AppColors.textSecondaryDark
+                  : AppColors.textSecondaryLight,
             ),
-          )
-        : ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: filteredGoals.length,
-            separatorBuilder: (context, index) => SizedBox(height: context.h20),
-            itemBuilder: (context, index) {
-              final goal = filteredGoals[index];
-              return GoalsCardWidget(
-                onTap: () => showModalBottomSheet(
-                  isScrollControlled: false,
-                  context: context,
-                  builder: (context) => GoalsBottomSheetWidget(
-                    isEditing: true,
-                    onDelete: () => router.pop(),
-                  ),
-                ),
-                goal: goal,
-              );
-            },
-          );
+          ),
+        ),
+      );
+    }
+
+    return ListView.separated(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: filteredGoals.length,
+      separatorBuilder: (context, index) => SizedBox(height: context.h20),
+      itemBuilder: (context, index) {
+        final goal = filteredGoals[index];
+        return GoalsCardWidget(goal: goal, onTap: () => onEdit(goal));
+      },
+    );
   }
 }

@@ -5,6 +5,7 @@ import 'package:masrofy/core/theme/app_colors.dart';
 import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
 import 'package:masrofy/core/utils/extensions/extensions.dart';
 import 'package:masrofy/features/debts/presentation/cubit/debts_cubit.dart';
+import 'package:masrofy/features/debts/presentation/cubit/debts_state.dart';
 
 class DebtsTabBarWidget extends StatefulWidget {
   const DebtsTabBarWidget({super.key});
@@ -36,6 +37,7 @@ class _DebtsTabBarWidgetState extends State<DebtsTabBarWidget>
     final inActiveColor = isDark
         ? AppColors.textSecondaryDark
         : AppColors.textSecondaryLight;
+
     return TabBar(
       labelColor: activeColor,
       unselectedLabelColor: inActiveColor,
@@ -50,15 +52,12 @@ class _DebtsTabBarWidgetState extends State<DebtsTabBarWidget>
       overlayColor: WidgetStateProperty.all(Colors.transparent),
       indicatorColor: activeColor,
       indicatorSize: TabBarIndicatorSize.tab,
-
       onTap: (index) {
         final status = [DebtsStatus.isActive, DebtsStatus.paid];
-
         context.read<DebtsCubit>().debtsStatusFunc(status[index]);
       },
       tabs: [
         Tab(text: LocaleKeys.status_active.tr()),
-
         Tab(text: LocaleKeys.status_paid.tr()),
       ],
     );

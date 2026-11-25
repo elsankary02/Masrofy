@@ -1,63 +1,73 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masrofy/core/theme/app_colors.dart';
 import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
 import 'package:masrofy/core/utils/extensions/extensions.dart';
 import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
-import 'package:masrofy/features/debts/data/models/debts_model.dart';
+import 'package:masrofy/features/debts/presentation/cubit/debts_cubit.dart';
+import 'package:masrofy/features/debts/presentation/cubit/debts_state.dart';
 
 class DebtsSummaryCardWidget extends StatelessWidget {
   const DebtsSummaryCardWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final num totalTarget = debtsModel.fold(
-      0,
-      (sum, item) => sum + item.target,
-    );
-    final num totalCurrent = debtsModel.fold(
-      0,
-      (sum, item) => sum + item.current,
-    );
+    return BlocBuilder<DebtsCubit, DebtsState>(
+      builder: (context, state) {
+        final num totalTarget = state.debts.fold(
+          0,
+          (sum, item) => sum + item.target,
+        );
+        final num totalCurrent = state.debts.fold(
+          0,
+          (sum, item) => sum + item.current,
+        );
 
-    final num totalPaid = totalTarget - totalCurrent;
-    final double totalProgress = totalTarget == 0 ? 0 : totalPaid / totalTarget;
-    final int totalPercentage = (totalProgress * 100).round();
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.all(context.h25),
-      decoration: BoxDecoration(
-        gradient: AppColors.debtsGradient,
-        borderRadius: BorderRadius.circular(24),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.expense.withValues(alpha: 0.15),
-            blurRadius: 15,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            children: [
-              _TotalDebtsWidget(
-                title: LocaleKeys.total_debts.tr(),
-                price: totalTarget.toInt(),
-              ),
-              _TotalDebtsWidget(
-                title: LocaleKeys.remaining_label.tr(),
-                price: totalCurrent.toInt(),
+        final num totalPaid = totalTarget - totalCurrent;
+        final double totalProgress = totalTarget == 0
+            ? 0
+            : (totalPaid / totalTarget).clamp(0.0, 1.0);
+        final int totalPercentage = (totalProgress * 100).round();
+
+        return Container(
+          width: double.infinity,
+          padding: EdgeInsets.all(context.h25),
+          decoration: BoxDecoration(
+            gradient: AppColors.debtsGradient,
+            borderRadius: BorderRadius.circular(24),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.expense.withValues(alpha: 0.15),
+                blurRadius: 15,
+                offset: const Offset(0, 8),
               ),
             ],
           ),
-          _CircularProgress(
-            progress: totalProgress,
-            percentage: totalPercentage,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _TotalDebtsWidget(
+                    title: LocaleKeys.total_debts.tr(),
+                    price: totalTarget.toInt(),
+                  ),
+                  _TotalDebtsWidget(
+                    title: LocaleKeys.remaining_label.tr(),
+                    price: totalCurrent.toInt(),
+                  ),
+                ],
+              ),
+              _CircularProgress(
+                progress: totalProgress,
+                percentage: totalPercentage,
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
@@ -135,7 +145,6 @@ class _CircularProgress extends StatelessWidget {
             ),
           ],
         ),
-
         Text(
           LocaleKeys.paid_label.tr(),
           style: context.textTheme.bodySmall?.copyWith(

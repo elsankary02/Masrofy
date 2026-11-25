@@ -5,6 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masrofy/app.dart';
 import 'package:masrofy/core/services/shared_preferences.dart';
 import 'package:masrofy/core/utils/constants/app_strings.dart';
+import 'package:masrofy/features/auth/data/datasources/auth_local_datasource.dart';
+import 'package:masrofy/features/auth/data/repositories/auth_repository_impl.dart';
+import 'package:masrofy/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:masrofy/features/main/tabs/more_tab/presentation/cubits/locale_cubit.dart';
 import 'package:masrofy/features/main/tabs/more_tab/presentation/cubits/theme_cubit.dart';
 
@@ -13,17 +16,22 @@ void main() async {
   await SPService.init();
   await EasyLocalization.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+  final authCubit = AuthCubit(AuthRepositoryImpl(AuthLocalDataSourceImpl()))
+    ..checkSession();
+
   runApp(
     EasyLocalization(
-      supportedLocales: [Locale('en'), Locale('ar')],
+      supportedLocales: const [Locale('en'), Locale('ar')],
       path: AppStrings.pathTranslations,
-      fallbackLocale: Locale('en'),
+      fallbackLocale: const Locale('en'),
       child: MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => ThemeCubit()),
           BlocProvider(create: (context) => LocaleCubit()),
+          BlocProvider.value(value: authCubit),
         ],
-        child: Masrofy(),
+        child: const Masrofy(),
       ),
     ),
   );

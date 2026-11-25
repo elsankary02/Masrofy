@@ -168,4 +168,40 @@ abstract class LocaleKeys {
   static const save_and_add_new = 'save_and_add_new';
   static const add_image_optional = 'add_image_optional';
   static const change_image = 'change_image';
+  static const notifications = 'notifications';
+  static const validation_debt_title_required =
+      'validation_debt_title_required';
+  static const validation_debt_total_required =
+      'validation_debt_total_required';
+  static const validation_debt_total_invalid = 'validation_debt_total_invalid';
+  static const validation_debt_total_positive =
+      'validation_debt_total_positive';
+  static const validation_debt_paid_invalid = 'validation_debt_paid_invalid';
+  static const validation_debt_paid_negative = 'validation_debt_paid_negative';
+  static const validation_debt_paid_exceeds_total =
+      'validation_debt_paid_exceeds_total';
+  static const validation_goal_title_required =
+      'validation_goal_title_required';
+  static const validation_goal_current_invalid =
+      'validation_goal_current_invalid';
+  static const validation_goal_current_negative =
+      'validation_goal_current_negative';
+  static const validation_goal_target_required =
+      'validation_goal_target_required';
+  static const validation_goal_target_invalid =
+      'validation_goal_target_invalid';
+  static const validation_goal_target_positive =
+      'validation_goal_target_positive';
+  static const validation_income_title_required =
+      'validation_income_title_required';
+  static const validation_income_amount_invalid =
+      'validation_income_amount_invalid';
+  static const validation_income_amount_positive =
+      'validation_income_amount_positive';
+  static const validation_expense_amount_required =
+      'validation_expense_amount_required';
+  static const validation_expense_amount_invalid =
+      'validation_expense_amount_invalid';
+  static const validation_expense_amount_positive =
+      'validation_expense_amount_positive';
 }

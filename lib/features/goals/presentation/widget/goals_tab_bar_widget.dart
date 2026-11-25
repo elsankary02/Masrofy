@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masrofy/core/theme/app_colors.dart';
 import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
 import 'package:masrofy/core/utils/extensions/extensions.dart';
+import 'package:masrofy/features/goals/presentation/cubit/goals_cubit.dart';
 import 'package:masrofy/features/goals/presentation/cubit/goals_status_cubit.dart';
 
 class GoalsTabBarWidget extends StatefulWidget {
@@ -20,7 +21,12 @@ class _GoalsTabBarWidgetState extends State<GoalsTabBarWidget>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    final initialStatus = context.read<GoalsCubit>().state.status;
+    _tabController = TabController(
+      length: 2,
+      vsync: this,
+      initialIndex: initialStatus == GoalsStatus.active ? 0 : 1,
+    );
   }
 
   @override
@@ -36,29 +42,38 @@ class _GoalsTabBarWidgetState extends State<GoalsTabBarWidget>
     final inActiveColor = isDark
         ? AppColors.textSecondaryDark
         : AppColors.textSecondaryLight;
-    return TabBar(
-      labelColor: activeColor,
-      unselectedLabelColor: inActiveColor,
-      controller: _tabController,
-      dividerColor: Colors.transparent,
-      unselectedLabelStyle: context.textTheme.labelLarge?.copyWith(
-        fontWeight: FontWeight.w500,
-      ),
-      labelStyle: context.textTheme.labelLarge?.copyWith(
-        fontWeight: FontWeight.bold,
-      ),
-      overlayColor: WidgetStateProperty.all(Colors.transparent),
-      indicatorColor: activeColor,
-      indicatorSize: TabBarIndicatorSize.tab,
 
-      onTap: (index) {
-        final status = [GoalsStatus.active, GoalsStatus.completed];
-        context.read<GoalsStatusCubit>().changeGoalStatus(status[index]);
+    return BlocListener<GoalsCubit, GoalsState>(
+      listenWhen: (prev, curr) => prev.status != curr.status,
+      listener: (context, state) {
+        final targetIndex = state.status == GoalsStatus.active ? 0 : 1;
+        if (_tabController.index != targetIndex) {
+          _tabController.animateTo(targetIndex);
+        }
       },
-      tabs: [
-        Tab(text: LocaleKeys.status_active.tr()),
-        Tab(text: LocaleKeys.completed_goals.tr()),
-      ],
+      child: TabBar(
+        labelColor: activeColor,
+        unselectedLabelColor: inActiveColor,
+        controller: _tabController,
+        dividerColor: Colors.transparent,
+        unselectedLabelStyle: context.textTheme.labelLarge?.copyWith(
+          fontWeight: FontWeight.w500,
+        ),
+        labelStyle: context.textTheme.labelLarge?.copyWith(
+          fontWeight: FontWeight.bold,
+        ),
+        overlayColor: WidgetStateProperty.all(Colors.transparent),
+        indicatorColor: activeColor,
+        indicatorSize: TabBarIndicatorSize.tab,
+        onTap: (index) {
+          final status = [GoalsStatus.active, GoalsStatus.completed];
+          context.read<GoalsCubit>().changeGoalStatus(status[index]);
+        },
+        tabs: [
+          Tab(text: LocaleKeys.status_active.tr()),
+          Tab(text: LocaleKeys.completed_goals.tr()),
+        ],
+      ),
     );
   }
 }

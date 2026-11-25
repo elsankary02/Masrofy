@@ -13,6 +13,9 @@ class GoalsCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isDone = goal.isCompleted;
+    final Color accentColor = isDone ? AppColors.saving : goal.color;
+
     return InkWell(
       borderRadius: BorderRadius.circular(16),
       onTap: onTap,
@@ -21,49 +24,64 @@ class GoalsCardWidget extends StatelessWidget {
           color: context.isDarkMode ? AppColors.cardDark : Colors.white,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: context.isDarkMode
-                ? AppColors.borderDark
-                : AppColors.borderLight,
+            color: isDone
+                ? AppColors.saving.withValues(alpha: 0.45)
+                : (context.isDarkMode
+                      ? AppColors.borderDark
+                      : AppColors.borderLight),
           ),
         ),
         child: ListTile(
           leading: Container(
             padding: EdgeInsets.all(context.h10),
             decoration: BoxDecoration(
-              color: goal.color.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(8),
+              color: accentColor.withValues(alpha: 0.14),
+              borderRadius: BorderRadius.circular(10),
             ),
-            child: Icon(goal.icon, color: goal.color, size: 16),
+            child: Icon(
+              isDone ? Icons.check_circle_rounded : (goal.icon ?? Icons.flag_rounded),
+              color: accentColor,
+              size: 20,
+            ),
           ),
-          title: Text(goal.title, style: context.textTheme.titleMedium),
+          title: Text(
+            goal.title,
+            style: context.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             spacing: 2,
             children: [
               Text(
                 '${goal.current} ${LocaleKeys.currency_egp.tr()}',
-                style: context.textTheme.bodyMedium,
+                style: context.textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               Text(
-                "${LocaleKeys.from.tr()} ${goal.target} ${LocaleKeys.currency_egp.tr()}",
+                '${LocaleKeys.from.tr()} ${goal.target} ${LocaleKeys.currency_egp.tr()}',
                 style: context.textTheme.bodySmall?.copyWith(
-                  color: context.isDarkMode
-                      ? AppColors.textSecondaryDark
-                      : AppColors.textSecondaryLight,
+                  color: isDone
+                      ? AppColors.saving
+                      : (context.isDarkMode
+                            ? AppColors.textSecondaryDark
+                            : AppColors.textSecondaryLight),
+                  fontWeight: isDone ? FontWeight.w600 : FontWeight.w400,
                 ),
               ),
             ],
           ),
           trailing: Row(
-            mainAxisSize: .min,
+            mainAxisSize: MainAxisSize.min,
             spacing: 8,
             children: [
               Text(
                 '${goal.percentage}%',
                 style: context.textTheme.bodySmall?.copyWith(
-                  color: context.isDarkMode
-                      ? AppColors.textSecondaryDark
-                      : AppColors.textSecondaryLight,
+                  color: accentColor,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               SizedBox(
@@ -71,6 +89,7 @@ class GoalsCardWidget extends StatelessWidget {
                 child: LinearProgressIndicator(
                   borderRadius: BorderRadius.circular(10),
                   value: goal.progress,
+                  color: accentColor,
                   minHeight: 6,
                   backgroundColor: context.isDarkMode
                       ? AppColors.borderDark

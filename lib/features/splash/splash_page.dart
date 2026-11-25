@@ -1,11 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masrofy/core/router/go_router.dart';
 import 'package:masrofy/core/router/named_routes.dart';
 import 'package:masrofy/core/theme/app_colors.dart';
 import 'package:masrofy/core/utils/constants/locale_keys.g.dart';
 import 'package:masrofy/core/utils/extensions/extensions.dart';
 import 'package:masrofy/core/utils/extensions/screen_helper_extension.dart';
+import 'package:masrofy/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:masrofy/features/auth/presentation/cubit/auth_state.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -17,13 +20,19 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
-    initMess();
     super.initState();
+    _navigateNext();
   }
 
-  void initMess() {
-    Future.delayed(Duration(seconds: 2), () {
-      router.go(NamedRoutes.auth);
+  void _navigateNext() {
+    Future.delayed(const Duration(seconds: 2), () {
+      if (!mounted) return;
+      final authState = context.read<AuthCubit>().state;
+      if (authState.status == AuthStatus.authenticated) {
+        router.go(NamedRoutes.main);
+      } else {
+        router.go(NamedRoutes.auth);
+      }
     });
   }
 
@@ -50,7 +59,7 @@ class _SplashPageState extends State<SplashPage> {
                       ),
                     ],
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.account_balance_wallet_rounded,
                     color: AppColors.white,
                     size: 85,
