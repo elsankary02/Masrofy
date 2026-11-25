@@ -24,19 +24,59 @@ class ReportsLocalDataSourceImpl implements ReportsLocalDataSource {
     return DateTime.now();
   }
 
+  String _normalizeCategoryKey(dynamic raw) {
+    final value = (raw ?? '')
+        .toString()
+        .trim()
+        .toLowerCase()
+        .replaceAll('ة', 'ه')
+        .replaceAll('أ', 'ا')
+        .replaceAll('إ', 'ا')
+        .replaceAll('آ', 'ا');
+
+    if (value.isEmpty) return 'other';
+    if (value == 'food' ||
+        value.contains('food') ||
+        value.contains('طعام') ||
+        value.contains('اكل')) {
+      return 'food';
+    }
+    if (value == 'transportation' ||
+        value.contains('transport') ||
+        value.contains('مواصلات')) {
+      return 'transportation';
+    }
+    if (value == 'bills' ||
+        value.contains('bill') ||
+        value.contains('فواتير')) {
+      return 'bills';
+    }
+    if (value == 'shopping' ||
+        value.contains('shop') ||
+        value.contains('تسوق')) {
+      return 'shopping';
+    }
+    if (value == 'entertainment' ||
+        value.contains('entertain') ||
+        value.contains('ترفيه')) {
+      return 'entertainment';
+    }
+    return 'other';
+  }
+
   List _readList(String key, String nestedKey) {
     final raw = SPService.getString(key);
     if (raw == null || raw.trim().isEmpty) return const [];
     final decoded = jsonDecode(raw);
     if (decoded is List) {
       return decoded
-          .whereType<Map>()
+          .whereType()
           .map((item) => Map<String, dynamic>.from(item))
           .toList();
     }
     if (decoded is Map && decoded[nestedKey] is List) {
       return (decoded[nestedKey] as List)
-          .whereType<Map>()
+          .whereType()
           .map((item) => Map<String, dynamic>.from(item))
           .toList();
     }
@@ -82,21 +122,21 @@ class ReportsLocalDataSourceImpl implements ReportsLocalDataSource {
     };
 
     for (final item in expenses) {
+      // مؤقتاً للتشخيص
+      // ignore: avoid_print
+      print('EXPENSE_ITEM => $item');
+
       final amount = _parseAmount(item['amount']);
       if (amount <= 0) continue;
       final date = _parseDate(item['date'] ?? item['createdAt']);
       if (!_matchesFilter(date, filterKey, now)) continue;
 
       periodExpenses += amount;
-      final rawCat = (item['category'] ?? 'other')
-          .toString()
-          .toLowerCase()
-          .trim();
-      if (categoryTotals.containsKey(rawCat)) {
-        categoryTotals[rawCat] = (categoryTotals[rawCat] ?? 0) + amount;
-      } else {
-        categoryTotals['other'] = (categoryTotals['other'] ?? 0) + amount;
-      }
+      final rawCategoryValue =
+          item['category'] ?? item['categoryKey'] ?? 'other';
+      final normalizedKey = _normalizeCategoryKey(rawCategoryValue);
+      categoryTotals[normalizedKey] =
+          (categoryTotals[normalizedKey] ?? 0) + amount;
     }
 
     for (final item in incomes) {

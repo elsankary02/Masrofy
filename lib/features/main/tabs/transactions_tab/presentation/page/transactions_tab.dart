@@ -7,7 +7,7 @@ import '../../../../../../core/utils/extensions/extensions.dart';
 import '../../../../../../core/utils/extensions/screen_helper_extension.dart';
 import '../../data/datasources/transactions_local_datasource.dart';
 import '../../data/repositories/transactions_repository_impl.dart';
-import '../../domain/usecases/et_transactions_usecase.dart';
+import '../../domain/usecases/get_transactions_usecase.dart';
 import '../cubit/transactions_cubit.dart';
 import '../widgets/transaction_item_builder.dart';
 import '../widgets/transactions_summary_card_widget.dart';

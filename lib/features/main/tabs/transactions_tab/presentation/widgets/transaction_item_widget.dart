@@ -12,20 +12,66 @@ class TransactionItemWidget extends StatelessWidget {
 
   const TransactionItemWidget({super.key, required this.transaction});
 
+  String _resolveDisplayTitle(TransactionEntity item) {
+    final trimmedTitle = item.title.trim();
+    if (trimmedTitle.isNotEmpty && trimmedTitle != '-') {
+      return trimmedTitle;
+    }
+
+    final rawKey = (item.categoryKey ?? item.subtitle).trim();
+    if (rawKey.isNotEmpty && rawKey != '-') {
+      return _localizeCategoryHint(rawKey);
+    }
+
+    return 'other'.tr();
+  }
+
+  String _localizeCategoryHint(String raw) {
+    final normalized = raw
+        .trim()
+        .toLowerCase()
+        .replaceAll('ة', 'ه')
+        .replaceAll('أ', 'ا')
+        .replaceAll('إ', 'ا')
+        .replaceAll('آ', 'ا');
+
+    if (normalized.contains('food') ||
+        normalized.contains('طعام') ||
+        normalized.contains('اكل')) {
+      return 'food'.tr();
+    }
+    if (normalized.contains('transport') || normalized.contains('مواصلات')) {
+      return 'transportation'.tr();
+    }
+    if (normalized.contains('bill') || normalized.contains('فواتير')) {
+      return 'bills'.tr();
+    }
+    if (normalized.contains('shop') || normalized.contains('تسوق')) {
+      return 'shopping'.tr();
+    }
+    if (normalized.contains('entertain') || normalized.contains('ترفيه')) {
+      return 'entertainment'.tr();
+    }
+    return raw;
+  }
+
   @override
   Widget build(BuildContext context) {
     final formatter = NumberFormat('#,##0.##');
     final timeLabel = DateFormat.jm(context.locale.languageCode)
         .format(transaction.date);
-    final sign = transaction.isExpense ? '-' : '+';
+    final isExpense = transaction.isExpense;
+    final sign = isExpense ? '-' : '+';
+    final displayTitle = _resolveDisplayTitle(transaction);
+    final arrowIcon = isExpense
+        ? Icons.north_east_rounded
+        : Icons.south_west_rounded;
+    final arrowColor = isExpense ? AppColors.expense : AppColors.success;
 
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      leading: _Leading(
-        iconColor: transaction.iconColor,
-        icon: transaction.icon,
-      ),
-      title: _Title(title: transaction.title),
+      leading: _Leading(iconColor: arrowColor, icon: arrowIcon),
+      title: _Title(title: displayTitle),
       subtitle: transaction.subtitle.isEmpty
           ? null
           : Text(
@@ -45,9 +91,7 @@ class TransactionItemWidget extends StatelessWidget {
             '$sign${formatter.format(transaction.amount)} ${LocaleKeys.currency_egp.tr()}',
             style: context.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.w700,
-              color: transaction.isExpense
-                  ? AppColors.expense
-                  : AppColors.success,
+              color: arrowColor,
             ),
           ),
           Text(

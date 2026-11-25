@@ -93,7 +93,10 @@ class TransactionItemBuilder extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.all(context.h15),
+                  padding: EdgeInsetsDirectional.only(
+                    start: context.h15,
+                    end: context.h15,
+                  ),
                   decoration: BoxDecoration(
                     color: context.isDarkMode
                         ? AppColors.cardDark

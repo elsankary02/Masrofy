@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/services/shared_preferences.dart';
@@ -27,19 +28,59 @@ class TransactionsLocalDataSourceImpl implements TransactionsLocalDataSource {
     return DateTime.now();
   }
 
+  String _normalizeCategoryKey(dynamic raw) {
+    final value = (raw ?? '')
+        .toString()
+        .trim()
+        .toLowerCase()
+        .replaceAll('ة', 'ه')
+        .replaceAll('أ', 'ا')
+        .replaceAll('إ', 'ا')
+        .replaceAll('آ', 'ا');
+
+    if (value.isEmpty || value == '-') return 'other';
+    if (value == 'food' ||
+        value.contains('food') ||
+        value.contains('طعام') ||
+        value.contains('اكل')) {
+      return 'food';
+    }
+    if (value == 'transportation' ||
+        value.contains('transport') ||
+        value.contains('مواصلات')) {
+      return 'transportation';
+    }
+    if (value == 'bills' ||
+        value.contains('bill') ||
+        value.contains('فواتير')) {
+      return 'bills';
+    }
+    if (value == 'shopping' ||
+        value.contains('shop') ||
+        value.contains('تسوق')) {
+      return 'shopping';
+    }
+    if (value == 'entertainment' ||
+        value.contains('entertain') ||
+        value.contains('ترفيه')) {
+      return 'entertainment';
+    }
+    return 'other';
+  }
+
   List _readList(String key, String nestedKey) {
     final raw = SPService.getString(key);
     if (raw == null || raw.trim().isEmpty) return const [];
     final decoded = jsonDecode(raw);
     if (decoded is List) {
       return decoded
-          .whereType<Map>()
+          .whereType()
           .map((item) => Map<String, dynamic>.from(item))
           .toList();
     }
     if (decoded is Map && decoded[nestedKey] is List) {
       return (decoded[nestedKey] as List)
-          .whereType<Map>()
+          .whereType()
           .map((item) => Map<String, dynamic>.from(item))
           .toList();
     }
@@ -56,21 +97,27 @@ class TransactionsLocalDataSourceImpl implements TransactionsLocalDataSource {
       final amount = _parseNum(map['amount']);
       if (amount <= 0) continue;
 
-      final title = (map['title'] ?? map['category'] ?? '').toString().trim();
-      final subtitle = (map['note'] ?? map['subtitle'] ?? map['category'] ?? '')
-          .toString()
-          .trim();
+      final rawCategory =
+          map['category'] ?? map['categoryKey'] ?? map['title'] ?? 'other';
+      final normalizedKey = _normalizeCategoryKey(rawCategory);
+      final rawTitle = (map['title'] ?? '').toString().trim();
+      final resolvedTitle = (rawTitle.isNotEmpty && rawTitle != '-')
+          ? rawTitle
+          : normalizedKey.tr();
+
+      final subtitle = (map['note'] ?? map['subtitle'] ?? '').toString().trim();
 
       result.add(
         TransactionEntity(
           id: (map['id'] ?? 'exp_$i').toString(),
-          title: title.isEmpty ? '-' : title,
-          subtitle: subtitle,
+          title: resolvedTitle,
+          subtitle: subtitle == '-' ? '' : subtitle,
           amount: amount,
           date: _parseDate(map['date'] ?? map['createdAt']),
           kind: TransactionKind.expense,
           icon: Icons.arrow_upward_rounded,
           iconColor: AppColors.expense,
+          categoryKey: normalizedKey,
         ),
       );
     }

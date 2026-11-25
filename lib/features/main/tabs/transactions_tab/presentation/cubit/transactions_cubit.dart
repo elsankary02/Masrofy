@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/entities/transaction_entity.dart';
-import '../../domain/usecases/et_transactions_usecase.dart';
+import '../../domain/usecases/get_transactions_usecase.dart';
 import 'transactions_state.dart';
 
 class TransactionsCubit extends Cubit<TransactionsState> {

@@ -13,6 +13,7 @@ class TransactionEntity {
   final TransactionKind kind;
   final IconData icon;
   final Color iconColor;
+  final String? categoryKey;
 
   const TransactionEntity({
     required this.id,
@@ -23,6 +24,7 @@ class TransactionEntity {
     required this.kind,
     required this.icon,
     required this.iconColor,
+    this.categoryKey,
   });
 
   bool get isExpense => kind == TransactionKind.expense;
