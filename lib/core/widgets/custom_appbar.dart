@@ -28,14 +28,16 @@ class CustomAppBar extends StatelessWidget {
             fontWeight: FontWeight.w700,
           ),
         ),
-        IconButton(
-          onPressed: onPressed,
-          icon: FaIcon(
-            FontAwesomeIcons.plus,
-            color: context.theme.colorScheme.onSurface,
-            size: 24,
-          ),
-        ),
+        onPressed != null
+            ? IconButton(
+                onPressed: onPressed,
+                icon: FaIcon(
+                  FontAwesomeIcons.plus,
+                  color: context.theme.colorScheme.onSurface,
+                  size: 24,
+                ),
+              )
+            : const SizedBox(width: 48),
       ],
     );
   }

@@ -17,43 +17,67 @@ class ExpenseCategoryField extends StatelessWidget {
     required this.onTap,
   });
 
+  ({IconData icon, Color color}) _categoryVisual(String key) {
+    final normalized = key.trim().toLowerCase();
+    if (normalized.contains('food') || key == LocaleKeys.food) {
+      return (icon: Icons.restaurant_rounded, color: AppColors.orange);
+    }
+    if (normalized.contains('transport') || key == LocaleKeys.transportation) {
+      return (icon: Icons.directions_car_rounded, color: AppColors.blue);
+    }
+    if (normalized.contains('bill') || key == LocaleKeys.bills) {
+      return (icon: Icons.receipt_long_rounded, color: AppColors.purple);
+    }
+    if (normalized.contains('shop') || key == LocaleKeys.shopping) {
+      return (icon: Icons.shopping_bag_rounded, color: AppColors.success);
+    }
+    if (normalized.contains('entertain') || key == LocaleKeys.entertainment) {
+      return (icon: Icons.movie_rounded, color: AppColors.expense);
+    }
+    return (icon: Icons.category_rounded, color: AppColors.primary);
+  }
+
   @override
   Widget build(BuildContext context) {
     final colors = context.theme.colorScheme;
+    final visual = _categoryVisual(category);
 
     return CustomFieldTile(
       label: LocaleKeys.category.tr(),
       onTap: onTap,
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            padding: const EdgeInsets.all(6),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             decoration: BoxDecoration(
-              color: AppColors.primary,
-              borderRadius: BorderRadius.circular(8),
+              color: visual.color.withValues(alpha: 0.12),
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: visual.color.withValues(alpha: 0.28)),
             ),
-            child: const Icon(
-              Icons.receipt_long,
-              size: 16,
-              color: Colors.white,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(visual.icon, size: 15, color: visual.color),
+                const SizedBox(width: 6),
+                Text(
+                  category.tr(),
+                  maxLines: 1,
+                  softWrap: false,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: visual.color,
+                  ),
+                ),
+              ],
             ),
           ),
-          const SizedBox(width: 8),
-          Flexible(
-            child: Text(
-              category.tr(),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.bodyMedium.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 6),
           Icon(
-            Icons.keyboard_arrow_down,
-            size: 18,
+            Icons.keyboard_arrow_down_rounded,
+            size: 20,
             color: colors.onSurfaceVariant,
           ),
         ],

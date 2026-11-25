@@ -6,7 +6,6 @@ import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/constants/locale_keys.g.dart';
 import '../../../../core/utils/extensions/extensions.dart';
 import '../../../../core/utils/extensions/screen_helper_extension.dart';
-import '../../../../core/widgets/custom_text_form_field.dart';
 
 class ExpenseDescriptionSection extends StatelessWidget {
   final TextEditingController controller;
@@ -14,34 +13,49 @@ class ExpenseDescriptionSection extends StatelessWidget {
   const ExpenseDescriptionSection({super.key, required this.controller});
 
   @override
-  @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
+    final isDark = context.isDarkMode;
+    final colors = context.theme.colorScheme;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          LocaleKeys.description_optional.tr(),
-          style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.w600),
-        ),
-
-        SizedBox(width: context.h10),
-
-        Expanded(
-          child: CustomTextField(
-            controller: controller,
-            hint: LocaleKeys.description_optional.tr(),
-            maxLines: 1,
-            radius: 14,
-            filled: true,
-
-            fillColor: context.isDarkMode ? AppColors.cardDark : Colors.white,
-            enabledBorderColor: context.theme.colorScheme.outline.withValues(
-              alpha: 0.15,
+        Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: Text(
+            LocaleKeys.description_hint.tr(),
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: colors.onSurfaceVariant,
+              fontWeight: FontWeight.w600,
             ),
-            focusedBorderColor: context.theme.colorScheme.primary,
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 14,
+          ),
+        ),
+        Container(
+          width: double.infinity,
+          padding: EdgeInsets.symmetric(horizontal: context.h15, vertical: 4),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            color: isDark ? AppColors.cardDark : Colors.white,
+            border: Border.all(
+              color: isDark ? AppColors.borderDark : AppColors.grey200,
+            ),
+          ),
+          child: TextField(
+            controller: controller,
+            minLines: 1,
+            maxLines: 3,
+            textInputAction: TextInputAction.done,
+            style: AppTextStyles.bodyMedium.copyWith(color: colors.onSurface),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              isDense: true,
+              contentPadding: const EdgeInsets.symmetric(vertical: 12),
+              hintText: LocaleKeys.description_optional.tr(),
+              hintStyle: AppTextStyles.bodyMedium.copyWith(
+                color: colors.onSurfaceVariant.withValues(alpha: 0.65),
+              ),
             ),
           ),
         ),

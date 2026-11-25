@@ -1,11 +1,10 @@
-import 'dart:io';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/constants/locale_keys.g.dart';
-import '../../../../core/utils/extensions/extensions.dart';
 import '../../../../core/utils/extensions/screen_helper_extension.dart';
 import '../../../../core/widgets/custom_appbar.dart';
 import '../../data/datasource/expense_local_datasource.dart';
@@ -18,7 +17,6 @@ import '../widget/expense_bottom_actions.dart';
 import '../widget/expense_category_field.dart';
 import '../widget/expense_date_field.dart';
 import '../widget/expense_description_section.dart';
-import '../widget/image_picker_widget.dart';
 
 class ExpensePage extends StatefulWidget {
   final void Function(
@@ -26,7 +24,6 @@ class ExpensePage extends StatefulWidget {
     String categoryKey,
     DateTime date,
     String note,
-    File? image,
   )?
   onSave;
 
@@ -41,9 +38,6 @@ class _ExpensePageState extends State<ExpensePage> {
   final _amountController = TextEditingController();
   final _noteController = TextEditingController();
 
-  File? _selectedImage;
-  Key _imagePickerKey = UniqueKey();
-
   DateTime _selectedDate = DateTime.now();
   String _selectedCategoryKey = LocaleKeys.food;
 
@@ -55,6 +49,26 @@ class _ExpensePageState extends State<ExpensePage> {
     LocaleKeys.entertainment,
     LocaleKeys.other,
   ];
+
+  ({IconData icon, Color color}) _categoryVisual(String key) {
+    final normalized = key.trim().toLowerCase();
+    if (normalized.contains('food') || key == LocaleKeys.food) {
+      return (icon: Icons.restaurant_rounded, color: AppColors.orange);
+    }
+    if (normalized.contains('transport') || key == LocaleKeys.transportation) {
+      return (icon: Icons.directions_car_rounded, color: AppColors.blue);
+    }
+    if (normalized.contains('bill') || key == LocaleKeys.bills) {
+      return (icon: Icons.receipt_long_rounded, color: AppColors.purple);
+    }
+    if (normalized.contains('shop') || key == LocaleKeys.shopping) {
+      return (icon: Icons.shopping_bag_rounded, color: AppColors.success);
+    }
+    if (normalized.contains('entertain') || key == LocaleKeys.entertainment) {
+      return (icon: Icons.movie_rounded, color: AppColors.expense);
+    }
+    return (icon: Icons.category_rounded, color: AppColors.primary);
+  }
 
   @override
   void initState() {
@@ -77,9 +91,9 @@ class _ExpensePageState extends State<ExpensePage> {
 
   String get _formattedDate {
     final languageCode = context.locale.languageCode;
-    final date = DateFormat('d MMMM y', languageCode).format(_selectedDate);
+    final date = DateFormat('d MMM y', languageCode).format(_selectedDate);
     final time = DateFormat('h:mm a', languageCode).format(_selectedDate);
-    return '$date - $time';
+    return '$date • $time';
   }
 
   void _showValidationMessage(String message) {
@@ -93,35 +107,127 @@ class _ExpensePageState extends State<ExpensePage> {
   Future<void> _selectCategory() async {
     final selectedKey = await showModalBottomSheet<String>(
       context: context,
-      backgroundColor: context.theme.colorScheme.surface,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
+      backgroundColor: Colors.transparent,
       builder: (sheetContext) {
-        final colors = Theme.of(sheetContext).colorScheme;
-        return SafeArea(
-          child: Padding(
-            padding: EdgeInsets.all(context.h20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  LocaleKeys.category.tr(),
-                  style: context.textTheme.titleLarge,
-                ),
-                SizedBox(height: context.h15),
-                ..._categoryKeys.map(
-                  (key) => ListTile(
-                    title: Text(key.tr()),
-                    trailing: key == _selectedCategoryKey
-                        ? Icon(Icons.check_circle, color: colors.primary)
-                        : null,
-                    onTap: () {
-                      Navigator.pop(sheetContext, key);
+        final isDark = Theme.of(sheetContext).brightness == Brightness.dark;
+        final surfaceColor = isDark ? const Color(0xFF181C20) : Colors.white;
+        final borderColor = isDark
+            ? Colors.white.withValues(alpha: 0.08)
+            : Colors.black.withValues(alpha: 0.08);
+
+        return Container(
+          decoration: BoxDecoration(
+            color: surfaceColor,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+            border: Border(top: BorderSide(color: borderColor)),
+          ),
+          child: SafeArea(
+            top: false,
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(
+                context.h20,
+                12,
+                context.h20,
+                context.h20,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 36,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.withValues(alpha: 0.35),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        LocaleKeys.category.tr(),
+                        style: AppTextStyles.bodyLarge.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () => Navigator.pop(sheetContext),
+                        icon: const Icon(Icons.close_rounded, size: 20),
+                        visualDensity: VisualDensity.compact,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: _categoryKeys.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 10,
+                          crossAxisSpacing: 10,
+                          childAspectRatio: 2.7,
+                        ),
+                    itemBuilder: (context, index) {
+                      final key = _categoryKeys[index];
+                      final isSelected = key == _selectedCategoryKey;
+                      final visual = _categoryVisual(key);
+
+                      return InkWell(
+                        borderRadius: BorderRadius.circular(16),
+                        onTap: () => Navigator.pop(sheetContext, key),
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 160),
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          decoration: BoxDecoration(
+                            color: isSelected
+                                ? visual.color.withValues(alpha: 0.14)
+                                : (isDark
+                                      ? Colors.white.withValues(alpha: 0.03)
+                                      : const Color(0xFFF7F8FA)),
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              color: isSelected ? visual.color : borderColor,
+                              width: isSelected ? 1.5 : 1,
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                radius: 16,
+                                backgroundColor: visual.color.withValues(
+                                  alpha: 0.16,
+                                ),
+                                child: Icon(
+                                  visual.icon,
+                                  size: 17,
+                                  color: visual.color,
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Text(
+                                  key.tr(),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTextStyles.bodyMedium.copyWith(
+                                    fontWeight: isSelected
+                                        ? FontWeight.w700
+                                        : FontWeight.w500,
+                                    color: isSelected ? visual.color : null,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
                     },
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );
@@ -163,20 +269,12 @@ class _ExpensePageState extends State<ExpensePage> {
     });
   }
 
-  void _onImageSelected(File? image) {
-    setState(() {
-      _selectedImage = image;
-    });
-  }
-
   void _resetForm() {
     setState(() {
       _amountController.clear();
       _noteController.clear();
       _selectedDate = DateTime.now();
       _selectedCategoryKey = LocaleKeys.food;
-      _selectedImage = null;
-      _imagePickerKey = UniqueKey();
     });
   }
 
@@ -209,17 +307,10 @@ class _ExpensePageState extends State<ExpensePage> {
       categoryKey: _selectedCategoryKey,
       date: _selectedDate,
       note: note,
-      imagePath: _selectedImage?.path,
     );
 
     await _expenseCubit.addExpense(entity);
-    widget.onSave?.call(
-      amount,
-      _selectedCategoryKey,
-      _selectedDate,
-      note,
-      _selectedImage,
-    );
+    widget.onSave?.call(amount, _selectedCategoryKey, _selectedDate, note);
 
     if (!mounted) return;
 
@@ -253,11 +344,6 @@ class _ExpensePageState extends State<ExpensePage> {
                 ExpenseDateField(date: _formattedDate, onTap: _selectDateTime),
                 SizedBox(height: context.h15),
                 ExpenseDescriptionSection(controller: _noteController),
-                SizedBox(height: context.h15),
-                ImagePickerWidget(
-                  key: _imagePickerKey,
-                  onImageSelected: _onImageSelected,
-                ),
                 SizedBox(height: context.h20),
               ],
             ),

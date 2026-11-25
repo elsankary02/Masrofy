@@ -213,4 +213,5 @@ abstract class LocaleKeys {
   static const developed_by_mohamed = 'developed_by_mohamed';
   static const developed_by = 'developed_by';
   static const mohamed = 'mohamed';
+  static const description_hint = 'description_hint';
 }

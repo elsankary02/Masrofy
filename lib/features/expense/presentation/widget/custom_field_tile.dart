@@ -20,48 +20,47 @@ class CustomFieldTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.theme.colorScheme;
 
-    return Row(
-      children: [
-        // Label
-        SizedBox(
-          width: 85,
-          child: Text(
-            label,
-            textAlign: TextAlign.end,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.bodyMedium.copyWith(
-              color: colors.onSurfaceVariant,
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(16),
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            color: context.isDarkMode ? AppColors.cardDark : Colors.white,
+            border: Border.all(
+              color: context.isDarkMode
+                  ? AppColors.borderDark
+                  : AppColors.grey200,
             ),
           ),
-        ),
-
-        const SizedBox(width: 12),
-
-        // Field
-        Expanded(
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: onTap,
-              borderRadius: BorderRadius.circular(14),
-              child: Container(
-                padding: EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  color: context.isDarkMode ? AppColors.cardDark : Colors.white,
-                  border: Border.all(
-                    color: context.isDarkMode
-                        ? AppColors.borderDark
-                        : AppColors.grey200,
-                  ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                label,
+                maxLines: 1,
+                softWrap: false,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.bodyMedium.copyWith(
+                  color: colors.onSurfaceVariant,
+                  fontWeight: FontWeight.w500,
                 ),
-                child: trailing,
               ),
-            ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Align(
+                  alignment: AlignmentDirectional.centerEnd,
+                  child: trailing,
+                ),
+              ),
+            ],
           ),
         ),
-      ],
+      ),
     );
   }
 }

@@ -26,6 +26,7 @@
   "delete_income": "Delete Income",
   "description": "Personal expense management app",
   "description_optional": "Description (Optional)",
+  "description_hint": "Add a note for the expense...",
   "edit_debt": "Edit Debt",
   "edit_expense_header": "Edit Expense",
   "edit_goal": "Edit Goal",

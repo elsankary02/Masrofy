@@ -26,6 +26,7 @@
   "delete_income": "حذف الدخل",
   "description": "تطبيق لإدارة المصاريف الشخصية",
   "description_optional": "وصف (اختياري)",
+  "description_hint": "أضف ملاحظة للمصروف...",
   "edit_debt": "تعديل الدين",
   "edit_expense_header": "تعديل المصروف",
   "edit_goal": "تعديل الهدف",
